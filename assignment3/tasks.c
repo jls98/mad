@@ -67,7 +67,7 @@ uint64_t probe(void *adrs){
 
 
 void fNOT(void *out, void *in){
-	__asm__ volatile(
+	inline __asm__ volatile(
 		"call 3f;"
 		"xor rax, rax;"
 		"nop; nop; nop; nop; nop;  # Delay ops"
