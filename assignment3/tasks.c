@@ -100,7 +100,7 @@ void fNOT(void *out, void *in){
 		"mov r11, QWORD PTR [%0+rax];" // spec instr
 		"lfence;"
 		"label_1: lea rax, [label_2];" 
-		"mov DWORD PTR [rsp], rax;"
+		"mov DWORD PTR [rsp], [rax];"
 		"mov r11, QWORD PTR [%1];"
 		"add QWORD PTR [rsp], r11;"
 		"ret;"
