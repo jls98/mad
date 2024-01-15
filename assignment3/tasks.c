@@ -83,8 +83,9 @@ void fNOT(void *out, void *in){
 		"2: 	nop;"*/
 	
 	__asm__ volatile(
-		"call 1;"
+		"call label_1;"
 		"xor rax, rax;"
+		// BEGIN delay ops
 		"mov rax, QWORD PTR [rsp+rax];"
 		"and rax, 0x0;"
 		"mov rax, QWORD PTR [rsp+rax];"
@@ -95,13 +96,14 @@ void fNOT(void *out, void *in){
 		"and rax, 0x0;"
 		"mov rax, QWORD PTR [rsp+rax];"
 		"and rax, 0x0;"
-		"mov r11, QWORD PTR [rdi+rax];"
+		// END delay ops
+		"mov r11, QWORD PTR [%0+rax];" // spec instr
 		"lfence;"
-		"1: mov DWORD PTR [rsp], 2;"
-		"mov r11, QWORD PTR [rsi];"
+		"label_1: mov DWORD PTR [rsp], label_2;"
+		"mov r11, QWORD PTR [%1];"
 		"add QWORD PTR [rsp], r11;"
 		"ret;"
-		"2: nop;"
+		"label_2: nop;"
 		: "=r" (out)
 		: "r" (in)
 		: "rax", "r11", "memory"
