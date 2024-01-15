@@ -29,11 +29,11 @@ int main(){
 	flush(b);
 	
 	// A
-	load(a);
+	/*load(a);
 	fNOT(b, a);
 	time = probe(b);
 	printf("A results in B=%lu\n", time);
-	
+	*/
 	
 	
 	
@@ -67,7 +67,7 @@ uint64_t probe(void *adrs){
 
 
 void fNOT(void *out, void *in){
-	inline __asm__ volatile(
+	__asm__ volatile(
 		"call 3f;"
 		"xor rax, rax;"
 		"nop; nop; nop; nop; nop;  # Delay ops"
