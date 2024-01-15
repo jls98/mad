@@ -61,29 +61,32 @@ uint64_t probe(void *adrs){
         " sub rax, r8 		\n"
         : "=&a" (time)
         : "r" (adrs)
-        : "rdx", "r8");
-		return time;
+        : "rdx", "r8", "memory"
+	);
+	return time;
 }
 
 
 void fNOT(void *out, void *in){
 	__asm__ volatile(
-		"call 3f;"
+		"call 3;"
 		"xor rax, rax;"
 		"nop; nop; nop; nop; nop;  # Delay ops"
 		"mov rax, [rsp+rax];"
 		"and rax, 0;"
 		"mov r11, [%0+rax];"
 		"lfence;"
-		"3: mov [rsp], 4f;"
+		"3:" 
+		"mov [rsp], 4;"
 		"mov r11, [%1];"
 		"add [rsp], r11;"
 		"ret;"
-		"4: nop;"
+		"4:" 
+		"nop;"
 
 		: "=r" (out)
 		: "r" (in)
-		: "rax", "r11"
+		: "rax", "r11", "memory"
 	);
 		
 	
