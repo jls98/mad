@@ -70,7 +70,7 @@ void fNOT(void *out, void *in){
 	__asm__ volatile(
 		"call 3f;"
 		"xor rax, rax;"
-		"rep; nop; nop; nop; nop; nop;  # Delay ops"
+		"nop; nop; nop; nop; nop;  # Delay ops"
 		"mov rax, [rsp+rax];"
 		"and rax, 0;"
 		"mov r11, [%0+rax];"
