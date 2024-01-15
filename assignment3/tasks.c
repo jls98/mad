@@ -77,11 +77,11 @@ void fNOT(void *out, void *in){
 		"mov r11, [%0+rax];"
 		"lfence;"
 		"3:" 
-		"mov [rsp], 4;"
+		//"mov [rsp], out;"
 		"mov r11, [%1];"
 		"add [rsp], r11;"
 		"ret;"
-		"4:" 
+		"out:" 
 		"nop;"
 
 		: "=r" (out)
