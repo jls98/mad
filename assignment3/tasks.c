@@ -31,7 +31,7 @@ int main(){
 	// A
 	load(a);
 	fNOT(b, a);
-	uint64_t time = probe(b);
+	time = probe(b);
 	printf("A results in B=%lu\n", time);
 	
 	
