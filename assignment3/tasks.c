@@ -25,7 +25,7 @@ int main(){
 }
 
 void flush(void *adrs){
-	__asm__ volatile("clflush %0;" ::"r" (adrs));
+	__asm__ volatile("clflush [%0];" ::"r" (adrs));
 }
 uint64_t probe(void *adrs){
 	volatile uint64_t time;  
