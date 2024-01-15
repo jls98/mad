@@ -99,7 +99,8 @@ void fNOT(void *out, void *in){
 		// END delay ops
 		"mov r11, QWORD PTR [%0+rax];" // spec instr
 		"lfence;"
-		"label_1: mov DWORD PTR [rsp], label_2;"
+		"label_1: lea rax, [label_2];" 
+		"mov DWORD PTR [rsp], rax;"
 		"mov r11, QWORD PTR [%1];"
 		"add QWORD PTR [rsp], r11;"
 		"ret;"
