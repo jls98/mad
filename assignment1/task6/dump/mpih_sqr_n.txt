@@ -1,0 +1,377 @@
+   daf99:	55                   	push   %rbp
+   daf9a:	48 89 e5             	mov    %rsp,%rbp
+   daf9d:	48 83 ec 50          	sub    $0x50,%rsp
+   dafa1:	48 89 7d c8          	mov    %rdi,-0x38(%rbp)
+   dafa5:	48 89 75 c0          	mov    %rsi,-0x40(%rbp)
+   dafa9:	89 55 bc             	mov    %edx,-0x44(%rbp)
+   dafac:	48 89 4d b0          	mov    %rcx,-0x50(%rbp)
+   dafb0:	8b 45 bc             	mov    -0x44(%rbp),%eax
+   dafb3:	83 e0 01             	and    $0x1,%eax
+   dafb6:	85 c0                	test   %eax,%eax
+   dafb8:	0f 84 fe 00 00 00    	je     db0bc <mpih_sqr_n+0x123>
+   dafbe:	8b 45 bc             	mov    -0x44(%rbp),%eax
+   dafc1:	83 e8 01             	sub    $0x1,%eax
+   dafc4:	89 45 e4             	mov    %eax,-0x1c(%rbp)
+   dafc7:	83 7d e4 0f          	cmpl   $0xf,-0x1c(%rbp)
+   dafcb:	7f 18                	jg     dafe5 <mpih_sqr_n+0x4c>
+   dafcd:	8b 55 e4             	mov    -0x1c(%rbp),%edx
+   dafd0:	48 8b 4d c0          	mov    -0x40(%rbp),%rcx
+   dafd4:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   dafd8:	48 89 ce             	mov    %rcx,%rsi
+   dafdb:	48 89 c7             	mov    %rax,%rdi
+   dafde:	e8 22 fe ff ff       	call   dae05 <mpih_sqr_n_basecase>
+   dafe3:	eb 17                	jmp    daffc <mpih_sqr_n+0x63>
+   dafe5:	48 8b 4d b0          	mov    -0x50(%rbp),%rcx
+   dafe9:	8b 55 e4             	mov    -0x1c(%rbp),%edx
+   dafec:	48 8b 75 c0          	mov    -0x40(%rbp),%rsi
+   daff0:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   daff4:	48 89 c7             	mov    %rax,%rdi
+   daff7:	e8 9d ff ff ff       	call   daf99 <mpih_sqr_n>
+   daffc:	8b 45 e4             	mov    -0x1c(%rbp),%eax
+   dafff:	48 98                	cltq
+   db001:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db008:	00 
+   db009:	48 8b 45 c0          	mov    -0x40(%rbp),%rax
+   db00d:	48 01 d0             	add    %rdx,%rax
+   db010:	48 8b 08             	mov    (%rax),%rcx
+   db013:	8b 45 e4             	mov    -0x1c(%rbp),%eax
+   db016:	48 98                	cltq
+   db018:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db01f:	00 
+   db020:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db024:	48 8d 3c 02          	lea    (%rdx,%rax,1),%rdi
+   db028:	8b 55 e4             	mov    -0x1c(%rbp),%edx
+   db02b:	48 8b 45 c0          	mov    -0x40(%rbp),%rax
+   db02f:	48 89 c6             	mov    %rax,%rsi
+   db032:	e8 ea 18 00 00       	call   dc921 <mpihelp_addmul_1>
+   db037:	48 89 45 d8          	mov    %rax,-0x28(%rbp)
+   db03b:	8b 45 e4             	mov    -0x1c(%rbp),%eax
+   db03e:	01 c0                	add    %eax,%eax
+   db040:	48 98                	cltq
+   db042:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db049:	00 
+   db04a:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db04e:	48 01 c2             	add    %rax,%rdx
+   db051:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+   db055:	48 89 02             	mov    %rax,(%rdx)
+   db058:	8b 45 e4             	mov    -0x1c(%rbp),%eax
+   db05b:	48 98                	cltq
+   db05d:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db064:	00 
+   db065:	48 8b 45 c0          	mov    -0x40(%rbp),%rax
+   db069:	48 01 d0             	add    %rdx,%rax
+   db06c:	48 8b 08             	mov    (%rax),%rcx
+   db06f:	8b 45 e4             	mov    -0x1c(%rbp),%eax
+   db072:	48 98                	cltq
+   db074:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db07b:	00 
+   db07c:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db080:	48 8d 3c 02          	lea    (%rdx,%rax,1),%rdi
+   db084:	8b 55 bc             	mov    -0x44(%rbp),%edx
+   db087:	48 8b 45 c0          	mov    -0x40(%rbp),%rax
+   db08b:	48 89 c6             	mov    %rax,%rsi
+   db08e:	e8 8e 18 00 00       	call   dc921 <mpihelp_addmul_1>
+   db093:	48 89 45 d8          	mov    %rax,-0x28(%rbp)
+   db097:	8b 55 e4             	mov    -0x1c(%rbp),%edx
+   db09a:	8b 45 bc             	mov    -0x44(%rbp),%eax
+   db09d:	01 d0                	add    %edx,%eax
+   db09f:	48 98                	cltq
+   db0a1:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db0a8:	00 
+   db0a9:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db0ad:	48 01 c2             	add    %rax,%rdx
+   db0b0:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+   db0b4:	48 89 02             	mov    %rax,(%rdx)
+   db0b7:	e9 dd 03 00 00       	jmp    db499 <mpih_sqr_n+0x500>
+   db0bc:	8b 45 bc             	mov    -0x44(%rbp),%eax
+   db0bf:	d1 f8                	sar    %eax
+   db0c1:	89 45 f4             	mov    %eax,-0xc(%rbp)
+   db0c4:	83 7d f4 0f          	cmpl   $0xf,-0xc(%rbp)
+   db0c8:	7f 39                	jg     db103 <mpih_sqr_n+0x16a>
+   db0ca:	8b 45 f4             	mov    -0xc(%rbp),%eax
+   db0cd:	48 98                	cltq
+   db0cf:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db0d6:	00 
+   db0d7:	48 8b 45 c0          	mov    -0x40(%rbp),%rax
+   db0db:	48 8d 34 02          	lea    (%rdx,%rax,1),%rsi
+   db0df:	8b 45 bc             	mov    -0x44(%rbp),%eax
+   db0e2:	48 98                	cltq
+   db0e4:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db0eb:	00 
+   db0ec:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db0f0:	48 8d 0c 02          	lea    (%rdx,%rax,1),%rcx
+   db0f4:	8b 45 f4             	mov    -0xc(%rbp),%eax
+   db0f7:	89 c2                	mov    %eax,%edx
+   db0f9:	48 89 cf             	mov    %rcx,%rdi
+   db0fc:	e8 04 fd ff ff       	call   dae05 <mpih_sqr_n_basecase>
+   db101:	eb 3b                	jmp    db13e <mpih_sqr_n+0x1a5>
+   db103:	8b 45 f4             	mov    -0xc(%rbp),%eax
+   db106:	48 98                	cltq
+   db108:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db10f:	00 
+   db110:	48 8b 45 c0          	mov    -0x40(%rbp),%rax
+   db114:	48 8d 34 02          	lea    (%rdx,%rax,1),%rsi
+   db118:	8b 45 bc             	mov    -0x44(%rbp),%eax
+   db11b:	48 98                	cltq
+   db11d:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db124:	00 
+   db125:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db129:	48 8d 3c 02          	lea    (%rdx,%rax,1),%rdi
+   db12d:	48 8b 55 b0          	mov    -0x50(%rbp),%rdx
+   db131:	8b 45 f4             	mov    -0xc(%rbp),%eax
+   db134:	48 89 d1             	mov    %rdx,%rcx
+   db137:	89 c2                	mov    %eax,%edx
+   db139:	e8 5b fe ff ff       	call   daf99 <mpih_sqr_n>
+   db13e:	8b 45 f4             	mov    -0xc(%rbp),%eax
+   db141:	48 98                	cltq
+   db143:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db14a:	00 
+   db14b:	48 8b 45 c0          	mov    -0x40(%rbp),%rax
+   db14f:	48 8d 0c 02          	lea    (%rdx,%rax,1),%rcx
+   db153:	8b 55 f4             	mov    -0xc(%rbp),%edx
+   db156:	48 8b 45 c0          	mov    -0x40(%rbp),%rax
+   db15a:	48 89 c6             	mov    %rax,%rsi
+   db15d:	48 89 cf             	mov    %rcx,%rdi
+   db160:	e8 2d d4 ff ff       	call   d8592 <mpihelp_cmp>
+   db165:	85 c0                	test   %eax,%eax
+   db167:	78 2a                	js     db193 <mpih_sqr_n+0x1fa>
+   db169:	8b 45 f4             	mov    -0xc(%rbp),%eax
+   db16c:	48 98                	cltq
+   db16e:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db175:	00 
+   db176:	48 8b 45 c0          	mov    -0x40(%rbp),%rax
+   db17a:	48 8d 34 02          	lea    (%rdx,%rax,1),%rsi
+   db17e:	8b 4d f4             	mov    -0xc(%rbp),%ecx
+   db181:	48 8b 55 c0          	mov    -0x40(%rbp),%rdx
+   db185:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db189:	48 89 c7             	mov    %rax,%rdi
+   db18c:	e8 fc 1b 00 00       	call   dcd8d <mpihelp_sub_n>
+   db191:	eb 2d                	jmp    db1c0 <mpih_sqr_n+0x227>
+   db193:	8b 45 f4             	mov    -0xc(%rbp),%eax
+   db196:	48 98                	cltq
+   db198:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db19f:	00 
+   db1a0:	48 8b 45 c0          	mov    -0x40(%rbp),%rax
+   db1a4:	48 8d 3c 02          	lea    (%rdx,%rax,1),%rdi
+   db1a8:	8b 55 f4             	mov    -0xc(%rbp),%edx
+   db1ab:	48 8b 75 c0          	mov    -0x40(%rbp),%rsi
+   db1af:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db1b3:	89 d1                	mov    %edx,%ecx
+   db1b5:	48 89 fa             	mov    %rdi,%rdx
+   db1b8:	48 89 c7             	mov    %rax,%rdi
+   db1bb:	e8 cd 1b 00 00       	call   dcd8d <mpihelp_sub_n>
+   db1c0:	83 7d f4 0f          	cmpl   $0xf,-0xc(%rbp)
+   db1c4:	7f 18                	jg     db1de <mpih_sqr_n+0x245>
+   db1c6:	8b 55 f4             	mov    -0xc(%rbp),%edx
+   db1c9:	48 8b 4d c8          	mov    -0x38(%rbp),%rcx
+   db1cd:	48 8b 45 b0          	mov    -0x50(%rbp),%rax
+   db1d1:	48 89 ce             	mov    %rcx,%rsi
+   db1d4:	48 89 c7             	mov    %rax,%rdi
+   db1d7:	e8 29 fc ff ff       	call   dae05 <mpih_sqr_n_basecase>
+   db1dc:	eb 28                	jmp    db206 <mpih_sqr_n+0x26d>
+   db1de:	8b 45 bc             	mov    -0x44(%rbp),%eax
+   db1e1:	48 98                	cltq
+   db1e3:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db1ea:	00 
+   db1eb:	48 8b 45 b0          	mov    -0x50(%rbp),%rax
+   db1ef:	48 8d 0c 02          	lea    (%rdx,%rax,1),%rcx
+   db1f3:	8b 55 f4             	mov    -0xc(%rbp),%edx
+   db1f6:	48 8b 75 c8          	mov    -0x38(%rbp),%rsi
+   db1fa:	48 8b 45 b0          	mov    -0x50(%rbp),%rax
+   db1fe:	48 89 c7             	mov    %rax,%rdi
+   db201:	e8 93 fd ff ff       	call   daf99 <mpih_sqr_n>
+   db206:	c7 45 fc 00 00 00 00 	movl   $0x0,-0x4(%rbp)
+   db20d:	eb 45                	jmp    db254 <mpih_sqr_n+0x2bb>
+   db20f:	8b 45 bc             	mov    -0x44(%rbp),%eax
+   db212:	48 63 d0             	movslq %eax,%rdx
+   db215:	8b 45 fc             	mov    -0x4(%rbp),%eax
+   db218:	48 98                	cltq
+   db21a:	48 01 d0             	add    %rdx,%rax
+   db21d:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db224:	00 
+   db225:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db229:	48 01 d0             	add    %rdx,%rax
+   db22c:	8b 55 f4             	mov    -0xc(%rbp),%edx
+   db22f:	48 63 ca             	movslq %edx,%rcx
+   db232:	8b 55 fc             	mov    -0x4(%rbp),%edx
+   db235:	48 63 d2             	movslq %edx,%rdx
+   db238:	48 01 ca             	add    %rcx,%rdx
+   db23b:	48 8d 0c d5 00 00 00 	lea    0x0(,%rdx,8),%rcx
+   db242:	00 
+   db243:	48 8b 55 c8          	mov    -0x38(%rbp),%rdx
+   db247:	48 01 ca             	add    %rcx,%rdx
+   db24a:	48 8b 00             	mov    (%rax),%rax
+   db24d:	48 89 02             	mov    %rax,(%rdx)
+   db250:	83 45 fc 01          	addl   $0x1,-0x4(%rbp)
+   db254:	8b 45 fc             	mov    -0x4(%rbp),%eax
+   db257:	3b 45 f4             	cmp    -0xc(%rbp),%eax
+   db25a:	7c b3                	jl     db20f <mpih_sqr_n+0x276>
+   db25c:	8b 45 bc             	mov    -0x44(%rbp),%eax
+   db25f:	48 63 d0             	movslq %eax,%rdx
+   db262:	8b 45 f4             	mov    -0xc(%rbp),%eax
+   db265:	48 98                	cltq
+   db267:	48 01 d0             	add    %rdx,%rax
+   db26a:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db271:	00 
+   db272:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db276:	48 01 c2             	add    %rax,%rdx
+   db279:	8b 45 bc             	mov    -0x44(%rbp),%eax
+   db27c:	48 98                	cltq
+   db27e:	48 8d 0c c5 00 00 00 	lea    0x0(,%rax,8),%rcx
+   db285:	00 
+   db286:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db28a:	48 8d 34 01          	lea    (%rcx,%rax,1),%rsi
+   db28e:	8b 45 bc             	mov    -0x44(%rbp),%eax
+   db291:	48 98                	cltq
+   db293:	48 8d 0c c5 00 00 00 	lea    0x0(,%rax,8),%rcx
+   db29a:	00 
+   db29b:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db29f:	48 8d 3c 01          	lea    (%rcx,%rax,1),%rdi
+   db2a3:	8b 45 f4             	mov    -0xc(%rbp),%eax
+   db2a6:	89 c1                	mov    %eax,%ecx
+   db2a8:	e8 f4 19 00 00       	call   dcca1 <mpihelp_add_n>
+   db2ad:	48 89 45 e8          	mov    %rax,-0x18(%rbp)
+   db2b1:	8b 45 f4             	mov    -0xc(%rbp),%eax
+   db2b4:	48 98                	cltq
+   db2b6:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db2bd:	00 
+   db2be:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db2c2:	48 8d 34 02          	lea    (%rdx,%rax,1),%rsi
+   db2c6:	8b 45 f4             	mov    -0xc(%rbp),%eax
+   db2c9:	48 98                	cltq
+   db2cb:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db2d2:	00 
+   db2d3:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db2d7:	48 8d 3c 02          	lea    (%rdx,%rax,1),%rdi
+   db2db:	8b 55 bc             	mov    -0x44(%rbp),%edx
+   db2de:	48 8b 45 b0          	mov    -0x50(%rbp),%rax
+   db2e2:	89 d1                	mov    %edx,%ecx
+   db2e4:	48 89 c2             	mov    %rax,%rdx
+   db2e7:	e8 a1 1a 00 00       	call   dcd8d <mpihelp_sub_n>
+   db2ec:	48 29 45 e8          	sub    %rax,-0x18(%rbp)
+   db2f0:	83 7d f4 0f          	cmpl   $0xf,-0xc(%rbp)
+   db2f4:	7f 18                	jg     db30e <mpih_sqr_n+0x375>
+   db2f6:	8b 55 f4             	mov    -0xc(%rbp),%edx
+   db2f9:	48 8b 4d c0          	mov    -0x40(%rbp),%rcx
+   db2fd:	48 8b 45 b0          	mov    -0x50(%rbp),%rax
+   db301:	48 89 ce             	mov    %rcx,%rsi
+   db304:	48 89 c7             	mov    %rax,%rdi
+   db307:	e8 f9 fa ff ff       	call   dae05 <mpih_sqr_n_basecase>
+   db30c:	eb 28                	jmp    db336 <mpih_sqr_n+0x39d>
+   db30e:	8b 45 bc             	mov    -0x44(%rbp),%eax
+   db311:	48 98                	cltq
+   db313:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db31a:	00 
+   db31b:	48 8b 45 b0          	mov    -0x50(%rbp),%rax
+   db31f:	48 8d 0c 02          	lea    (%rdx,%rax,1),%rcx
+   db323:	8b 55 f4             	mov    -0xc(%rbp),%edx
+   db326:	48 8b 75 c0          	mov    -0x40(%rbp),%rsi
+   db32a:	48 8b 45 b0          	mov    -0x50(%rbp),%rax
+   db32e:	48 89 c7             	mov    %rax,%rdi
+   db331:	e8 63 fc ff ff       	call   daf99 <mpih_sqr_n>
+   db336:	8b 45 f4             	mov    -0xc(%rbp),%eax
+   db339:	48 98                	cltq
+   db33b:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db342:	00 
+   db343:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db347:	48 8d 34 02          	lea    (%rdx,%rax,1),%rsi
+   db34b:	8b 45 f4             	mov    -0xc(%rbp),%eax
+   db34e:	48 98                	cltq
+   db350:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db357:	00 
+   db358:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db35c:	48 8d 3c 02          	lea    (%rdx,%rax,1),%rdi
+   db360:	8b 55 bc             	mov    -0x44(%rbp),%edx
+   db363:	48 8b 45 b0          	mov    -0x50(%rbp),%rax
+   db367:	89 d1                	mov    %edx,%ecx
+   db369:	48 89 c2             	mov    %rax,%rdx
+   db36c:	e8 30 19 00 00       	call   dcca1 <mpihelp_add_n>
+   db371:	48 01 45 e8          	add    %rax,-0x18(%rbp)
+   db375:	48 83 7d e8 00       	cmpq   $0x0,-0x18(%rbp)
+   db37a:	74 4d                	je     db3c9 <mpih_sqr_n+0x430>
+   db37c:	8b 45 f4             	mov    -0xc(%rbp),%eax
+   db37f:	48 63 d0             	movslq %eax,%rdx
+   db382:	8b 45 bc             	mov    -0x44(%rbp),%eax
+   db385:	48 98                	cltq
+   db387:	48 01 d0             	add    %rdx,%rax
+   db38a:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db391:	00 
+   db392:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db396:	48 8d 34 02          	lea    (%rdx,%rax,1),%rsi
+   db39a:	8b 45 f4             	mov    -0xc(%rbp),%eax
+   db39d:	48 63 d0             	movslq %eax,%rdx
+   db3a0:	8b 45 bc             	mov    -0x44(%rbp),%eax
+   db3a3:	48 98                	cltq
+   db3a5:	48 01 d0             	add    %rdx,%rax
+   db3a8:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db3af:	00 
+   db3b0:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db3b4:	48 8d 3c 02          	lea    (%rdx,%rax,1),%rdi
+   db3b8:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+   db3bc:	8b 45 f4             	mov    -0xc(%rbp),%eax
+   db3bf:	48 89 d1             	mov    %rdx,%rcx
+   db3c2:	89 c2                	mov    %eax,%edx
+   db3c4:	e8 96 93 ff ff       	call   d475f <mpihelp_add_1>
+   db3c9:	c7 45 f8 00 00 00 00 	movl   $0x0,-0x8(%rbp)
+   db3d0:	eb 33                	jmp    db405 <mpih_sqr_n+0x46c>
+   db3d2:	8b 45 f8             	mov    -0x8(%rbp),%eax
+   db3d5:	48 98                	cltq
+   db3d7:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db3de:	00 
+   db3df:	48 8b 45 b0          	mov    -0x50(%rbp),%rax
+   db3e3:	48 01 d0             	add    %rdx,%rax
+   db3e6:	8b 55 f8             	mov    -0x8(%rbp),%edx
+   db3e9:	48 63 d2             	movslq %edx,%rdx
+   db3ec:	48 8d 0c d5 00 00 00 	lea    0x0(,%rdx,8),%rcx
+   db3f3:	00 
+   db3f4:	48 8b 55 c8          	mov    -0x38(%rbp),%rdx
+   db3f8:	48 01 ca             	add    %rcx,%rdx
+   db3fb:	48 8b 00             	mov    (%rax),%rax
+   db3fe:	48 89 02             	mov    %rax,(%rdx)
+   db401:	83 45 f8 01          	addl   $0x1,-0x8(%rbp)
+   db405:	8b 45 f8             	mov    -0x8(%rbp),%eax
+   db408:	3b 45 f4             	cmp    -0xc(%rbp),%eax
+   db40b:	7c c5                	jl     db3d2 <mpih_sqr_n+0x439>
+   db40d:	8b 45 f4             	mov    -0xc(%rbp),%eax
+   db410:	48 98                	cltq
+   db412:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db419:	00 
+   db41a:	48 8b 45 b0          	mov    -0x50(%rbp),%rax
+   db41e:	48 01 c2             	add    %rax,%rdx
+   db421:	8b 45 f4             	mov    -0xc(%rbp),%eax
+   db424:	48 98                	cltq
+   db426:	48 8d 0c c5 00 00 00 	lea    0x0(,%rax,8),%rcx
+   db42d:	00 
+   db42e:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db432:	48 8d 34 01          	lea    (%rcx,%rax,1),%rsi
+   db436:	8b 45 f4             	mov    -0xc(%rbp),%eax
+   db439:	48 98                	cltq
+   db43b:	48 8d 0c c5 00 00 00 	lea    0x0(,%rax,8),%rcx
+   db442:	00 
+   db443:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db447:	48 8d 3c 01          	lea    (%rcx,%rax,1),%rdi
+   db44b:	8b 45 f4             	mov    -0xc(%rbp),%eax
+   db44e:	89 c1                	mov    %eax,%ecx
+   db450:	e8 4c 18 00 00       	call   dcca1 <mpihelp_add_n>
+   db455:	48 89 45 e8          	mov    %rax,-0x18(%rbp)
+   db459:	48 83 7d e8 00       	cmpq   $0x0,-0x18(%rbp)
+   db45e:	74 39                	je     db499 <mpih_sqr_n+0x500>
+   db460:	8b 45 bc             	mov    -0x44(%rbp),%eax
+   db463:	48 98                	cltq
+   db465:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db46c:	00 
+   db46d:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db471:	48 8d 34 02          	lea    (%rdx,%rax,1),%rsi
+   db475:	8b 45 bc             	mov    -0x44(%rbp),%eax
+   db478:	48 98                	cltq
+   db47a:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   db481:	00 
+   db482:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+   db486:	48 8d 3c 02          	lea    (%rdx,%rax,1),%rdi
+   db48a:	8b 45 bc             	mov    -0x44(%rbp),%eax
+   db48d:	b9 01 00 00 00       	mov    $0x1,%ecx
+   db492:	89 c2                	mov    %eax,%edx
+   db494:	e8 c6 92 ff ff       	call   d475f <mpihelp_add_1>
+   db499:	90                   	nop
+   db49a:	c9                   	leave
+   db49b:	c3                   	ret

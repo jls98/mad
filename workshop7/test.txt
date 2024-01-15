@@ -1,0 +1,3 @@
+scp D:\sciebo\WS23\MAD\workshop3\workshop3.c jia@10.150.59.141:~/workshop3/workshop3.c
+
+scp -r -C D:\sciebo-rub\WS23\MAD\workshop7\ jia@10.150.59.141:~/

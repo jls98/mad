@@ -1,0 +1,114 @@
+  dae05:	55                   	push   %rbp
+   dae06:	48 89 e5             	mov    %rsp,%rbp
+   dae09:	48 83 ec 40          	sub    $0x40,%rsp
+   dae0d:	48 89 7d d8          	mov    %rdi,-0x28(%rbp)
+   dae11:	48 89 75 d0          	mov    %rsi,-0x30(%rbp)
+   dae15:	89 55 cc             	mov    %edx,-0x34(%rbp)
+   dae18:	48 8b 45 d0          	mov    -0x30(%rbp),%rax
+   dae1c:	48 8b 00             	mov    (%rax),%rax
+   dae1f:	48 89 45 e0          	mov    %rax,-0x20(%rbp)
+   dae23:	48 83 7d e0 01       	cmpq   $0x1,-0x20(%rbp)
+   dae28:	0f 87 87 00 00 00    	ja     daeb5 <mpih_sqr_n_basecase+0xb0>
+   dae2e:	48 83 7d e0 01       	cmpq   $0x1,-0x20(%rbp)
+   dae33:	75 46                	jne    dae7b <mpih_sqr_n_basecase+0x76>
+   dae35:	c7 45 ec 00 00 00 00 	movl   $0x0,-0x14(%rbp)
+   dae3c:	eb 33                	jmp    dae71 <mpih_sqr_n_basecase+0x6c>
+   dae3e:	8b 45 ec             	mov    -0x14(%rbp),%eax
+   dae41:	48 98                	cltq
+   dae43:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   dae4a:	00 
+   dae4b:	48 8b 45 d0          	mov    -0x30(%rbp),%rax
+   dae4f:	48 01 d0             	add    %rdx,%rax
+   dae52:	8b 55 ec             	mov    -0x14(%rbp),%edx
+   dae55:	48 63 d2             	movslq %edx,%rdx
+   dae58:	48 8d 0c d5 00 00 00 	lea    0x0(,%rdx,8),%rcx
+   dae5f:	00 
+   dae60:	48 8b 55 d8          	mov    -0x28(%rbp),%rdx
+   dae64:	48 01 ca             	add    %rcx,%rdx
+   dae67:	48 8b 00             	mov    (%rax),%rax
+   dae6a:	48 89 02             	mov    %rax,(%rdx)
+   dae6d:	83 45 ec 01          	addl   $0x1,-0x14(%rbp)
+   dae71:	8b 45 ec             	mov    -0x14(%rbp),%eax
+   dae74:	3b 45 cc             	cmp    -0x34(%rbp),%eax
+   dae77:	7c c5                	jl     dae3e <mpih_sqr_n_basecase+0x39>
+   dae79:	eb 30                	jmp    daeab <mpih_sqr_n_basecase+0xa6>
+   dae7b:	c7 45 e8 00 00 00 00 	movl   $0x0,-0x18(%rbp)
+   dae82:	eb 1f                	jmp    daea3 <mpih_sqr_n_basecase+0x9e>
+   dae84:	8b 45 e8             	mov    -0x18(%rbp),%eax
+   dae87:	48 98                	cltq
+   dae89:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   dae90:	00 
+   dae91:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+   dae95:	48 01 d0             	add    %rdx,%rax
+   dae98:	48 c7 00 00 00 00 00 	movq   $0x0,(%rax)
+   dae9f:	83 45 e8 01          	addl   $0x1,-0x18(%rbp)
+   daea3:	8b 45 e8             	mov    -0x18(%rbp),%eax
+   daea6:	3b 45 cc             	cmp    -0x34(%rbp),%eax
+   daea9:	7c d9                	jl     dae84 <mpih_sqr_n_basecase+0x7f>
+   daeab:	48 c7 45 f0 00 00 00 	movq   $0x0,-0x10(%rbp)
+   daeb2:	00 
+   daeb3:	eb 1b                	jmp    daed0 <mpih_sqr_n_basecase+0xcb>
+   daeb5:	48 8b 4d e0          	mov    -0x20(%rbp),%rcx
+   daeb9:	8b 55 cc             	mov    -0x34(%rbp),%edx
+   daebc:	48 8b 75 d0          	mov    -0x30(%rbp),%rsi
+   daec0:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+   daec4:	48 89 c7             	mov    %rax,%rdi
+   daec7:	e8 e0 18 00 00       	call   dc7ac <mpihelp_mul_1>
+   daecc:	48 89 45 f0          	mov    %rax,-0x10(%rbp)
+   daed0:	8b 45 cc             	mov    -0x34(%rbp),%eax
+   daed3:	48 98                	cltq
+   daed5:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   daedc:	00 
+   daedd:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+   daee1:	48 01 c2             	add    %rax,%rdx
+   daee4:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+   daee8:	48 89 02             	mov    %rax,(%rdx)
+   daeeb:	48 83 45 d8 08       	addq   $0x8,-0x28(%rbp)
+   daef0:	c7 45 fc 01 00 00 00 	movl   $0x1,-0x4(%rbp)
+   daef7:	e9 8d 00 00 00       	jmp    daf89 <mpih_sqr_n_basecase+0x184>
+   daefc:	8b 45 fc             	mov    -0x4(%rbp),%eax
+   daeff:	48 98                	cltq
+   daf01:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   daf08:	00 
+   daf09:	48 8b 45 d0          	mov    -0x30(%rbp),%rax
+   daf0d:	48 01 d0             	add    %rdx,%rax
+   daf10:	48 8b 00             	mov    (%rax),%rax
+   daf13:	48 89 45 e0          	mov    %rax,-0x20(%rbp)
+   daf17:	48 83 7d e0 01       	cmpq   $0x1,-0x20(%rbp)
+   daf1c:	77 2c                	ja     daf4a <mpih_sqr_n_basecase+0x145>
+   daf1e:	48 c7 45 f0 00 00 00 	movq   $0x0,-0x10(%rbp)
+   daf25:	00 
+   daf26:	48 83 7d e0 01       	cmpq   $0x1,-0x20(%rbp)
+   daf2b:	75 38                	jne    daf65 <mpih_sqr_n_basecase+0x160>
+   daf2d:	8b 4d cc             	mov    -0x34(%rbp),%ecx
+   daf30:	48 8b 55 d0          	mov    -0x30(%rbp),%rdx
+   daf34:	48 8b 75 d8          	mov    -0x28(%rbp),%rsi
+   daf38:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+   daf3c:	48 89 c7             	mov    %rax,%rdi
+   daf3f:	e8 5d 1d 00 00       	call   dcca1 <mpihelp_add_n>
+   daf44:	48 89 45 f0          	mov    %rax,-0x10(%rbp)
+   daf48:	eb 1b                	jmp    daf65 <mpih_sqr_n_basecase+0x160>
+   daf4a:	48 8b 4d e0          	mov    -0x20(%rbp),%rcx
+   daf4e:	8b 55 cc             	mov    -0x34(%rbp),%edx
+   daf51:	48 8b 75 d0          	mov    -0x30(%rbp),%rsi
+   daf55:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+   daf59:	48 89 c7             	mov    %rax,%rdi
+   daf5c:	e8 c0 19 00 00       	call   dc921 <mpihelp_addmul_1>
+   daf61:	48 89 45 f0          	mov    %rax,-0x10(%rbp)
+   daf65:	8b 45 cc             	mov    -0x34(%rbp),%eax
+   daf68:	48 98                	cltq
+   daf6a:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   daf71:	00 
+   daf72:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+   daf76:	48 01 c2             	add    %rax,%rdx
+   daf79:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+   daf7d:	48 89 02             	mov    %rax,(%rdx)
+   daf80:	48 83 45 d8 08       	addq   $0x8,-0x28(%rbp)
+   daf85:	83 45 fc 01          	addl   $0x1,-0x4(%rbp)
+   daf89:	8b 45 fc             	mov    -0x4(%rbp),%eax
+   daf8c:	3b 45 cc             	cmp    -0x34(%rbp),%eax
+   daf8f:	0f 8c 67 ff ff ff    	jl     daefc <mpih_sqr_n_basecase+0xf7>
+   daf95:	90                   	nop
+   daf96:	90                   	nop
+   daf97:	c9                   	leave
+   daf98:	c3                   	ret

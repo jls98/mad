@@ -1,0 +1,28 @@
+precomputing
+
+-> multiple mul
+xp contains base^2, base_u contains base^(2i+1) für i = 1, ..., 2^(W-1)
+W -> Windowsize 2^(W-1) in steps of 2
+W=1 -> base^1
+W=2 -> base^1, base^3
+W=3 -> base^1, base^3, base^5, base^7
+W=4 -> base^1...2^4+1
+
+1<<2 = 100 = 4
+1,2,3
+
+
+suche nach nächstem geeignetem Window (in e0)
+suche nach entsprechendem Wert in vorberechneter Tabelle precomp und speichere in base_u
+
+multipliziere entsprechenden Wert in base_u mit aktuellem temporärem Result
+
+public exponent known
+
+
+fixes: 
+-ignore everything before first MMMM sequence
+-ignore last MMMM sequence
+
+-2 MUL at beginning and 5+ MUL at end of a sequence of d[p|q] calculation, ignore everything else and extract those
+

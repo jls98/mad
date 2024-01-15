@@ -1,0 +1,344 @@
+push   %rbp
+mov    %rsp,%rbp
+sub    $0x50,%rsp
+mov    %rdi,-0x38(%rbp)
+mov    %rsi,-0x40(%rbp)
+mov    %edx,-0x44(%rbp)
+mov    %rcx,-0x50(%rbp)
+mov    -0x44(%rbp),%eax
+and    $0x1,%eax
+test   %eax,%eax
+je     db0bc <mpih_sqr_n+0x123>
+mov    -0x44(%rbp),%eax
+sub    $0x1,%eax
+mov    %eax,-0x1c(%rbp)
+cmpl   $0xf,-0x1c(%rbp)
+jg     dafe5 <mpih_sqr_n+0x4c>
+mov    -0x1c(%rbp),%edx
+mov    -0x40(%rbp),%rcx
+mov    -0x38(%rbp),%rax
+mov    %rcx,%rsi
+mov    %rax,%rdi
+call   dae05 <mpih_sqr_n_basecase>
+jmp    daffc <mpih_sqr_n+0x63>
+mov    -0x50(%rbp),%rcx
+mov    -0x1c(%rbp),%edx
+mov    -0x40(%rbp),%rsi
+mov    -0x38(%rbp),%rax
+mov    %rax,%rdi
+call   daf99 <mpih_sqr_n>
+mov    -0x1c(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x40(%rbp),%rax
+add    %rdx,%rax
+mov    (%rax),%rcx
+mov    -0x1c(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x38(%rbp),%rax
+lea    (%rdx,%rax,1),%rdi
+mov    -0x1c(%rbp),%edx
+mov    -0x40(%rbp),%rax
+mov    %rax,%rsi
+call   dc921 <mpihelp_addmul_1>
+mov    %rax,-0x28(%rbp)
+mov    -0x1c(%rbp),%eax
+add    %eax,%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x38(%rbp),%rax
+add    %rax,%rdx
+mov    -0x28(%rbp),%rax
+mov    %rax,(%rdx)
+mov    -0x1c(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x40(%rbp),%rax
+add    %rdx,%rax
+mov    (%rax),%rcx
+mov    -0x1c(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x38(%rbp),%rax
+lea    (%rdx,%rax,1),%rdi
+mov    -0x44(%rbp),%edx
+mov    -0x40(%rbp),%rax
+mov    %rax,%rsi
+call   dc921 <mpihelp_addmul_1>
+mov    %rax,-0x28(%rbp)
+mov    -0x1c(%rbp),%edx
+mov    -0x44(%rbp),%eax
+add    %edx,%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x38(%rbp),%rax
+add    %rax,%rdx
+mov    -0x28(%rbp),%rax
+mov    %rax,(%rdx)
+jmp    db499 <mpih_sqr_n+0x500>
+mov    -0x44(%rbp),%eax
+sar    %eax
+mov    %eax,-0xc(%rbp)
+cmpl   $0xf,-0xc(%rbp)
+jg     db103 <mpih_sqr_n+0x16a>
+mov    -0xc(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x40(%rbp),%rax
+lea    (%rdx,%rax,1),%rsi
+mov    -0x44(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x38(%rbp),%rax
+lea    (%rdx,%rax,1),%rcx
+mov    -0xc(%rbp),%eax
+mov    %eax,%edx
+mov    %rcx,%rdi
+call   dae05 <mpih_sqr_n_basecase>
+jmp    db13e <mpih_sqr_n+0x1a5>
+mov    -0xc(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x40(%rbp),%rax
+lea    (%rdx,%rax,1),%rsi
+mov    -0x44(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x38(%rbp),%rax
+lea    (%rdx,%rax,1),%rdi
+mov    -0x50(%rbp),%rdx
+mov    -0xc(%rbp),%eax
+mov    %rdx,%rcx
+mov    %eax,%edx
+call   daf99 <mpih_sqr_n>
+mov    -0xc(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x40(%rbp),%rax
+lea    (%rdx,%rax,1),%rcx
+mov    -0xc(%rbp),%edx
+mov    -0x40(%rbp),%rax
+mov    %rax,%rsi
+mov    %rcx,%rdi
+call   d8592 <mpihelp_cmp>
+test   %eax,%eax
+js     db193 <mpih_sqr_n+0x1fa>
+mov    -0xc(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x40(%rbp),%rax
+lea    (%rdx,%rax,1),%rsi
+mov    -0xc(%rbp),%ecx
+mov    -0x40(%rbp),%rdx
+mov    -0x38(%rbp),%rax
+mov    %rax,%rdi
+call   dcd8d <mpihelp_sub_n>
+jmp    db1c0 <mpih_sqr_n+0x227>
+mov    -0xc(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x40(%rbp),%rax
+lea    (%rdx,%rax,1),%rdi
+mov    -0xc(%rbp),%edx
+mov    -0x40(%rbp),%rsi
+mov    -0x38(%rbp),%rax
+mov    %edx,%ecx
+mov    %rdi,%rdx
+mov    %rax,%rdi
+call   dcd8d <mpihelp_sub_n>
+cmpl   $0xf,-0xc(%rbp)
+jg     db1de <mpih_sqr_n+0x245>
+mov    -0xc(%rbp),%edx
+mov    -0x38(%rbp),%rcx
+mov    -0x50(%rbp),%rax
+mov    %rcx,%rsi
+mov    %rax,%rdi
+call   dae05 <mpih_sqr_n_basecase>
+jmp    db206 <mpih_sqr_n+0x26d>
+mov    -0x44(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x50(%rbp),%rax
+lea    (%rdx,%rax,1),%rcx
+mov    -0xc(%rbp),%edx
+mov    -0x38(%rbp),%rsi
+mov    -0x50(%rbp),%rax
+mov    %rax,%rdi
+call   daf99 <mpih_sqr_n>
+movl   $0x0,-0x4(%rbp)
+jmp    db254 <mpih_sqr_n+0x2bb>
+mov    -0x44(%rbp),%eax
+movslq %eax,%rdx
+mov    -0x4(%rbp),%eax
+cltq
+add    %rdx,%rax
+lea    0x0(,%rax,8),%rdx
+mov    -0x38(%rbp),%rax
+add    %rdx,%rax
+mov    -0xc(%rbp),%edx
+movslq %edx,%rcx
+mov    -0x4(%rbp),%edx
+movslq %edx,%rdx
+add    %rcx,%rdx
+lea    0x0(,%rdx,8),%rcx
+mov    -0x38(%rbp),%rdx
+add    %rcx,%rdx
+mov    (%rax),%rax
+mov    %rax,(%rdx)
+addl   $0x1,-0x4(%rbp)
+mov    -0x4(%rbp),%eax
+cmp    -0xc(%rbp),%eax
+jl     db20f <mpih_sqr_n+0x276>
+mov    -0x44(%rbp),%eax
+movslq %eax,%rdx
+mov    -0xc(%rbp),%eax
+cltq
+add    %rdx,%rax
+lea    0x0(,%rax,8),%rdx
+mov    -0x38(%rbp),%rax
+add    %rax,%rdx
+mov    -0x44(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rcx
+mov    -0x38(%rbp),%rax
+lea    (%rcx,%rax,1),%rsi
+mov    -0x44(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rcx
+mov    -0x38(%rbp),%rax
+lea    (%rcx,%rax,1),%rdi
+mov    -0xc(%rbp),%eax
+mov    %eax,%ecx
+call   dcca1 <mpihelp_add_n>
+mov    %rax,-0x18(%rbp)
+mov    -0xc(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x38(%rbp),%rax
+lea    (%rdx,%rax,1),%rsi
+mov    -0xc(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x38(%rbp),%rax
+lea    (%rdx,%rax,1),%rdi
+mov    -0x44(%rbp),%edx
+mov    -0x50(%rbp),%rax
+mov    %edx,%ecx
+mov    %rax,%rdx
+call   dcd8d <mpihelp_sub_n>
+sub    %rax,-0x18(%rbp)
+cmpl   $0xf,-0xc(%rbp)
+jg     db30e <mpih_sqr_n+0x375>
+mov    -0xc(%rbp),%edx
+mov    -0x40(%rbp),%rcx
+mov    -0x50(%rbp),%rax
+mov    %rcx,%rsi
+mov    %rax,%rdi
+call   dae05 <mpih_sqr_n_basecase>
+jmp    db336 <mpih_sqr_n+0x39d>
+mov    -0x44(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x50(%rbp),%rax
+lea    (%rdx,%rax,1),%rcx
+mov    -0xc(%rbp),%edx
+mov    -0x40(%rbp),%rsi
+mov    -0x50(%rbp),%rax
+mov    %rax,%rdi
+call   daf99 <mpih_sqr_n>
+mov    -0xc(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x38(%rbp),%rax
+lea    (%rdx,%rax,1),%rsi
+mov    -0xc(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x38(%rbp),%rax
+lea    (%rdx,%rax,1),%rdi
+mov    -0x44(%rbp),%edx
+mov    -0x50(%rbp),%rax
+mov    %edx,%ecx
+mov    %rax,%rdx
+call   dcca1 <mpihelp_add_n>
+add    %rax,-0x18(%rbp)
+cmpq   $0x0,-0x18(%rbp)
+je     db3c9 <mpih_sqr_n+0x430>
+mov    -0xc(%rbp),%eax
+movslq %eax,%rdx
+mov    -0x44(%rbp),%eax
+cltq
+add    %rdx,%rax
+lea    0x0(,%rax,8),%rdx
+mov    -0x38(%rbp),%rax
+lea    (%rdx,%rax,1),%rsi
+mov    -0xc(%rbp),%eax
+movslq %eax,%rdx
+mov    -0x44(%rbp),%eax
+cltq
+add    %rdx,%rax
+lea    0x0(,%rax,8),%rdx
+mov    -0x38(%rbp),%rax
+lea    (%rdx,%rax,1),%rdi
+mov    -0x18(%rbp),%rdx
+mov    -0xc(%rbp),%eax
+mov    %rdx,%rcx
+mov    %eax,%edx
+call   d475f <mpihelp_add_1>
+movl   $0x0,-0x8(%rbp)
+jmp    db405 <mpih_sqr_n+0x46c>
+mov    -0x8(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x50(%rbp),%rax
+add    %rdx,%rax
+mov    -0x8(%rbp),%edx
+movslq %edx,%rdx
+lea    0x0(,%rdx,8),%rcx
+mov    -0x38(%rbp),%rdx
+add    %rcx,%rdx
+mov    (%rax),%rax
+mov    %rax,(%rdx)
+addl   $0x1,-0x8(%rbp)
+mov    -0x8(%rbp),%eax
+cmp    -0xc(%rbp),%eax
+jl     db3d2 <mpih_sqr_n+0x439>
+mov    -0xc(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x50(%rbp),%rax
+add    %rax,%rdx
+mov    -0xc(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rcx
+mov    -0x38(%rbp),%rax
+lea    (%rcx,%rax,1),%rsi
+mov    -0xc(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rcx
+mov    -0x38(%rbp),%rax
+lea    (%rcx,%rax,1),%rdi
+mov    -0xc(%rbp),%eax
+mov    %eax,%ecx
+call   dcca1 <mpihelp_add_n>
+mov    %rax,-0x18(%rbp)
+cmpq   $0x0,-0x18(%rbp)
+je     db499 <mpih_sqr_n+0x500>
+mov    -0x44(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x38(%rbp),%rax
+lea    (%rdx,%rax,1),%rsi
+mov    -0x44(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x38(%rbp),%rax
+lea    (%rdx,%rax,1),%rdi
+mov    -0x44(%rbp),%eax
+mov    $0x1,%ecx
+mov    %eax,%edx
+call   d475f <mpihelp_add_1>
+nop
+leave
+ret

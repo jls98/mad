@@ -1,0 +1,16 @@
+scp D:\sciebo\WS23\MAD\workshop3\workshop3.c jia@10.150.59.141:~/workshop3/workshop3.c
+
+scp -r -C D:\sciebo\WS23\MAD\workshop3\ jia@10.150.59.141:~/
+scp -r -C D:\sciebo-rub\WS23\MAD\workshop3\ jia@10.150.59.141:~/
+
+scp -r -C jia@10.150.59.141:~/workshop3 D:\sciebo\WS23\MAD\workshop3\
+
+18446744073709551615
+3472328296227680304 
+
+
+8192 * 8 bytes -> 32 KiB
+
+
+
+64 bit  = 8 byte, 8000* 8 byte = 64 KiB

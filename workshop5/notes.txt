@@ -1,0 +1,6 @@
+scp D:\sciebo-rub\WS23\MAD\workshop5\Makefile jia@10.150.59.141:~/workshop5\Makefile
+
+scp D:\sciebo-rub\WS23\MAD\workshop5\wk5_victim.c jia@10.150.59.141:~/workshop5\wk5_victim.c 
+
+
+4096

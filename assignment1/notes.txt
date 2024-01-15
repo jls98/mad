@@ -1,0 +1,15 @@
+gnupg einrichten/bauen
+verstehen wie man das benutzt: sudo -u victim /home/victim/madgpg --sign --output=/dev/null /dev/null
+sq and MUL location identifizieren (nm?)
+
+
+23F68B18
+
+
+
+monitor access to /home/victim/trigger
+then fr_trace() of sq and mul
+
+sqr_mod 653 d57ed
+
+mul_mod 678 571f

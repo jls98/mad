@@ -1,0 +1,106 @@
+push   %rbp
+mov    %rsp,%rbp
+sub    $0x40,%rsp
+mov    %rdi,-0x28(%rbp)
+mov    %rsi,-0x30(%rbp)
+mov    %edx,-0x34(%rbp)
+mov    -0x30(%rbp),%rax
+mov    (%rax),%rax
+mov    %rax,-0x20(%rbp)
+cmpq   $0x1,-0x20(%rbp)
+ja     daeb5 <mpih_sqr_n_basecase+0xb0>
+cmpq   $0x1,-0x20(%rbp)
+jne    dae7b <mpih_sqr_n_basecase+0x76>
+movl   $0x0,-0x14(%rbp)
+jmp    dae71 <mpih_sqr_n_basecase+0x6c>
+mov    -0x14(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x30(%rbp),%rax
+add    %rdx,%rax
+mov    -0x14(%rbp),%edx
+movslq %edx,%rdx
+lea    0x0(,%rdx,8),%rcx
+mov    -0x28(%rbp),%rdx
+add    %rcx,%rdx
+mov    (%rax),%rax
+mov    %rax,(%rdx)
+addl   $0x1,-0x14(%rbp)
+mov    -0x14(%rbp),%eax
+cmp    -0x34(%rbp),%eax
+jl     dae3e <mpih_sqr_n_basecase+0x39>
+jmp    daeab <mpih_sqr_n_basecase+0xa6>
+movl   $0x0,-0x18(%rbp)
+jmp    daea3 <mpih_sqr_n_basecase+0x9e>
+mov    -0x18(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x28(%rbp),%rax
+add    %rdx,%rax
+movq   $0x0,(%rax)
+addl   $0x1,-0x18(%rbp)
+mov    -0x18(%rbp),%eax
+cmp    -0x34(%rbp),%eax
+jl     dae84 <mpih_sqr_n_basecase+0x7f>
+movq   $0x0,-0x10(%rbp)
+jmp    daed0 <mpih_sqr_n_basecase+0xcb>
+mov    -0x20(%rbp),%rcx
+mov    -0x34(%rbp),%edx
+mov    -0x30(%rbp),%rsi
+mov    -0x28(%rbp),%rax
+mov    %rax,%rdi
+call   dc7ac <mpihelp_mul_1>
+mov    %rax,-0x10(%rbp)
+mov    -0x34(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x28(%rbp),%rax
+add    %rax,%rdx
+mov    -0x10(%rbp),%rax
+mov    %rax,(%rdx)
+addq   $0x8,-0x28(%rbp)
+movl   $0x1,-0x4(%rbp)
+jmp    daf89 <mpih_sqr_n_basecase+0x184>
+mov    -0x4(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x30(%rbp),%rax
+add    %rdx,%rax
+mov    (%rax),%rax
+mov    %rax,-0x20(%rbp)
+cmpq   $0x1,-0x20(%rbp)
+ja     daf4a <mpih_sqr_n_basecase+0x145>
+movq   $0x0,-0x10(%rbp)
+cmpq   $0x1,-0x20(%rbp)
+jne    daf65 <mpih_sqr_n_basecase+0x160>
+mov    -0x34(%rbp),%ecx
+mov    -0x30(%rbp),%rdx
+mov    -0x28(%rbp),%rsi
+mov    -0x28(%rbp),%rax
+mov    %rax,%rdi
+call   dcca1 <mpihelp_add_n>
+mov    %rax,-0x10(%rbp)
+jmp    daf65 <mpih_sqr_n_basecase+0x160>
+mov    -0x20(%rbp),%rcx
+mov    -0x34(%rbp),%edx
+mov    -0x30(%rbp),%rsi
+mov    -0x28(%rbp),%rax
+mov    %rax,%rdi
+call   dc921 <mpihelp_addmul_1>
+mov    %rax,-0x10(%rbp)
+mov    -0x34(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x28(%rbp),%rax
+add    %rax,%rdx
+mov    -0x10(%rbp),%rax
+mov    %rax,(%rdx)
+addq   $0x8,-0x28(%rbp)
+addl   $0x1,-0x4(%rbp)
+mov    -0x4(%rbp),%eax
+cmp    -0x34(%rbp),%eax
+jl     daefc <mpih_sqr_n_basecase+0xf7>
+nop
+nop
+leave
+ret

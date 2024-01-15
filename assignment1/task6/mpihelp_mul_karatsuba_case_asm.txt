@@ -1,0 +1,236 @@
+push   %rbp
+mov    %rsp,%rbp
+sub    $0x40,%rsp
+mov    %rdi,-0x18(%rbp)
+mov    %rsi,-0x20(%rbp)
+mov    %edx,-0x24(%rbp)
+mov    %rcx,-0x30(%rbp)
+mov    %r8d,-0x28(%rbp)
+mov    %r9,-0x38(%rbp)
+mov    -0x38(%rbp),%rax
+mov    0x8(%rax),%rax
+test   %rax,%rax
+je     db5f6 <mpihelp_mul_karatsuba_case+0x38>
+mov    -0x38(%rbp),%rax
+mov    0x10(%rax),%eax
+cmp    %eax,-0x28(%rbp)
+jle    db65f <mpihelp_mul_karatsuba_case+0xa1>
+mov    -0x38(%rbp),%rax
+mov    0x8(%rax),%rax
+test   %rax,%rax
+je     db613 <mpihelp_mul_karatsuba_case+0x55>
+mov    -0x38(%rbp),%rax
+mov    0x8(%rax),%rax
+mov    %rax,%rdi
+call   dbda7 <mpi_free_limb_space>
+mov    -0x20(%rbp),%rax
+mov    %rax,%rdi
+call   e5275 <m_is_secure>
+test   %eax,%eax
+jne    db633 <mpihelp_mul_karatsuba_case+0x75>
+mov    -0x30(%rbp),%rax
+mov    %rax,%rdi
+call   e5275 <m_is_secure>
+test   %eax,%eax
+je     db63a <mpihelp_mul_karatsuba_case+0x7c>
+mov    $0x1,%edx
+jmp    db63f <mpihelp_mul_karatsuba_case+0x81>
+mov    $0x0,%edx
+mov    -0x28(%rbp),%eax
+add    %eax,%eax
+mov    %edx,%esi
+mov    %eax,%edi
+call   dbd3d <mpi_alloc_limb_space>
+mov    -0x38(%rbp),%rdx
+mov    %rax,0x8(%rdx)
+mov    -0x38(%rbp),%rax
+mov    -0x28(%rbp),%edx
+mov    %edx,0x10(%rax)
+cmpl   $0xf,-0x28(%rbp)
+jg     db67e <mpihelp_mul_karatsuba_case+0xc0>
+mov    -0x28(%rbp),%ecx
+mov    -0x30(%rbp),%rdx
+mov    -0x20(%rbp),%rsi
+mov    -0x18(%rbp),%rax
+mov    %rax,%rdi
+call   da5fc <mul_n_basecase>
+jmp    db6a0 <mpihelp_mul_karatsuba_case+0xe2>
+mov    -0x38(%rbp),%rax
+mov    0x8(%rax),%rdi
+mov    -0x28(%rbp),%ecx
+mov    -0x30(%rbp),%rdx
+mov    -0x20(%rbp),%rsi
+mov    -0x18(%rbp),%rax
+mov    %rdi,%r8
+mov    %rax,%rdi
+call   da796 <mul_n>
+mov    -0x28(%rbp),%eax
+cltq
+shl    $0x3,%rax
+add    %rax,-0x18(%rbp)
+mov    -0x28(%rbp),%eax
+cltq
+shl    $0x3,%rax
+add    %rax,-0x20(%rbp)
+mov    -0x28(%rbp),%eax
+sub    %eax,-0x24(%rbp)
+mov    -0x24(%rbp),%eax
+cmp    -0x28(%rbp),%eax
+jl     db81e <mpihelp_mul_karatsuba_case+0x260>
+mov    -0x38(%rbp),%rax
+mov    0x18(%rax),%rax
+test   %rax,%rax
+je     db6e5 <mpihelp_mul_karatsuba_case+0x127>
+mov    -0x38(%rbp),%rax
+mov    0x20(%rax),%eax
+cmp    %eax,-0x28(%rbp)
+jle    db74e <mpihelp_mul_karatsuba_case+0x190>
+mov    -0x38(%rbp),%rax
+mov    0x18(%rax),%rax
+test   %rax,%rax
+je     db702 <mpihelp_mul_karatsuba_case+0x144>
+mov    -0x38(%rbp),%rax
+mov    0x18(%rax),%rax
+mov    %rax,%rdi
+call   dbda7 <mpi_free_limb_space>
+mov    -0x20(%rbp),%rax
+mov    %rax,%rdi
+call   e5275 <m_is_secure>
+test   %eax,%eax
+jne    db722 <mpihelp_mul_karatsuba_case+0x164>
+mov    -0x30(%rbp),%rax
+mov    %rax,%rdi
+call   e5275 <m_is_secure>
+test   %eax,%eax
+je     db729 <mpihelp_mul_karatsuba_case+0x16b>
+mov    $0x1,%edx
+jmp    db72e <mpihelp_mul_karatsuba_case+0x170>
+mov    $0x0,%edx
+mov    -0x28(%rbp),%eax
+add    %eax,%eax
+mov    %edx,%esi
+mov    %eax,%edi
+call   dbd3d <mpi_alloc_limb_space>
+mov    -0x38(%rbp),%rdx
+mov    %rax,0x18(%rdx)
+mov    -0x38(%rbp),%rax
+mov    -0x28(%rbp),%edx
+mov    %edx,0x20(%rax)
+cmpl   $0xf,-0x28(%rbp)
+jg     db771 <mpihelp_mul_karatsuba_case+0x1b3>
+mov    -0x38(%rbp),%rax
+mov    0x18(%rax),%rax
+mov    -0x28(%rbp),%ecx
+mov    -0x30(%rbp),%rdx
+mov    -0x20(%rbp),%rsi
+mov    %rax,%rdi
+call   da5fc <mul_n_basecase>
+jmp    db797 <mpihelp_mul_karatsuba_case+0x1d9>
+mov    -0x38(%rbp),%rax
+mov    0x8(%rax),%rdi
+mov    -0x38(%rbp),%rax
+mov    0x18(%rax),%rax
+mov    -0x28(%rbp),%ecx
+mov    -0x30(%rbp),%rdx
+mov    -0x20(%rbp),%rsi
+mov    %rdi,%r8
+mov    %rax,%rdi
+call   da796 <mul_n>
+mov    -0x38(%rbp),%rax
+mov    0x18(%rax),%rdx
+mov    -0x28(%rbp),%ecx
+mov    -0x18(%rbp),%rsi
+mov    -0x18(%rbp),%rax
+mov    %rax,%rdi
+call   dcca1 <mpihelp_add_n>
+mov    %rax,-0x8(%rbp)
+mov    -0x38(%rbp),%rax
+mov    0x18(%rax),%rax
+mov    -0x28(%rbp),%edx
+movslq %edx,%rdx
+shl    $0x3,%rdx
+lea    (%rax,%rdx,1),%rsi
+mov    -0x28(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x18(%rbp),%rax
+lea    (%rdx,%rax,1),%rdi
+mov    -0x8(%rbp),%rdx
+mov    -0x28(%rbp),%eax
+mov    %rdx,%rcx
+mov    %eax,%edx
+call   d475f <mpihelp_add_1>
+mov    -0x28(%rbp),%eax
+cltq
+shl    $0x3,%rax
+add    %rax,-0x18(%rbp)
+mov    -0x28(%rbp),%eax
+cltq
+shl    $0x3,%rax
+add    %rax,-0x20(%rbp)
+mov    -0x28(%rbp),%eax
+sub    %eax,-0x24(%rbp)
+mov    -0x24(%rbp),%eax
+cmp    -0x28(%rbp),%eax
+jge    db74e <mpihelp_mul_karatsuba_case+0x190>
+cmpl   $0x0,-0x24(%rbp)
+je     db8f4 <mpihelp_mul_karatsuba_case+0x336>
+cmpl   $0xf,-0x24(%rbp)
+jg     db851 <mpihelp_mul_karatsuba_case+0x293>
+mov    -0x38(%rbp),%rax
+mov    0x8(%rax),%rax
+mov    -0x24(%rbp),%edi
+mov    -0x20(%rbp),%rcx
+mov    -0x28(%rbp),%edx
+mov    -0x30(%rbp),%rsi
+mov    %edi,%r8d
+mov    %rax,%rdi
+call   db9ae <mpihelp_mul>
+jmp    db899 <mpihelp_mul_karatsuba_case+0x2db>
+mov    -0x38(%rbp),%rax
+mov    (%rax),%rax
+test   %rax,%rax
+jne    db86e <mpihelp_mul_karatsuba_case+0x2b0>
+mov    $0x28,%edi
+call   e478e <xmalloc_clear>
+mov    -0x38(%rbp),%rdx
+mov    %rax,(%rdx)
+mov    -0x38(%rbp),%rax
+mov    (%rax),%r8
+mov    -0x38(%rbp),%rax
+mov    0x8(%rax),%rax
+mov    -0x24(%rbp),%edi
+mov    -0x20(%rbp),%rcx
+mov    -0x28(%rbp),%edx
+mov    -0x30(%rbp),%rsi
+mov    %r8,%r9
+mov    %edi,%r8d
+mov    %rax,%rdi
+call   db5be <mpihelp_mul_karatsuba_case>
+mov    -0x38(%rbp),%rax
+mov    0x8(%rax),%rdx
+mov    -0x28(%rbp),%ecx
+mov    -0x18(%rbp),%rsi
+mov    -0x18(%rbp),%rax
+mov    %rax,%rdi
+call   dcca1 <mpihelp_add_n>
+mov    %rax,-0x8(%rbp)
+mov    -0x38(%rbp),%rax
+mov    0x8(%rax),%rax
+mov    -0x28(%rbp),%edx
+movslq %edx,%rdx
+shl    $0x3,%rdx
+lea    (%rax,%rdx,1),%rsi
+mov    -0x28(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x18(%rbp),%rax
+lea    (%rdx,%rax,1),%rdi
+mov    -0x8(%rbp),%rdx
+mov    -0x24(%rbp),%eax
+mov    %rdx,%rcx
+mov    %eax,%edx
+call   d475f <mpihelp_add_1>
+nop
+leave
+ret

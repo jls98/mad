@@ -1,0 +1,3 @@
+scp D:\sciebo-rub\WS23\MAD\workshop1\rng.c jia@10.150.59.141:~/rng.c
+
+context und nicht content based sharing

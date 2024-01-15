@@ -1,0 +1,1 @@
+scp -r -C D:\sciebo\WS23\MAD\assignment2\src jia@10.150.59.141:~/assignment2/

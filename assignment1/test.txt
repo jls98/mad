@@ -1,0 +1,49 @@
+scp D:\sciebo-rub\WS23\MAD\workshop1\rng.c jia@10.150.59.141:~/rng.c
+
+scp D:\sciebo\WS23\MAD\assignment1\task1\file_generator.c jia@10.150.59.141:~/assignment1\task1\file_generator.c
+
+scp jia@10.150.59.141:~/workshop4/AES/aes.c D:\sciebo-rub\WS23\MAD\workshop4\AES\aes.c 
+
+scp D:\sciebo-rub\WS23\MAD\workshop4\AES\aes.c jia@10.150.59.141:~/workshop4/AES/aes.c 
+
+
+jia@10.150.59.141
+scp D:\sciebo\WS23\MAD\assignment1\task2\a1t2.c jia@10.150.59.141:~/assignment1\task2\a1t2.c
+scp D:\sciebo\WS23\MAD\assignment1\task3\a1t3.c jia@10.150.59.141:~/assignment1\task3\a1t3.cW
+scp D:\sciebo\WS23\MAD\assignment1\task4\monitor.c jia@10.150.59.141:~/assignment1\task4\monitor.c
+
+scp D:\sciebo\WS23\MAD\assignment1\task3\Makefile jia@10.150.59.141:~/assignment1\task3\Makefile
+
+scp D:\sciebo-rub\WS23\MAD\assignment1\submission\madgpg_monitor.c jia@10.150.59.141:~/assignment1\submission\madgpg_monitor.c
+
+
+
+
+scp jia@10.150.59.141:~/assignment1\submission\testoutput  D:\sciebo-rub\WS23\MAD\assignment1\submission\testoutput
+
+
+
+scp jia@10.150.59.141:~/assignment1/task6/objdump_madgpg D:\sciebo\WS23\MAD\assignment1/task6/objdump_madgpg
+
+
+context und nicht content based sharing
+
+
+
+scp jia@10.150.59.141:/home/jia/assignment1/task6/gnupg-1.4.MAD/ D:\sciebo-rub\WS23\MAD\assignment1\task6\gnupg-1.4.MAD\
+
+00000000000db5be: mpihelp_mul_karatsuba_case
+00000000000db9ae: mpihelp_mul
+
+
+
+
+
+
+
+
+
+
+
+
+

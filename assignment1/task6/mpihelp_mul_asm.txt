@@ -1,0 +1,144 @@
+push   %rbp
+mov    %rsp,%rbp
+sub    $0x70,%rsp
+mov    %rdi,-0x58(%rbp)
+mov    %rsi,-0x60(%rbp)
+mov    %edx,-0x64(%rbp)
+mov    %rcx,-0x70(%rbp)
+mov    %r8d,-0x68(%rbp)
+mov    -0x64(%rbp),%eax
+movslq %eax,%rdx
+mov    -0x68(%rbp),%eax
+cltq
+add    %rdx,%rax
+shl    $0x3,%rax
+lea    -0x8(%rax),%rdx
+mov    -0x58(%rbp),%rax
+add    %rdx,%rax
+mov    %rax,-0x20(%rbp)
+cmpl   $0xf,-0x68(%rbp)
+jg     dbb87 <mpihelp_mul+0x1d9>
+cmpl   $0x0,-0x68(%rbp)
+jne    dba04 <mpihelp_mul+0x56>
+mov    $0x0,%eax
+jmp    dbbd4 <mpihelp_mul+0x226>
+mov    -0x70(%rbp),%rax
+mov    (%rax),%rax
+mov    %rax,-0x28(%rbp)
+cmpq   $0x1,-0x28(%rbp)
+ja     dbaa1 <mpihelp_mul+0xf3>
+cmpq   $0x1,-0x28(%rbp)
+jne    dba67 <mpihelp_mul+0xb9>
+movl   $0x0,-0x10(%rbp)
+jmp    dba5d <mpihelp_mul+0xaf>
+mov    -0x10(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x60(%rbp),%rax
+add    %rdx,%rax
+mov    -0x10(%rbp),%edx
+movslq %edx,%rdx
+lea    0x0(,%rdx,8),%rcx
+mov    -0x58(%rbp),%rdx
+add    %rcx,%rdx
+mov    (%rax),%rax
+mov    %rax,(%rdx)
+addl   $0x1,-0x10(%rbp)
+mov    -0x10(%rbp),%eax
+cmp    -0x64(%rbp),%eax
+jl     dba2a <mpihelp_mul+0x7c>
+jmp    dba97 <mpihelp_mul+0xe9>
+movl   $0x0,-0x14(%rbp)
+jmp    dba8f <mpihelp_mul+0xe1>
+mov    -0x14(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x58(%rbp),%rax
+add    %rdx,%rax
+movq   $0x0,(%rax)
+addl   $0x1,-0x14(%rbp)
+mov    -0x14(%rbp),%eax
+cmp    -0x64(%rbp),%eax
+jl     dba70 <mpihelp_mul+0xc2>
+movq   $0x0,-0x8(%rbp)
+jmp    dbabc <mpihelp_mul+0x10e>
+mov    -0x28(%rbp),%rcx
+mov    -0x64(%rbp),%edx
+mov    -0x60(%rbp),%rsi
+mov    -0x58(%rbp),%rax
+mov    %rax,%rdi
+call   dc7ac <mpihelp_mul_1>
+mov    %rax,-0x8(%rbp)
+mov    -0x64(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x58(%rbp),%rax
+add    %rax,%rdx
+mov    -0x8(%rbp),%rax
+mov    %rax,(%rdx)
+addq   $0x8,-0x58(%rbp)
+movl   $0x1,-0xc(%rbp)
+jmp    dbb75 <mpihelp_mul+0x1c7>
+mov    -0xc(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x70(%rbp),%rax
+add    %rdx,%rax
+mov    (%rax),%rax
+mov    %rax,-0x28(%rbp)
+cmpq   $0x1,-0x28(%rbp)
+ja     dbb36 <mpihelp_mul+0x188>
+movq   $0x0,-0x8(%rbp)
+cmpq   $0x1,-0x28(%rbp)
+jne    dbb51 <mpihelp_mul+0x1a3>
+mov    -0x64(%rbp),%ecx
+mov    -0x60(%rbp),%rdx
+mov    -0x58(%rbp),%rsi
+mov    -0x58(%rbp),%rax
+mov    %rax,%rdi
+call   dcca1 <mpihelp_add_n>
+mov    %rax,-0x8(%rbp)
+jmp    dbb51 <mpihelp_mul+0x1a3>
+mov    -0x28(%rbp),%rcx
+mov    -0x64(%rbp),%edx
+mov    -0x60(%rbp),%rsi
+mov    -0x58(%rbp),%rax
+mov    %rax,%rdi
+call   dc921 <mpihelp_addmul_1>
+mov    %rax,-0x8(%rbp)
+mov    -0x64(%rbp),%eax
+cltq
+lea    0x0(,%rax,8),%rdx
+mov    -0x58(%rbp),%rax
+add    %rax,%rdx
+mov    -0x8(%rbp),%rax
+mov    %rax,(%rdx)
+addq   $0x8,-0x58(%rbp)
+addl   $0x1,-0xc(%rbp)
+mov    -0xc(%rbp),%eax
+cmp    -0x68(%rbp),%eax
+jl     dbae8 <mpihelp_mul+0x13a>
+mov    -0x8(%rbp),%rax
+jmp    dbbd4 <mpihelp_mul+0x226>
+lea    -0x50(%rbp),%rax
+mov    $0x28,%edx
+mov    $0x0,%esi
+mov    %rax,%rdi
+call   93b0 <memset@plt>
+lea    -0x50(%rbp),%r8
+mov    -0x68(%rbp),%edi
+mov    -0x70(%rbp),%rcx
+mov    -0x64(%rbp),%edx
+mov    -0x60(%rbp),%rsi
+mov    -0x58(%rbp),%rax
+mov    %r8,%r9
+mov    %edi,%r8d
+mov    %rax,%rdi
+call   db5be <mpihelp_mul_karatsuba_case>
+lea    -0x50(%rbp),%rax
+mov    %rax,%rdi
+call   db8f7 <mpihelp_release_karatsuba_ctx>
+mov    -0x20(%rbp),%rax
+mov    (%rax),%rax
+leave
+ret
