@@ -83,7 +83,7 @@ void fNOT(void *out, void *in){
 
 		: "=r" (out)
 		: "r" (in)
-		: "r11"
+		: "rax", "r11"
 	);
 		
 	
