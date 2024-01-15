@@ -7,20 +7,18 @@ uint64_t probe(void *adrs); // access adrs and return access
 void flush(void *adrs); // clflush adrs 
 
 
-#define THRESHOLD 80 // TODO
+#define THRESHOLD 200 // timing around 14-16 when cached
 
 int main(){
-	uint64_t *test = (uint64_t *) malloc(sizeof(uint64_t *));
 	
-	uint64_t timing = probe(test);
-	printf("%lu\n", timing);
-	*test = 10;
+	// preparation
+	uint64_t *a = (uint64_t *) malloc(sizeof(uint64_t *));
+	uint64_t *b = (uint64_t *) malloc(sizeof(uint64_t *));
+
+	flush(a);
+	flush(b);
 	
-	timing = probe(test);
-	printf("%lu\n", timing);
-	flush(test);
-	timing = probe(test);
-	printf("%lu\n", timing);
+	
 	
 }
 
@@ -46,5 +44,30 @@ uint64_t probe(void *adrs){
 
 
 void fNOT(void *out, void *in){
+	__asm__ volatile(
+		"1: call 3f;"
+		"2: xor rax, rax;"
+		"rep; nop; nop; nop; nop; nop;  # Delay ops"
+		"mov rax, [rsp+rax];"
+		"and rax, 0;"
+		".endr;"
+		"mov r11, [rdi+rax];"
+		"lfence;"
+		"3: mov [rsp], 4f;"
+		"mov r11, [rsi];"
+		"add [rsp], r11;"
+		"ret;"
+		"4: nop;"
+
+		: "=d" (out)
+		: "s" (in)
+		: "r11"
+	);
+		
+	
+	
+	
+	
+	
 	return; // TODO
 }
