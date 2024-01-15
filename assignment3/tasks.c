@@ -28,10 +28,7 @@ void test(){
 		fNOT(b, a);
 		time = probe(b);
 		if (time<THRESHOLD) ctr_notA++;
-	}
-	printf("not A results in B=%lu, time %lu\n", ctr_notA, time);
-	
-	for (int i=0;i<100000;i++){
+
 		flush(a);
 		flush(b);
 		load(a);
@@ -42,6 +39,7 @@ void test(){
 		if (time>THRESHOLD) ctr_A++;
 	}
 	printf("A results in B=%lu, time %lu\n", ctr_A, time);
+	printf("not A results in B=%lu, time %lu\n", ctr_notA, time);
 
 }
 
