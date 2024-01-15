@@ -29,11 +29,11 @@ int main(){
 	flush(b);
 	
 	// A
-	/*load(a);
+	load(a);
 	fNOT(b, a);
 	time = probe(b);
 	printf("A results in B=%lu\n", time);
-	*/
+	
 	
 	
 	
