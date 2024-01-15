@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <x86intrin.h>
 
 void fNOT(void *out, void *in); // NOT gate
 uint64_t probe(void *adrs); // access adrs and return access
