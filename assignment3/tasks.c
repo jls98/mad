@@ -5,7 +5,7 @@
 void fNOT(void *out, void *in); // NOT gate
 uint64_t probe(void *adrs); // access adrs and return access
 void flush(void *adrs); // clflush adrs 
-
+void load(void *adrs); // load adrs into cache
 
 #define THRESHOLD 200 // timing around 14-16 when cached
 
@@ -14,17 +14,40 @@ int main(){
 	// preparation
 	uint64_t *a = (uint64_t *) malloc(sizeof(uint64_t *));
 	uint64_t *b = (uint64_t *) malloc(sizeof(uint64_t *));
+	*a=0;
+	*b=0;
+	flush(a);
+	flush(b);
 
+	// not A
+	fNOT(a);
+	uint64_t time = probe(b);
+	printf("not A results in B=%lu\n", time);
+	
+	
 	flush(a);
 	flush(b);
 	
+	// A
+	load(a);
+	fNOT(a);
+	uint64_t time = probe(b);
+	printf("A results in B=%lu\n", time);
 	
 	
+	
+	
+	
+}
+
+void load(void *adrs){
+	__asm__ volatile("movd rax, [%0];"::"r" (adrs));
 }
 
 void flush(void *adrs){
 	__asm__ volatile("clflush [%0];" ::"r" (adrs));
 }
+
 uint64_t probe(void *adrs){
 	volatile uint64_t time;  
 	__asm__ volatile (
@@ -51,16 +74,16 @@ void fNOT(void *out, void *in){
 		"mov rax, [rsp+rax];"
 		"and rax, 0;"
 		".endr;"
-		"mov r11, [rdi+rax];"
+		"mov r11, [%0+rax];"
 		"lfence;"
 		"3: mov [rsp], 4f;"
-		"mov r11, [rsi];"
+		"mov r11, [%1];"
 		"add [rsp], r11;"
 		"ret;"
 		"4: nop;"
 
-		: "=d" (out)
-		: "s" (in)
+		: "=r" (out)
+		: "r" (in)
 		: "r11"
 	);
 		
