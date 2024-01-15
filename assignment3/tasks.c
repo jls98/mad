@@ -41,7 +41,7 @@ int main(){
 }
 
 void load(void *adrs){
-	__asm__ volatile("movd rax, [%0];"::"r" (adrs): "rax");
+	__asm__ volatile("mov rax, [%0];"::"r" (adrs): "rax");
 }
 
 void flush(void *adrs){
