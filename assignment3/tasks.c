@@ -16,10 +16,10 @@ int main(){
 	printf("%lu\n", timing);
 	*test = 10;
 	
-	uint64_t timing = probe(test);
+	timing = probe(test);
 	printf("%lu\n", timing);
 	flush(test);
-	uint64_t timing = probe(test);
+	timing = probe(test);
 	printf("%lu\n", timing);
 	
 }
@@ -39,7 +39,7 @@ uint64_t probe(void *adrs){
         " rdtsc             \n"
         " sub rax, r8 		\n"
         : "=&a" (time)
-        : "r" (p)
+        : "r" (adrs)
         : "rdx", "r8");
 		return time;
 }
