@@ -10,31 +10,44 @@ void load(void *adrs); // load adrs into cache
 void wait(uint64_t cycles); // just wait
 #define THRESHOLD 150 // timing around 14-16 when cached
 
-int main(){
-	
+
+void test(){
 	// preparation
 	uint64_t *a = (uint64_t *) malloc(sizeof(uint64_t *));
 	uint64_t *b = (uint64_t *) malloc(sizeof(uint64_t *));
 	*a=0;
 	*b=0;
-	flush(a);
-	flush(b);
-	
 	wait(1E9);
-	// not A
-	fNOT(b, a);
-	uint64_t time = probe(b);
-	printf("not A results in B=%lu\n", time);
+	uint64_t time, ctr_notA=0, ctr_A=0;
 	
+	for (int i=0;i<100000;i++){
+		flush(a);
+		flush(b);
+
+		// not A
+		fNOT(b, a);
+		time = probe(b);
+		if (time<THRESHOLD) ctr_notA++;
+	}
+	printf("not A results in B=%lu\n", ctr_notA);
 	
-	flush(a);
-	flush(b);
+	for (int i=0;i<100000;i++){
+		flush(a);
+		flush(b);
+		load(a);
+
+		// not A
+		fNOT(b, a);
+		time = probe(b);
+		if (time>THRESHOLD) ctr_notA++;
+	}
+	printf("not A results in B=%lu\n", ctr_A);
+
+}
+
+int main(){
 	
-	// A
-	load(a);
-	fNOT(b, a);
-	time = probe(b);
-	printf("A results in B=%lu\n", time);
+	test();
 	
 	
 	
