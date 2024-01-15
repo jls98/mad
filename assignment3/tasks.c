@@ -83,33 +83,35 @@ void fNOT(void *out, void *in){
 		"2: 	nop;"*/
 	
 	__asm__ volatile(
-    "call label_1;"
-    "xor %%rax, %%rax;"
-    // BEGIN delay ops
-    "mov %%rax, QWORD PTR [rsp+%%rax];"
-    "and %%rax, 0x0;"
-    "mov %%rax, QWORD PTR [rsp+%%rax];"
-    "and %%rax, 0x0;"
-    "mov %%rax, QWORD PTR [rsp+%%rax];"
-    "and %%rax, 0x0;"
-    "mov %%rax, QWORD PTR [rsp+%%rax];"
-    "and %%rax, 0x0;"
-    "mov %%rax, QWORD PTR [rsp+%%rax];"
-    "and %%rax, 0x0;"
-    // END delay ops
-    "mov %%r11, QWORD PTR [%0+%%rax];" // spec instr
-    "lfence;"
-    "label_1: lea %%rax, [label_2];" 
-    "mov DWORD PTR [rsp], %%rax;"
-    "mov %%r11, QWORD PTR [%1];"
-    "add QWORD PTR [rsp], %%r11;"
-    "ret;"
-    "label_2: nop;"
-    : "=r" (out)
-    : "r" (in)
-    : "%rax", "%r11", "memory"
-);
-
+		
+		"mov rsi, %1;"
+		"mov rdi, %0;"
+		"call label_1;"
+		"xor rax, rax;"
+		// BEGIN delay ops
+		"mov rax, QWORD PTR [rsp+rax];"
+		"and rax, 0x0;"
+		"mov rax, QWORD PTR [rsp+rax];"
+		"and rax, 0x0;"
+		"mov rax, QWORD PTR [rsp+rax];"
+		"and rax, 0x0;"
+		"mov rax, QWORD PTR [rsp+rax];"
+		"and rax, 0x0;"
+		"mov rax, QWORD PTR [rsp+rax];"
+		"and rax, 0x0;"
+		// END delay ops
+		"mov r11, QWORD PTR [rdi+rax];" // spec instr
+		"lfence;"
+		"label_1: lea rax, [label_2];" 
+		"mov DWORD PTR [rsp], rax;"
+		"mov r11, QWORD PTR [rsi];"
+		"add QWORD PTR [rsp], r11;"
+		"ret;"
+		"label_2: nop;"
+		: "=r" (out)
+		: "r" (in)
+		: "rax", "rdi", "rsi", "r11", "memory"
+	);
 		
 	
 	
