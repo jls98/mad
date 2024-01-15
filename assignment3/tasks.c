@@ -21,6 +21,8 @@ void test(){
 	uint64_t time, ctr_notA=0, ctr_A=0;
 	
 	for (int i=0;i<100000;i++){
+
+		wait(1E9);
 		flush(a);
 		flush(b);
 
@@ -29,14 +31,16 @@ void test(){
 		time = probe(b);
 		if (time<THRESHOLD) ctr_notA++;
 
+		wait(1E9);
 		flush(a);
 		flush(b);
 		load(a);
 
-		// not A
+		// A
 		fNOT(b, a);
 		time = probe(b);
 		if (time>THRESHOLD) ctr_A++;
+	
 	}
 	printf("A results in B=%lu, time %lu\n", ctr_A, time);
 	printf("not A results in B=%lu, time %lu\n", ctr_notA, time);
