@@ -22,7 +22,6 @@ void test(){
 	
 	for (int i=0;i<100000;i++){
 
-		wait(1E9);
 		flush(a);
 		flush(b);
 
@@ -31,7 +30,6 @@ void test(){
 		time = probe(b);
 		if (time<THRESHOLD) ctr_notA++;
 
-		wait(1E9);
 		flush(a);
 		flush(b);
 		load(a);
