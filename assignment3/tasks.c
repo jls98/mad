@@ -49,35 +49,7 @@ void test(){
 
 int main(){
 	
-// preparation
-	uint64_t *a = (uint64_t *) malloc(sizeof(uint64_t *));
-	uint64_t *b = (uint64_t *) malloc(sizeof(uint64_t *));
-	*a=0;
-	*b=0;
-	wait(1E9);
-	uint64_t time, ctr_notA=0, ctr_A=0;
-	
-	for (int i=0;i<100000;i++){
-		flush(a);
-		flush(b);
-
-		// not A
-		fNOT(b, a);
-		time = probe(b);
-		if (time<THRESHOLD) ctr_notA++;
-
-		flush(a);
-		flush(b);
-		load(a);
-
-		// not A
-		fNOT(b, a);
-		time = probe(b);
-		if (time>THRESHOLD) ctr_A++;
-	}
-	printf("A results in B=%lu, time %lu\n", ctr_A, time);
-	printf("not A results in B=%lu, time %lu\n", ctr_notA, time);
-	
+test();	
 }
 
 void wait(uint64_t cycles) {
