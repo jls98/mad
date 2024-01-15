@@ -68,7 +68,7 @@ uint64_t probe(void *adrs){
 
 void fNOT(void *out, void *in){
 	__asm__ volatile(
-		"call loc1%=;"
+		"call 3f;"
 		"xor rax, rax;"
 		"rep; nop; nop; nop; nop; nop;  # Delay ops"
 		"mov rax, [rsp+rax];"
@@ -76,12 +76,12 @@ void fNOT(void *out, void *in){
 		".endr;"
 		"mov r11, [%0+rax];"
 		"lfence;"
-		"loc1%=:;"
-		"mov [rsp], loc2%=;"
+		"3:;"
+		"mov [rsp], 4f;"
 		"mov r11, [%1];"
 		"add [rsp], r11;"
 		"ret;"
-		"loc2%=:" 
+		"4:" 
 		"nop;"
 
 		: "=r" (out)
