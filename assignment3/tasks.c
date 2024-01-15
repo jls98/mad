@@ -20,7 +20,7 @@ int main(){
 	flush(b);
 
 	// not A
-	fNOT(a);
+	fNOT(b, a);
 	uint64_t time = probe(b);
 	printf("not A results in B=%lu\n", time);
 	
@@ -30,7 +30,7 @@ int main(){
 	
 	// A
 	load(a);
-	fNOT(a);
+	fNOT(b, a);
 	uint64_t time = probe(b);
 	printf("A results in B=%lu\n", time);
 	
