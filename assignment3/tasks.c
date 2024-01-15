@@ -8,7 +8,7 @@ uint64_t probe(void *adrs); // access adrs and return access
 void flush(void *adrs); // clflush adrs 
 void load(void *adrs); // load adrs into cache
 void wait(uint64_t cycles); // just wait
-#define THRESHOLD 200 // timing around 14-16 when cached
+#define THRESHOLD 150 // timing around 14-16 when cached
 
 int main(){
 	
@@ -84,6 +84,8 @@ void fNOT(void *out, void *in){
 		"call label_1;"
 		"xor rax, rax;"
 		// BEGIN delay ops
+		"mov rax, QWORD PTR [rsp+rax];"
+		"and rax, 0x0;"
 		"mov rax, QWORD PTR [rsp+rax];"
 		"and rax, 0x0;"
 		"mov rax, QWORD PTR [rsp+rax];"
