@@ -108,11 +108,7 @@ void test_fNAND(){
 	flush(c);
 	load(a);
 	load(b);
-	
-	// test 
-	printf("testing a %lu\n",probe(a));
-	printf("testing b %lu\n",probe(b));
-	
+		
 	fNAND(c, a, b);
 	time = probe(c);
 	CU_ASSERT_TRUE(time>THRESHOLD);
