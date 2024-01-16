@@ -64,7 +64,7 @@ static void fNOT(void *out, void *in){
 		"and rax, 0x0;"
 		"mov rax, QWORD PTR [rsp+rax];"
 		"and rax, 0x0;"
-		"mov rax, QWORD PTR [rsp+rax];"
+		/*"mov rax, QWORD PTR [rsp+rax];"
 		"and rax, 0x0;"
 		/*"mov rax, QWORD PTR [rsp+rax];"
 		"and rax, 0x0;"
