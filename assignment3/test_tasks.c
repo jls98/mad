@@ -56,6 +56,8 @@ void test_fNOT(){
 	if(ctr_notA<=90) printf("ctr_notA %lu\n", ctr_notA);
 	CU_ASSERT_TRUE(ctr_A>90);
 	if(ctr_A<=90) printf("ctr_A %lu\n", ctr_A);
+	free(a);
+	free(b);
 }
 
 void test_fNAND(){
@@ -112,7 +114,10 @@ void test_fNAND(){
 	CU_ASSERT_TRUE(time>THRESHOLD);
 	//if(time>=THRESHOLD) 
 	printf("fNAND case A, B: time is %lu\n", time);
-	
+
+	free(a);
+	free(b);
+	free(c);
 }
 
 void test_fNOR(){
@@ -173,6 +178,9 @@ void test_fNOR(){
 	CU_ASSERT_TRUE(time>THRESHOLD);
 	//if(time>=THRESHOLD) 
 	printf("fNOR case A, B: time is %lu\n", time);
+
+	free(a);
+	free(b);
 }
 
 
@@ -181,7 +189,7 @@ int main() {
 
     CU_pSuite suite = CU_add_suite("Test Suite assignment 3", NULL, NULL);
     CU_add_test(suite, "Test fNOT", test_fNOT);
-    //CU_add_test(suite, "Test fNAND", test_fNAND);
+    CU_add_test(suite, "Test fNAND", test_fNAND);
     //CU_add_test(suite, "Test fNOT", test_fNOR);
 
     CU_basic_run_tests();

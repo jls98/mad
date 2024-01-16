@@ -126,8 +126,6 @@ static void fNOR(void *out, void *in1, void *in2){
 		: "r" (in1), "r" (in2)
 		: "rax", "rbx", "r11", "memory"
 	);
-	
-	return; // TODO
 }
 
 
