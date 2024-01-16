@@ -10,7 +10,7 @@ static uint64_t probe(void *adrs); // access adrs and return access
 static void flush(void *adrs); // clflush adrs 
 static void load(void *adrs); // load adrs into cache
 static void wait(uint64_t cycles); // just wait
-
+static int fibonacci(int n);
 
 #ifndef TESTCASE
 
@@ -18,6 +18,16 @@ int main(){
 		
 }
 #endif
+
+
+static int fibonacci(int n) {
+    if (n <= 1) {
+        return n;
+    } else {
+        return fibonacci(n - 1) + fibonacci(n - 2);
+    }
+}
+
 static void wait(uint64_t cycles) {
 	unsigned int ignore;
 	uint64_t start = __rdtscp(&ignore);
