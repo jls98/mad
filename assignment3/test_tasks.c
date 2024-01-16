@@ -35,6 +35,7 @@ void test_fNOT(){
 	for (int i=0;i<10000;i++){
 		flush(a);
 		flush(b);
+		printf("time a %lu\n", probe(a));
 		// not A
 		fNOT(b, a);
 		time = probe(b);
