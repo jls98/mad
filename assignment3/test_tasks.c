@@ -272,20 +272,26 @@ void test_fNAND(){
 	free(b2);
 	free(c2);
 	
-	/*// A nand B = notC 
-	flush((void *) c);
-	load((void *) a);
-	load((void *) b);
-		
-	fNAND((void *) c, (void *) a, (void *) b);
-	time = probe((void *) c);
+	// A nand B = notC 
+	uint64_t *a3 = malloc(sizeof(uint64_t *));
+	uint64_t *b3 = malloc(sizeof(uint64_t *));
+	uint64_t *c3 = malloc(sizeof(uint64_t *));
+	*a3=0;
+	*b3=0;
+
+	flush(c3);
+	load(a3);
+	load(b3);
+
+	fNAND(c3, a3, b3);
+	time = probe(c3);
 	CU_ASSERT_TRUE(time>THRESHOLD);
 	//if(time>=THRESHOLD) 
-	printf("fNAND case A, B: time is %lu\n", time);
-
-	free(a);
-	free(b);
-	free(c);*/
+	printf("fNAND case A, B: c %lu\n", time);
+	
+	free(a3);
+	free(b3);
+	free(c3);
 }
 
 void test_fNOR(){

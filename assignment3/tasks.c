@@ -31,7 +31,7 @@ static void wait(uint64_t cycles) {
 }
 
 static void load(void *adrs){
-	__asm__ volatile("mov rax, [%0];"::"r" (adrs): "rax", "memory");
+	__asm__ volatile("mov rax, [%0];lfence"::"r" (adrs): "rax", "memory");
 }
 
 static void flush(void *adrs){
