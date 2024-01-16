@@ -60,12 +60,13 @@ static void fNOT(void *out, void *in){
 	__asm__ volatile(
 		"lea rbx, [fNOT_2];"
 		"call fNOT_1;"
-		// BEGIN Spec part 		
+		// BEGIN Spec part 	
+		"xor rbx, rbx;"
 		"xor rax, rax;"
 		// BEGIN delay ops
-		".rept 100;"
+		".rept 5;"
 		"mov rax, [rsp+rax];"
-		"and rax, 0x0;"
+		"and rax, rbx;"
 		".endr;"
 		// END delay ops
 		"mov r11, [%0+rax];" // spec instr
