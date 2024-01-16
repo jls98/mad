@@ -93,12 +93,10 @@ static void fNOR(void *out, void *in1, void *in2){
 		// BEGIN spec part 
 		"xor rax, rax;"
 		// BEGIN delay ops 
+		".rept 5;"
 		"mov rax, [rsp+rax];"
-		"and rax, 0x0;"		
-		"mov rax, [rsp+rax];"
-		"and rax, 0x0;"		
-		"mov rax, [rsp+rax];"
-		"and rax, 0x0;"
+		"and rax, 0x0;"	
+		".endr;"		
 		// END delay ops 
 		"mov r11, [%0+rax];" // addr output + 0
 		// END spec part 
@@ -130,14 +128,10 @@ static void fNAND(void *out, void *in1, void *in2){
         "call fNAND_1;"
 		// BEGIN spec code
         "xor rax, rax;"
+		".rept 5;"
         "mov rax, [rsp+rax];"
         "and rax, 0x0;"
-        "mov rax, [rsp+rax];"
-        "and rax, 0x0;"
-		"mov rax, [rsp+rax];"
-        "and rax, 0x0;"
-        "mov rax, [rsp+rax];"
-        "and rax, 0x0;"
+		".endr;"
 		"mov r11, [%0+rax];" // out
 		// END spec code
         "lfence;"
