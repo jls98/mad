@@ -23,7 +23,7 @@ void test_fNOT(){
 	printf("fNOT case not A: time is %lu\n", time);
 
 	// ------------ A ------------
-	flush(a);
+
 	flush(b);
 	printf("probe a %lu\n", probe(a));
 	printf("probe a %lu\n", probe(a));
