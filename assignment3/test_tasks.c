@@ -31,7 +31,26 @@ void test_fNOT(){
 	CU_ASSERT_TRUE(time>THRESHOLD);
 	if(time<=THRESHOLD) printf("time<THRESHOLD: time is %lu\n", time);
 
-	
+	// not A multiple times
+	for (int i=0;i<10000;i++){
+		flush(a);
+		flush(b);
+		// not A
+		fNOT(b, a);
+		time = probe(b);
+		if(time<THRESHOLD) ctr_notA++;
+		
+		flush(a);
+		flush(b);
+		load(a);
+
+		// A
+		fNOT(b, a);
+		time = probe(b);
+		if(time>THRESHOLD) ctr_A++;
+	}	
+	CU_ASSERT_TRUE(ctr_notA>9000);
+	CU_ASSERT_TRUE(ctr_A>9000);
 }
 
 
