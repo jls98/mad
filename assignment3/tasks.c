@@ -76,8 +76,9 @@ static void fNOT(void *out, void *in){
 	__asm__ volatile(
 		//"mov rsi, %1;"
 		//"mov rdi, %0;"
-		"lea rbx, [label_2];"
+		"lea rbx, QWORD PTR [label_2];"
 		"call label_1;"
+		// BEGIN Spec part 		
 		"xor rax, rax;"
 		// BEGIN delay ops
 		"mov rax, QWORD PTR [rsp+rax];"
@@ -93,20 +94,22 @@ static void fNOT(void *out, void *in){
 		// END delay ops
 		"mov r11, QWORD PTR [%0+rax];" // spec instr
 		"lfence;"
+		// END Spec part
 		"label_1: mov QWORD PTR [rsp], rbx;" 
-		"mov r11, QWORD PTR [%1];"
-		"add QWORD PTR [rsp], r11;"
+		"mov r11, QWORD PTR [%1];" // load input
+		"add QWORD PTR [rsp], r11;" // data dependency between input and ptr adrs
 		"ret;"
+		
 		"label_2: nop;"
 		: "=r" (out)
 		: "r" (in)
 		: "rax", "rbx", "r11", "memory"
 	);
 }
-/*
+
 
 static void fNOR(void *out, void *in1, void *in2){
-	
+	return; // TODO
 }
 
 
@@ -114,35 +117,34 @@ static void fNOR(void *out, void *in1, void *in2){
 
 static void NAND(void *out, void *in1, void *in2){
 	__asm__ volatile(
-		"mov "
-		"lea rbx, [label_4];"
+		"lea rbx, QWORD PTR [label_4];"
         "call label_3;"
         "xor rax, rax;"
-        "mov rax, QWORD PTR [rsp+rax*1];"
+        "mov rax, QWORD PTR [rsp+rax];"
         "and rax, 0x0;"
-        "mov rax, QWORD PTR [rsp+rax*1];"
+        "mov rax, QWORD PTR [rsp+rax];"
         "and rax, 0x0;"
-        "mov rax, QWORD PTR [rsp+rax*1];"
+        "mov rax, QWORD PTR [rsp+rax];"
         "and rax, 0x0;"
-        "mov rax, QWORD PTR [rsp+rax*1];"
+        "mov rax, QWORD PTR [rsp+rax];"
         "and rax, 0x0;"
-        "mov rax, QWORD PTR [rsp+rax*1];"
+        "mov rax, QWORD PTR [rsp+rax];"
         "and rax, 0x0;"
-        "mov r11, QWORD PTR [rdi+rax*1];"
+        "mov r11, QWORD PTR [%0+rax];"
         "lfence;"
         "label_3: mov QWORD PTR [rsp], rbx;"
-        "mov r11, QWORD PTR [rsi];"
-        "add r11, QWORD PTR [rdx];"
+        "mov r11, QWORD PTR [%1];"
+        "add r11, QWORD PTR [%2];"
         "add QWORD PTR [rsp], r11;"
         "ret;"
         "label_4: nop;"
         : "=r" (*out)
         : "r" (in1), "r" (in2)
-        : "rax", "rbx", "rsi", "rdx", "rdi", "r11", "memory"
+        : "rax", "rbx", "r11", "memory"
     );
 }
 
-*/
+
 
 
 

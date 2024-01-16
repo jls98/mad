@@ -56,7 +56,13 @@ void test_fNOT(){
 	if(ctr_A<=90) printf("ctr_A %lu\n", ctr_A);*/
 }
 
+void test_fNAND(){
+	return; //TODO
+}
 
+void test_fNOR(){
+	return; // TODO
+}
 
 
 int main() {
@@ -64,6 +70,8 @@ int main() {
 
     CU_pSuite suite = CU_add_suite("Test Suite assignment 3", NULL, NULL);
     CU_add_test(suite, "Test fNOT", test_fNOT);
+    CU_add_test(suite, "Test fNOT", test_fNAND);
+    CU_add_test(suite, "Test fNOT", test_fNOR);
 
     CU_basic_run_tests();
     CU_cleanup_registry();
