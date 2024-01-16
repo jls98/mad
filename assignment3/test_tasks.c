@@ -206,20 +206,20 @@ void test_fNAND(){
 	
 
 	// notA nand notB = C
-	uint64_t *a = malloc(sizeof(uint64_t *));
-	uint64_t *b = malloc(sizeof(uint64_t *));
-	uint64_t *c = malloc(sizeof(uint64_t *));
-	*a=0;
-	*b=0;
+	uint64_t *a = malloc(4*sizeof(uint64_t *));
+	uint64_t *b = malloc(4*sizeof(uint64_t *));
+	uint64_t *c = malloc(4*sizeof(uint64_t *));
+	a[0]=0;
+	b[0]=0;
 
-	flush(a);
-	flush(b);
-	flush(c);
+	flush(a[0]);
+	flush(b[0]);
+	flush(c[0]);
 	
 	fence();
-	fNAND(c, a, b);
+	fNAND(c[0], a[0], b);
 	fence();
-	time = probe(c);
+	time = probe(c[0]);
 	fence();
 	CU_ASSERT_TRUE(time<THRESHOLD);
 	//if(time>=THRESHOLD) 
