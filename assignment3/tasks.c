@@ -68,8 +68,8 @@ static void fNOT(void *out, void *in){
 		"and rax, 0x0;"
 		"mov rax, QWORD PTR [rsp+rax];"
 		"and rax, 0x0;"
-		"mov rax, QWORD PTR [rsp+rax];"
-		"and rax, 0x0;"
+		/*"mov rax, QWORD PTR [rsp+rax];"
+		"and rax, 0x0;"*/
 		// END delay ops
 		"mov r11, QWORD PTR [rdi+rax];" // spec instr
 		"lfence;"
