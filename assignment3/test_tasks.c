@@ -77,40 +77,40 @@ void test_fNAND(){
 	flush((void *) c);
 	
 	fNAND((void *) c, (void *) a, (void *) b);
-	time = probe(c);
+	time = probe((void *) c);
 	CU_ASSERT_TRUE(time<THRESHOLD);
 	//if(time>=THRESHOLD) 
 	printf("\n\nfNAND case notA, notB: time is %lu\n", time);
 	
 	// notA nand B = C 
-	flush(a);
-	flush(c);
-	load(b);
+	flush((void *) a);
+	flush((void *) c);
+	load((void *) b);
 	
-	fNAND(c, a, b);
-	time = probe(c);
+	fNAND((void *) c, (void *) a, (void *) b);
+	time = probe((void *) c);
 	CU_ASSERT_TRUE(time<THRESHOLD);
 	//if(time>=THRESHOLD) 
 	printf("fNAND case notA, B: time is %lu\n", time);
 	
 	// A nand notB = C 
-	flush(b);
-	flush(c);
-	load(a);
+	flush((void *) b);
+	flush((void *) c);
+	load((void *) a);
 	
-	fNAND(c, a, b);
-	time = probe(c);
+	fNAND((void *) c, (void *) a, (void *) b);
+	time = probe((void *) c);
 	CU_ASSERT_TRUE(time<THRESHOLD);
 	//if(time>=THRESHOLD) 
 	printf("fNAND case A, notB: time is %lu\n", time);
 	
 	// A nand B = notC 
-	flush(c);
-	load(a);
-	load(b);
+	flush((void *) c);
+	load((void *) a);
+	load((void *) b);
 		
-	fNAND(c, a, b);
-	time = probe(c);
+	fNAND((void *) c, (void *) a, (void *) b);
+	time = probe((void *) c);
 	CU_ASSERT_TRUE(time>THRESHOLD);
 	//if(time>=THRESHOLD) 
 	printf("fNAND case A, B: time is %lu\n", time);
