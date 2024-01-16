@@ -81,12 +81,12 @@ static void fNOT(void *out, void *in){
 		"xor rax, rax;"
 		// BEGIN delay ops
 		"mov rax, QWORD PTR [rsp+rax];"
-		"and rax, 0x0;"
+		/*"and rax, 0x0;"
 		"mov rax, QWORD PTR [rsp+rax];"
 		"and rax, 0x0;"
 		"mov rax, QWORD PTR [rsp+rax];"
 		"and rax, 0x0;"
-		/*"mov rax, QWORD PTR [rsp+rax];"
+		"mov rax, QWORD PTR [rsp+rax];"
 		"and rax, 0x0;"
 		"mov rax, QWORD PTR [rsp+rax];"
 		"and rax, 0x0;"*/
