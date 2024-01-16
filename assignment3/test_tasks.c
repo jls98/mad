@@ -267,7 +267,7 @@ void test_fNAND(){
 	load(a2);
 	
 	fence();
-	fNAND(c2, a2, b2);
+	fNAND(c2, b2, a2);
 	fence();
 	time = probe(c2);
 	fence();
