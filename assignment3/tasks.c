@@ -45,11 +45,12 @@ void test(){
 
 }
 
+#ifndef TESTCASE
 int main(){
 	
 test();	
 }
-
+#endif
 void wait(uint64_t cycles) {
 	unsigned int ignore;
 	uint64_t start = __rdtscp(&ignore);
