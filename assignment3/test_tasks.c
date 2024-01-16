@@ -216,8 +216,11 @@ void test_fNAND(){
 	flush(b);
 	flush(c);
 	
+	fence();
 	fNAND(c, a, b);
+	fence();
 	time = probe(c);
+	fence();
 	CU_ASSERT_TRUE(time<THRESHOLD);
 	//if(time>=THRESHOLD) 
 	printf("\n\nfNAND case notA, notB: c %lu\n", time);
@@ -238,8 +241,11 @@ void test_fNAND(){
 	flush(c1);
 	load(b1);
 	
+	fence();
 	fNAND(c1, a1, b1);
+	fence();
 	time = probe(c1);
+	fence();
 	CU_ASSERT_TRUE(time>THRESHOLD);
 	//if(time>=THRESHOLD) 
 	printf("fNAND case notA, B: c %lu\n", time);
@@ -260,8 +266,12 @@ void test_fNAND(){
 	flush(c2);
 	load(a2);
 	
+	fence();
 	fNAND(c2, a2, b2);
+	fence();
 	time = probe(c2);
+	fence();
+
 	CU_ASSERT_TRUE(time>THRESHOLD);
 	//if(time>=THRESHOLD) 
 	printf("fNAND case A, notB: c %lu\n", time);
@@ -281,8 +291,11 @@ void test_fNAND(){
 	load(a3);
 	load(b3);
 
+	fence();
 	fNAND(c3, a3, b3);
+	fence();
 	time = probe(c3);
+	fence();
 	CU_ASSERT_TRUE(time>THRESHOLD);
 	//if(time>=THRESHOLD) 
 	printf("fNAND case A, B: c %lu\n", time);

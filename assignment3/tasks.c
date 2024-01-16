@@ -39,7 +39,7 @@ static void flush(void *adrs){
 }
 
 static void fence(){
-	__asm__ volatile("lfence");
+	__asm__ volatile("mfence");
 }
 
 
