@@ -58,13 +58,23 @@ static uint64_t probe(void *adrs){
 static void fNOT(void *out, void *in){
 	
 	__asm__ volatile(
-		//"mov rsi, %1;"
-		//"mov rdi, %0;"
 		"lea rbx, [fNOT_2];"
 		"call fNOT_1;"
 		// BEGIN Spec part 		
 		"xor rax, rax;"
 		// BEGIN delay ops
+		"mov rax, [rsp+rax];"
+		"and rax, 0x0;"
+		"mov rax, [rsp+rax];"
+		"and rax, 0x0;"
+		"mov rax, [rsp+rax];"
+		"and rax, 0x0;"
+		"mov rax, [rsp+rax];"
+		"and rax, 0x0;"
+		"mov rax, [rsp+rax];"
+		"and rax, 0x0;"
+		"mov rax, [rsp+rax];"
+		"and rax, 0x0;"
 		"mov rax, [rsp+rax];"
 		"and rax, 0x0;"
 		"mov rax, [rsp+rax];"
