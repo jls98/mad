@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <x86intrin.h>
 
-#define THRESHOLD 191 // timing around 14-16 when cached
+#define THRESHOLD 200 // timing around 14-16 when cached
 
 static void fNOT(void *out, void *in); // NOT gate
 static void fNOR(void *out, void *in1, void *in2);
@@ -85,8 +85,8 @@ static void fNOT(void *out, void *in){
 		"ret;"
 		
 		"fNOT_2: nop;"
-		: "=r" (out)
-		: "r" (in)
+		: 
+		: "r" (out), "r" (in)
 		: "rax", "rbx", "r11", "memory"
 	);
 }
