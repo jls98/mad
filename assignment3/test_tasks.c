@@ -25,7 +25,7 @@ void test_fNOT(){
 	// ------------ A ------------
 	flush(a);
 	flush(b);
-	load(a);
+	printf("load a %lu\n", load(a));
 
 	fNOT(b, a);
 	time = probe(b);
