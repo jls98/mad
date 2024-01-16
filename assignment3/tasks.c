@@ -99,7 +99,7 @@ static void fNOT(void *out, void *in){
 		"label_2: nop;"
 		: "=r" (out)
 		: "r" (in)
-		: "rax", "rdx", "rsx", "r11", "memory"
+		: "rax", "rdi", "rsi", "r11", "memory"
 	);
 		
 	
