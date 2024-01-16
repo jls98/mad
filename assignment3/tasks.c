@@ -5,11 +5,11 @@
 
 #define THRESHOLD 150 // timing around 14-16 when cached
 
-void fNOT(void *out, void *in); // NOT gate
-uint64_t probe(void *adrs); // access adrs and return access
-void flush(void *adrs); // clflush adrs 
-void load(void *adrs); // load adrs into cache
-void wait(uint64_t cycles); // just wait
+static void fNOT(void *out, void *in); // NOT gate
+static uint64_t probe(void *adrs); // access adrs and return access
+static void flush(void *adrs); // clflush adrs 
+static void load(void *adrs); // load adrs into cache
+static void wait(uint64_t cycles); // just wait
 
 
 #ifndef TESTCASE
@@ -18,21 +18,21 @@ int main(){
 		
 }
 #endif
-void wait(uint64_t cycles) {
+static void wait(uint64_t cycles) {
 	unsigned int ignore;
 	uint64_t start = __rdtscp(&ignore);
 	while (__rdtscp(&ignore) - start < cycles);
 }
 
-void load(void *adrs){
+static void load(void *adrs){
 	__asm__ volatile("mov rax, [%0];"::"r" (adrs): "rax");
 }
 
-void flush(void *adrs){
+static void flush(void *adrs){
 	__asm__ volatile("clflush [%0];" ::"r" (adrs));
 }
 
-uint64_t probe(void *adrs){
+static uint64_t probe(void *adrs){
 	volatile uint64_t time;  
 	__asm__ volatile (
         " mfence            \n"
@@ -51,7 +51,7 @@ uint64_t probe(void *adrs){
 }
 
 
-void fNOT(void *out, void *in){
+static void fNOT(void *out, void *in){
 	
 	__asm__ volatile(
 		
