@@ -111,12 +111,12 @@ static void fNOR(void *out, void *in1, void *in2){
 		// first input 
 		".label_1: mov QWORD PTR [rsp], rbx;"
 		"mov r11, [%1];"
-		"add [%rsp], r11;"
+		"add [rsp], r11;"
 		"ret;"
 		//second input 
 		".label_2: mov QWORD PTR [rsp], rbx;"
 		"mov r11, [%2];"
-		"add [%rsp], r11;"
+		"add [rsp], r11;"
 		"ret;"
 		// end 
 		".label_3: nop;"
