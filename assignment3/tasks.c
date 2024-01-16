@@ -60,7 +60,7 @@ static void fNOT(void *out, void *in){
 	__asm__ volatile(
 		//"mov rsi, %1;"
 		//"mov rdi, %0;"
-		"lea rbx, QWORD PTR [fNOT_2];"
+		//"lea rbx, QWORD PTR [fNOT_2];"
 		"call fNOT_1;"
 		// BEGIN Spec part 		
 		"xor rax, rax;"
@@ -89,7 +89,7 @@ static void fNOT(void *out, void *in){
 		"mov r11, QWORD PTR [%0+rax];" // spec instr
 		"lfence;"
 		// END Spec part
-		"fNOT_1: mov QWORD PTR [rsp], rbx;" 
+		"fNOT_1: mov QWORD PTR [rsp], $fNOT_2;" 
 		"mov r11, QWORD PTR [%1];" // load input
 		"add QWORD PTR [rsp], r11;" // data dependency between input and ptr adrs
 		"ret;"
@@ -105,7 +105,7 @@ static void fNOT(void *out, void *in){
 
 static void fNOR(void *out, void *in1, void *in2){
 	__asm__ volatile(
-		"lea rbx, QWORD PTR [fNOR_3];"
+		//"lea rbx, QWORD PTR [fNOR_3];"
 		"call fNOR_1;"
 		"call fNOR_2;"
 		// BEGIN spec part 
@@ -121,12 +121,12 @@ static void fNOR(void *out, void *in1, void *in2){
 		"mov r11, QWORD PTR [%0+rax];" // addr output + 0
 		// END spec part 
 		// first input 
-		"fNOR_1: mov QWORD PTR [rsp], rbx;"
+		"fNOR_1: mov QWORD PTR [rsp], $fNOR_3;"
 		"mov r11, [%1];"
 		"add [rsp], r11;"
 		"ret;"
 		//second input 
-		"fNOR_2: mov QWORD PTR [rsp], rbx;"
+		"fNOR_2: mov QWORD PTR [rsp], $fNOR_3;"
 		"mov r11, [%2];"
 		"add [rsp], r11;"
 		"ret;"
@@ -146,14 +146,14 @@ static void fNOR(void *out, void *in1, void *in2){
 
 static void fNAND(void *out, void *in1, void *in2){
 	__asm__ volatile(
-		"lea rbx, QWORD PTR [fNAND_2];"
+		//"lea rbx, QWORD PTR [fNAND_2];"
         "call fNAND_1;"
         "xor rax, rax;"
         "mov rax, QWORD PTR [rsp+rax];"
         "and rax, 0x0;"
         "mov r11, QWORD PTR [%0+rax];"
         "lfence;"
-        "fNAND_1: mov QWORD PTR [rsp], rbx;"
+        "fNAND_1: mov QWORD PTR [rsp], $fNAND_2;"
         "mov r11, QWORD PTR [%1];"
         "add r11, QWORD PTR [%2];"
         "add QWORD PTR [rsp], r11;"
