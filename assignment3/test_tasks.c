@@ -7,6 +7,9 @@ void test_fNOT(){
 	// preparation
 	uint64_t *a = malloc(sizeof(uint64_t *));
 	uint64_t *b = malloc(sizeof(uint64_t *));
+	uint64_t *c = malloc(sizeof(uint64_t *));
+	uint64_t *d = malloc(sizeof(uint64_t *));
+	uint64_t *e = malloc(sizeof(uint64_t *));
 	*a=0;
 	*b=0;
 	wait(1E9);
@@ -34,7 +37,127 @@ void test_fNOT(){
 	CU_ASSERT_TRUE(time>THRESHOLD);
 	printf("fNOT case A: time is %lu\n", time);
 	
-	// not A multiple times // TOdo naive version does not work since training effect
+	// ---- not2
+	flush(a);
+	flush(b);
+	flush(c);
+	
+	fNOT2(c, b, a);
+	time = probe(b);	
+	CU_ASSERT_TRUE(time<THRESHOLD);
+	printf("fNOT2 case notA: b is %lu\n", time);	
+	
+	time = probe(c);	
+	CU_ASSERT_TRUE(time<THRESHOLD);
+	printf("fNOT2 case notA: c is %lu\n", time);
+
+	// ------------ A ------------
+
+	flush(b);
+	flush(c);
+	load(a);
+
+	fNOT2(c, b, a);
+	time = probe(b);	
+	CU_ASSERT_TRUE(time<THRESHOLD);
+	printf("fNOT2 case A: b is %lu\n", time);	
+	
+	time = probe(c);	
+	CU_ASSERT_TRUE(time<THRESHOLD);
+	printf("fNOT2 case A: c is %lu\n", time);
+	
+	
+	// ---- not3
+	flush(a);
+	flush(b);
+	flush(c);
+	flush(d);
+	
+	fNOT3(d, c, b, a);
+	time = probe(b);	
+	CU_ASSERT_TRUE(time<THRESHOLD);
+	printf("fNOT3 case notA: b is %lu\n", time);	
+	
+	time = probe(c);	
+	CU_ASSERT_TRUE(time<THRESHOLD);
+	printf("fNOT3 case notA: c is %lu\n", time);
+	
+	time = probe(d);	
+	CU_ASSERT_TRUE(time<THRESHOLD);
+	printf("fNOT3 case notA: d is %lu\n", time);
+
+	// ------------ A ------------
+
+	flush(b);
+	flush(c);
+	flush(d);
+	load(a);
+
+	fNOT3(d, c, b, a);
+	time = probe(b);	
+	CU_ASSERT_TRUE(time<THRESHOLD);
+	printf("fNOT3 case A: b is %lu\n", time);	
+	
+	time = probe(c);	
+	CU_ASSERT_TRUE(time<THRESHOLD);
+	printf("fNOT3 case A: c is %lu\n", time);
+	
+	time = probe(d);	
+	CU_ASSERT_TRUE(time<THRESHOLD);
+	printf("fNOT3 case A: d is %lu\n", time);
+	
+	
+	// ---- not4
+	flush(a);
+	flush(b);
+	flush(c);
+	flush(d);
+	flush(e);
+	
+	fNOT4(e, d, c, b, a);
+	time = probe(b);	
+	CU_ASSERT_TRUE(time<THRESHOLD);
+	printf("fNOT4 case notA: b is %lu\n", time);	
+	
+	time = probe(c);	
+	CU_ASSERT_TRUE(time<THRESHOLD);
+	printf("fNOT4 case notA: c is %lu\n", time);
+	
+	time = probe(d);	
+	CU_ASSERT_TRUE(time<THRESHOLD);
+	printf("fNOT4 case notA: d is %lu\n", time);
+	
+	time = probe(e);	
+	CU_ASSERT_TRUE(time<THRESHOLD);
+	printf("fNOT4 case notA: e is %lu\n", time);
+
+	// ------------ A ------------
+
+	flush(b);
+	flush(c);
+	flush(d);
+	flush(e);
+	load(a);
+
+	fNOT4(e, d, c, b, a);
+	time = probe(b);	
+	CU_ASSERT_TRUE(time<THRESHOLD);
+	printf("fNOT4 case A: b is %lu\n", time);	
+	
+	time = probe(c);	
+	CU_ASSERT_TRUE(time<THRESHOLD);
+	printf("fNOT4 case A: c is %lu\n", time);
+	
+	time = probe(d);	
+	CU_ASSERT_TRUE(time<THRESHOLD);
+	printf("fNOT4 case A: d is %lu\n", time);
+	
+	time = probe(e);	
+	CU_ASSERT_TRUE(time<THRESHOLD);
+	printf("fNOT4 case A: e is %lu\n", time);
+	
+	// -----
+	/*// not A multiple times // TOdo naive version does not work since training effect
 	for (int i=0;i<100;i++){
 		// not A
 		flush(a);
@@ -55,9 +178,12 @@ void test_fNOT(){
 	CU_ASSERT_TRUE(ctr_notA>90);
 	if(ctr_notA<=90) printf("ctr_notA %lu\n", ctr_notA);
 	CU_ASSERT_TRUE(ctr_A>90);
-	if(ctr_A<=90) printf("ctr_A %lu\n", ctr_A);
+	if(ctr_A<=90) printf("ctr_A %lu\n", ctr_A);*/
 	free(a);
 	free(b);
+	free(c);
+	free(d);
+	free(e);
 }
 
 void test_fNAND(){

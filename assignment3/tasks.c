@@ -6,6 +6,9 @@
 #define THRESHOLD 200 // timing around 14-16 when cached
 
 static void fNOT(void *out, void *in); // NOT gate
+static void fNOT2(void *out, void *in); // NOT gate
+static void fNOT3(void *out, void *in); // NOT gate
+static void fNOT4(void *out, void *in); // NOT gate
 static void fNOR(void *out, void *in1, void *in2);
 static void fNAND(void *out, void *in1, void *in2);
 
@@ -60,13 +63,12 @@ static void fNOT(void *out, void *in){
 	__asm__ volatile(
 		"lea rbx, [fNOT_2];"
 		"call fNOT_1;"
-		// BEGIN Spec part 	
-		"xor rbx, rbx;"
+		// BEGIN Spec part 		
 		"xor rax, rax;"
 		// BEGIN delay ops
 		".rept 5;"
 		"mov rax, [rsp+rax];"
-		"and rax, rbx;"
+		"and rax, 0x0;"
 		".endr;"
 		// END delay ops
 		"mov r11, [%0+rax];" // spec instr
@@ -83,6 +85,150 @@ static void fNOT(void *out, void *in){
 		: "rax", "rbx", "r11", "memory"
 	);
 }
+
+static void fNOT2(void *out1, void *out2, void *in){	
+	__asm__ volatile(
+		"lea rbx, [fNOT_2];"
+		"call fNOT_1;"
+		// BEGIN Spec part 		
+		"xor rax, rax;"
+		// BEGIN delay ops
+		".rept 5;"
+		"mov rax, [rsp+rax];"
+		"and rax, 0x0;"
+		".endr;"
+		// END delay ops
+		"mov r11, [%0+rax];" // spec instr
+		"mov r11, [%1+rax];" // spec instr
+		"lfence;"
+		// END Spec part
+		"fNOT_1: mov [rsp], rbx;" 
+		"mov r11, [%2];" // load input
+		"add [rsp], r11;" // data dependency between input and ptr adrs
+		"ret;"
+		
+		"fNOT_2: nop;"
+		: 
+		: "r" (out1), "r" (out2), "r" (in)
+		: "rax", "rbx", "r11", "memory"
+	);
+}
+
+static void fNOT3(void *out1, void *out2, void *out3, void *in){	
+	__asm__ volatile(
+		"lea rbx, [fNOT_2];"
+		"call fNOT_1;"
+		// BEGIN Spec part 		
+		"xor rax, rax;"
+		// BEGIN delay ops
+		".rept 5;"
+		"mov rax, [rsp+rax];"
+		"and rax, 0x0;"
+		".endr;"
+		// END delay ops
+		"mov r11, [%0+rax];" // spec instr
+		"mov r11, [%1+rax];" // spec instr
+		"mov r11, [%2+rax];" // spec instr
+		"lfence;"
+		// END Spec part
+		"fNOT_1: mov [rsp], rbx;" 
+		"mov r11, [%3];" // load input
+		"add [rsp], r11;" // data dependency between input and ptr adrs
+		"ret;"
+		
+		"fNOT_2: nop;"
+		: 
+		: "r" (out1), "r" (out2), "r" (out3), "r" (in)
+		: "rax", "rbx", "r11", "memory"
+	);
+}
+
+static void fNOT4(void *out1, void *out2, void *out3, void *out4, void *in){	
+	__asm__ volatile(
+		"lea rbx, [fNOT_2];"
+		"call fNOT_1;"
+		// BEGIN Spec part 		
+		"xor rax, rax;"
+		// BEGIN delay ops
+		".rept 5;"
+		"mov rax, [rsp+rax];"
+		"and rax, 0x0;"
+		".endr;"
+		// END delay ops
+		"mov r11, [%0+rax];" // spec instr
+		"mov r11, [%1+rax];" // spec instr
+		"mov r11, [%2+rax];" // spec instr
+		"mov r11, [%3+rax];" // spec instr
+		"lfence;"
+		// END Spec part
+		"fNOT_1: mov [rsp], rbx;" 
+		"mov r11, [%4];" // load input
+		"add [rsp], r11;" // data dependency between input and ptr adrs
+		"ret;"
+		
+		"fNOT_2: nop;"
+		: 
+		: "r" (out1), "r" (out2),"r" (out3), "r" (out4), "r" (in)
+		: "rax", "rbx", "r11", "memory"
+	);
+}
+
+/*
+static void fNOT2(void *out1, void *out2 void *in){	
+	__asm__ volatile(
+		"lea rbx, [fNOT_2];"
+		"call fNOT_1;"
+		// BEGIN Spec part 		
+		"xor rax, rax;"
+		// BEGIN delay ops
+		".rept 5;"
+		"mov rax, [rsp+rax];"
+		"and rax, 0x0;"
+		".endr;"
+		// END delay ops
+		"mov r11, [%0+rax];" // spec instr
+		"mov r11, [%1+rax];" // spec instr
+		"lfence;"
+		// END Spec part
+		"fNOT_1: mov [rsp], rbx;" 
+		"mov r11, [%1];" // load input
+		"add [rsp], r11;" // data dependency between input and ptr adrs
+		"ret;"
+		
+		"fNOT_2: nop;"
+		: 
+		: "r" (out1), "r" (out2), "r" (in)
+		: "rax", "rbx", "r11", "memory"
+	);
+}
+
+static void fNOT2(void *out1, void *out2 void *in){	
+	__asm__ volatile(
+		"lea rbx, [fNOT_2];"
+		"call fNOT_1;"
+		// BEGIN Spec part 		
+		"xor rax, rax;"
+		// BEGIN delay ops
+		".rept 5;"
+		"mov rax, [rsp+rax];"
+		"and rax, 0x0;"
+		".endr;"
+		// END delay ops
+		"mov r11, [%0+rax];" // spec instr
+		"mov r11, [%1+rax];" // spec instr
+		"lfence;"
+		// END Spec part
+		"fNOT_1: mov [rsp], rbx;" 
+		"mov r11, [%1];" // load input
+		"add [rsp], r11;" // data dependency between input and ptr adrs
+		"ret;"
+		
+		"fNOT_2: nop;"
+		: 
+		: "r" (out1), "r" (out2), "r" (in)
+		: "rax", "rbx", "r11", "memory"
+	);
+}*/
 
 // works like an and logical gate ._.
 
