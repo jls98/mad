@@ -63,18 +63,10 @@ static void fNOT(void *out, void *in){
 		// BEGIN Spec part 		
 		"xor rax, rax;"
 		// BEGIN delay ops
+		.rept 5
 		"mov rax, [rsp+rax];"
 		"and rax, 0x0;"
-		"mov rax, [rsp+rax];"
-		"and rax, 0x0;"
-		"mov rax, [rsp+rax];"
-		"and rax, 0x0;"
-		"mov rax, [rsp+rax];"
-		"and rax, 0x0;"
-		"mov rax, [rsp+rax];"
-		"and rax, 0x0;"
-		"mov rax, [rsp+rax];"
-		"and rax, 0x0;"
+		.endr
 		// END delay ops
 		"mov r11, [%0+rax];" // spec instr
 		"lfence;"
@@ -101,22 +93,22 @@ static void fNOR(void *out, void *in1, void *in2){
 		// BEGIN spec part 
 		"xor rax, rax;"
 		// BEGIN delay ops 
-		"mov rax, QWORD PTR [rsp+rax];"
+		"mov rax, [rsp+rax];"
 		"and rax, 0x0;"		
-		"mov rax, QWORD PTR [rsp+rax];"
+		"mov rax, [rsp+rax];"
 		"and rax, 0x0;"		
-		"mov rax, QWORD PTR [rsp+rax];"
+		"mov rax, [rsp+rax];"
 		"and rax, 0x0;"
 		// END delay ops 
-		"mov r11, QWORD PTR [%0+rax];" // addr output + 0
+		"mov r11, [%0+rax];" // addr output + 0
 		// END spec part 
 		// first input 
-		"fNOR_1: mov QWORD PTR [rsp], rbx;"
+		"fNOR_1: mov [rsp], rbx;"
 		"mov r11, [%1];"
 		"add [rsp], r11;"
 		"ret;"
 		//second input 
-		"fNOR_2: mov QWORD PTR [rsp], rbx;"
+		"fNOR_2: mov [rsp], rbx;"
 		"mov r11, [%2];"
 		"add [rsp], r11;"
 		"ret;"
@@ -149,9 +141,9 @@ static void fNAND(void *out, void *in1, void *in2){
 		"mov r11, [%0+rax];" // out
 		// END spec code
         "lfence;"
-        "fNAND_1: mov [rsp], rbx;"
-        "mov r11, [%1];"
-        "add r11, [%2];"
+        "fNAND_1: mov [rsp], rbx;" // move 
+        "mov r11, [%1];" // in1
+        "add r11, [%2];" // in2
         "add [rsp], r11;"
         "ret;"
         "fNAND_2: nop;"
