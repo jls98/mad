@@ -45,7 +45,7 @@ static void flush(void *adrs){
 static void clear_cache(){
 	uint64_t *dump = (uint64_t *) malloc(512*sizeof(uint64_t));
 	for(int i=0; i<512;i++){
-		dump[i] = fibonacci(15);
+		dump[i] = fibonacci(3);
 	}
 }
 
