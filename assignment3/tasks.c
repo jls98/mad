@@ -5,7 +5,6 @@
 
 #define THRESHOLD 150 // timing around 14-16 when cached
 
-#ifndef TESTCASE
 void fNOT(void *out, void *in); // NOT gate
 uint64_t probe(void *adrs); // access adrs and return access
 void flush(void *adrs); // clflush adrs 
@@ -13,11 +12,12 @@ void load(void *adrs); // load adrs into cache
 void wait(uint64_t cycles); // just wait
 
 
+#ifndef TESTCASE
 
 int main(){
 		
 }
-
+#endif
 void wait(uint64_t cycles) {
 	unsigned int ignore;
 	uint64_t start = __rdtscp(&ignore);
@@ -95,4 +95,3 @@ void fNOT(void *out, void *in){
 	
 	return; // TODO
 }
-#endif
