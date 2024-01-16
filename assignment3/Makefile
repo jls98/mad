@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -masm=intel -O0
+CFLAGS = -Wall -Wextra -masm=intel -O0 -no-pie
 
 
 all: tasks test_tasks
