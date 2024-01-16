@@ -60,8 +60,8 @@ static void fNOT(void *out, void *in){
 	__asm__ volatile(
 		//"mov rsi, %1;"
 		//"mov rdi, %0;"
-		"lea rbx, QWORD PTR [.label_2];"
-		"call .label_1;"
+		"lea rbx, QWORD PTR [fNOT_2];"
+		"call fNOT_1;"
 		// BEGIN Spec part 		
 		"xor rax, rax;"
 		// BEGIN delay ops
@@ -79,12 +79,12 @@ static void fNOT(void *out, void *in){
 		"mov r11, QWORD PTR [%0+rax];" // spec instr
 		"lfence;"
 		// END Spec part
-		".label_1: mov QWORD PTR [rsp], rbx;" 
+		"fNOT_1: mov QWORD PTR [rsp], rbx;" 
 		"mov r11, QWORD PTR [%1];" // load input
 		"add QWORD PTR [rsp], r11;" // data dependency between input and ptr adrs
 		"ret;"
 		
-		".label_2: nop;"
+		"fNOT_2: nop;"
 		: "=r" (out)
 		: "r" (in)
 		: "rax", "rbx", "r11", "memory"
@@ -94,8 +94,9 @@ static void fNOT(void *out, void *in){
 
 static void fNOR(void *out, void *in1, void *in2){
 	__asm__ volatile(
-		"lea rbx, QWORD PTR [.label_3];"
-		"call .label_1;"
+		"lea rbx, QWORD PTR [fNOR_3];"
+		"call fNOR_1;"
+		"call fNOR_2;"
 		// BEGIN spec part 
 		"xor rax, rax;"
 		// BEGIN delay ops 
@@ -109,17 +110,17 @@ static void fNOR(void *out, void *in1, void *in2){
 		"mov r11, QWORD PTR [%0+rax];" // addr output + 0
 		// END spec part 
 		// first input 
-		".label_1: mov QWORD PTR [rsp], rbx;"
+		"fNOR_1: mov QWORD PTR [rsp], rbx;"
 		"mov r11, [%1];"
 		"add [rsp], r11;"
 		"ret;"
 		//second input 
-		".label_2: mov QWORD PTR [rsp], rbx;"
+		"fNOR_2: mov QWORD PTR [rsp], rbx;"
 		"mov r11, [%2];"
 		"add [rsp], r11;"
 		"ret;"
 		// end 
-		".label_3: nop;"
+		"fNOR_3: nop;"
 		: "=r" (out)
 		: "r" (in1), "r" (in2)
 		: "rax", "rbx", "r11", "memory"
@@ -134,19 +135,19 @@ static void fNOR(void *out, void *in1, void *in2){
 
 static void fNAND(void *out, void *in1, void *in2){
 	__asm__ volatile(
-		"lea rbx, QWORD PTR [.label_2];"
-        "call .label_1;"
+		"lea rbx, QWORD PTR [fNAND_2];"
+        "call fNAND_1;"
         "xor rax, rax;"
         "mov rax, QWORD PTR [rsp+rax];"
         "and rax, 0x0;"
         "mov r11, QWORD PTR [%0+rax];"
         "lfence;"
-        ".label_1: mov QWORD PTR [rsp], rbx;"
+        "fNAND_1: mov QWORD PTR [rsp], rbx;"
         "mov r11, QWORD PTR [%1];"
         "add r11, QWORD PTR [%2];"
         "add QWORD PTR [rsp], r11;"
         "ret;"
-        ".label_2: nop;"
+        "fNAND_2: nop;"
         : "=r" (out)
         : "r" (in1), "r" (in2)
         : "rax", "rbx", "r11", "memory"
