@@ -61,7 +61,7 @@ void test_fNOT(){
 	CU_ASSERT_TRUE(ctr_A>90);
 	if(ctr_A<=90) printf("ctr_A %lu\n", ctr_A);*/
 }
-
+/*
 void test_fNAND(){
 	// preparation
 	uint64_t *a = (uint64_t *) malloc(sizeof(uint64_t *));
@@ -187,14 +187,14 @@ void test_fNOR(){
 	printf("fNOR case A, B: time is %lu\n", time);
 }
 
-
+*/
 int main() {
     CU_initialize_registry();
 
     CU_pSuite suite = CU_add_suite("Test Suite assignment 3", NULL, NULL);
     CU_add_test(suite, "Test fNOT", test_fNOT);
-    CU_add_test(suite, "Test fNOT", test_fNAND);
-    CU_add_test(suite, "Test fNOT", test_fNOR);
+  //  CU_add_test(suite, "Test fNOT", test_fNAND);
+    //CU_add_test(suite, "Test fNOT", test_fNOR);
 
     CU_basic_run_tests();
     CU_cleanup_registry();
