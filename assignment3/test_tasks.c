@@ -72,9 +72,9 @@ void test_fNAND(){
 	uint64_t time;
 	
 	// notA nand notB = C
-	flush(a);
-	flush(b);
-	flush(c);
+	flush((void *) a);
+	flush((void *) b);
+	flush((void *) c);
 	
 	fNAND(c, a, b);
 	time = probe(c);
