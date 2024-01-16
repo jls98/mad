@@ -74,8 +74,8 @@ static uint64_t probe(void *adrs){
 static void fNOT(void *out, void *in){
 	
 	__asm__ volatile(
-		"mov rsi, %1;"
-		"mov rdi, %0;"
+		//"mov rsi, %1;"
+		//"mov rdi, %0;"
 		"lea rbx, [label_2];"
 		"call label_1;"
 		"xor rax, rax;"
@@ -91,15 +91,66 @@ static void fNOT(void *out, void *in){
 		"mov rax, QWORD PTR [rsp+rax];"
 		"and rax, 0x0;"*/
 		// END delay ops
-		"mov r11, QWORD PTR [rdi+rax];" // spec instr
+		"mov r11, QWORD PTR [%0+rax];" // spec instr
 		"lfence;"
 		"label_1: mov QWORD PTR [rsp], rbx;" 
-		"mov r11, QWORD PTR [rsi];"
+		"mov r11, QWORD PTR [%1];"
 		"add QWORD PTR [rsp], r11;"
 		"ret;"
 		"label_2: nop;"
 		: "=r" (out)
 		: "r" (in)
-		: "rax", "rbx", "rdi", "rsi", "r11", "memory"
+		: "rax", "rbx", "r11", "memory"
 	);
 }
+/*
+
+static void fNOR(void *out, void *in1, void *in2){
+	
+}
+
+
+
+
+static void NAND(void *out, void *in1, void *in2){
+	__asm__ volatile(
+		"mov "
+		"lea rbx, [label_4];"
+        "call label_3;"
+        "xor rax, rax;"
+        "mov rax, QWORD PTR [rsp+rax*1];"
+        "and rax, 0x0;"
+        "mov rax, QWORD PTR [rsp+rax*1];"
+        "and rax, 0x0;"
+        "mov rax, QWORD PTR [rsp+rax*1];"
+        "and rax, 0x0;"
+        "mov rax, QWORD PTR [rsp+rax*1];"
+        "and rax, 0x0;"
+        "mov rax, QWORD PTR [rsp+rax*1];"
+        "and rax, 0x0;"
+        "mov r11, QWORD PTR [rdi+rax*1];"
+        "lfence;"
+        "label_3: mov QWORD PTR [rsp], rbx;"
+        "mov r11, QWORD PTR [rsi];"
+        "add r11, QWORD PTR [rdx];"
+        "add QWORD PTR [rsp], r11;"
+        "ret;"
+        "label_4: nop;"
+        : "=r" (*out)
+        : "r" (in1), "r" (in2)
+        : "rax", "rbx", "rsi", "rdx", "rdi", "r11", "memory"
+    );
+}
+
+*/
+
+
+
+
+
+
+
+
+
+
+
