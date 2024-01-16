@@ -50,7 +50,7 @@ void test_fNOT(){
 		time = probe(b);
 		if(time>THRESHOLD) ctr_A++;
 		
-		fibonacci(i+10);
+		fibonacci(100);
 	}	
 	CU_ASSERT_TRUE(ctr_notA>9000);
 	if(ctr_notA<=9000) printf("ctr_notA %lu\n", ctr_notA);
