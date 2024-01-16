@@ -79,7 +79,7 @@ void test_fNAND(){
 	time = probe(c);
 	CU_ASSERT_TRUE(time<THRESHOLD);
 	//if(time>=THRESHOLD) 
-	printf("fNAND case not A, not B time>THRESHOLD: time is %lu\n", time);
+	printf("\n\nfNAND case not A, not B time>THRESHOLD: time is %lu\n", time);
 	
 	// not A nand B = not C 
 	flush(a);
