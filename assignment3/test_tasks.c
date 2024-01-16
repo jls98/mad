@@ -5,8 +5,8 @@
 // broken now :S
 void test_fNOT(){
 	// preparation
-	uint64_t *a = (uint64_t *) malloc(sizeof(uint64_t *));
-	uint64_t *b = (uint64_t *) malloc(sizeof(uint64_t *));
+	uint64_t *a = malloc(sizeof(uint64_t *));
+	uint64_t *b = malloc(sizeof(uint64_t *));
 	*a=0;
 	*b=0;
 	wait(1E9);
@@ -62,9 +62,9 @@ void test_fNOT(){
 
 void test_fNAND(){
 	// preparation
-	uint64_t *a = (uint64_t *) malloc(sizeof(uint64_t *));
-	uint64_t *b = (uint64_t *) malloc(sizeof(uint64_t *));
-	uint64_t *c = (uint64_t *) malloc(sizeof(uint64_t *));
+	uint64_t *a = malloc(sizeof(uint64_t *));
+	uint64_t *b = malloc(sizeof(uint64_t *));
+	uint64_t *c = malloc(sizeof(uint64_t *));
 	*a=0;
 	*b=0;
 	*c=0;
@@ -76,7 +76,7 @@ void test_fNAND(){
 	flush((void *) b);
 	flush((void *) c);
 	
-	fNAND(c, a, b);
+	fNAND((void *) c, (void *) a, (void *) b);
 	time = probe(c);
 	CU_ASSERT_TRUE(time<THRESHOLD);
 	//if(time>=THRESHOLD) 
@@ -122,9 +122,9 @@ void test_fNAND(){
 
 void test_fNOR(){
 	// preparation
-	uint64_t *a = (uint64_t *) malloc(sizeof(uint64_t *));
-	uint64_t *b = (uint64_t *) malloc(sizeof(uint64_t *));
-	uint64_t *c = (uint64_t *) malloc(sizeof(uint64_t *));
+	uint64_t *a = malloc(sizeof(uint64_t *));
+	uint64_t *b = malloc(sizeof(uint64_t *));
+	uint64_t *c = malloc(sizeof(uint64_t *));
 	*a=0;
 	*b=0;
 	*c=0;
