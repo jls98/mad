@@ -47,15 +47,15 @@ static uint64_t probe(void *adrs){
 	__asm__ volatile (
         " mfence            \n"
         " lfence            \n"
-        " rdtsc             \n"
+        " rdtscp             \n"
         " mov r8, rax 		\n"
         " mov rax, [%1]		\n"
         " lfence            \n"
-        " rdtsc             \n"
+        " rdtscp             \n"
         " sub rax, r8 		\n"
         : "=&a" (time)
         : "r" (adrs)
-        : "rdx", "r8", "memory"
+        : "ecx", "rdx", "r8", "memory"
 	);
 	return time;
 }
