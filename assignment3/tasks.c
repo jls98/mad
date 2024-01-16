@@ -71,17 +71,17 @@ static void fNOT(void *out, void *in){
 		"and rax, 0x0;"
 		".endr;"
 		// END delay ops
-		"mov r11, [%0+rax];" // spec instr
+		"mov r11, [rdi+rax];" // spec instr
 		"lfence;"
 		// END Spec part
 		"fNOT_1: mov [rsp], rbx;" 
-		"mov r11, [%1];" // load input
+		"mov r11, [rsi];" // load input
 		"add [rsp], r11;" // data dependency between input and ptr adrs
 		"ret;"
 		
 		"fNOT_2: nop;"
 		: 
-		: "r" (out), "r" (in)
+		: "D" (out), "S" (in)
 		: "rax", "rbx", "r11", "memory"
 	);
 }
