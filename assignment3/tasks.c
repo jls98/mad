@@ -138,7 +138,7 @@ static void NAND(void *out, void *in1, void *in2){
         "add QWORD PTR [rsp], r11;"
         "ret;"
         "label_4: nop;"
-        : "=r" (*out)
+        : "=r" (out)
         : "r" (in1), "r" (in2)
         : "rax", "rbx", "r11", "memory"
     );
