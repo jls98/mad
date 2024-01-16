@@ -13,22 +13,13 @@ static uint64_t probe(void *adrs); // access adrs and return access
 static void flush(void *adrs); // clflush adrs 
 static void load(void *adrs); // load adrs into cache
 static void wait(uint64_t cycles); // just wait
-static int fibonacci(int n);
-static void clear_cache();
+
 #ifndef TESTCASE
 int main(){
 	printf("hi\n");
 }
 #endif
 
-
-static int fibonacci(int n) {
-    if (n <= 1) {
-        return n;
-    } else {
-        return fibonacci(n - 1) + fibonacci(n - 2);
-    }
-}
 
 static void wait(uint64_t cycles) {
 	unsigned int ignore;
@@ -44,13 +35,6 @@ static void flush(void *adrs){
 	__asm__ volatile("clflush [%0];" ::"r" (adrs));
 }
 
-static void clear_cache(){
-	uint64_t *dump = (uint64_t *) malloc(512*sizeof(uint64_t));
-	for(int i=0; i<512;i++){
-		if(i>0) dump[i] = 1;
-	}
-	free(dump);
-}
 
 static uint64_t probe(void *adrs){
 	volatile uint64_t time;  

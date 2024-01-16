@@ -9,7 +9,7 @@ void test_fNOT(){
 	*a=0;
 	*b=0;
 	wait(1E9);
-	uint64_t time, ctr_notA=0, ctr_A=0;
+	uint64_t time; //, ctr_notA=0, ctr_A=0;
 	
 	flush(a);
 	flush(b);
@@ -57,6 +57,14 @@ void test_fNOT(){
 }
 
 void test_fNAND(){
+	// preparation
+	uint64_t *a = (uint64_t *) malloc(sizeof(uint64_t *));
+	uint64_t *b = (uint64_t *) malloc(sizeof(uint64_t *));
+	*a=0;
+	*b=0;
+	wait(1E9);
+	uint64_t time, ctr_notA=0, ctr_A=0;
+	
 	return; //TODO
 }
 
