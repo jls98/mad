@@ -73,7 +73,7 @@ void test_fNAND(){
 	wait(1E9);
 	uint64_t time;
 	
-	// not A nand not B = C
+	// notA nand notB = C
 	flush(a);
 	flush(b);
 	flush(c);
@@ -82,9 +82,9 @@ void test_fNAND(){
 	time = probe(c);
 	CU_ASSERT_TRUE(time<THRESHOLD);
 	//if(time>=THRESHOLD) 
-	printf("\n\nfNAND case not A, not B time>THRESHOLD: time is %lu\n", time);
+	printf("\n\nfNAND case notA, notB: time is %lu\n", time);
 	
-	// not A nand B = not C 
+	// notA nand B = C 
 	flush(a);
 	flush(b);
 	flush(c);
@@ -92,11 +92,11 @@ void test_fNAND(){
 	
 	fNAND(c, a, b);
 	time = probe(c);
-	CU_ASSERT_TRUE(time>THRESHOLD);
+	CU_ASSERT_TRUE(time<THRESHOLD);
 	//if(time>=THRESHOLD) 
-	printf("fNAND case not A, B time<THRESHOLD: time is %lu\n", time);
+	printf("fNAND case notA, B: time is %lu\n", time);
 	
-	// A nand not B = not C 
+	// A nand notB = C 
 	flush(a);
 	flush(b);
 	flush(c);
@@ -104,27 +104,87 @@ void test_fNAND(){
 	
 	fNAND(c, a, b);
 	time = probe(c);
-	CU_ASSERT_TRUE(time>THRESHOLD);
+	CU_ASSERT_TRUE(time<THRESHOLD);
 	//if(time>=THRESHOLD) 
-	printf("fNAND case A, not B time<THRESHOLD: time is %lu\n", time);
+	printf("fNAND case A, notB: time is %lu\n", time);
 	
-	// A nand B = not C 
+	// A nand B = notC 
 	flush(a);
 	flush(b);
 	flush(c);
 	load(a);
 	load(b);
 	
+	// test 
+	printf("testing a %lu\n",probe(a));
+	printf("testing b %lu\n",probe(b));
+	
 	fNAND(c, a, b);
 	time = probe(c);
 	CU_ASSERT_TRUE(time>THRESHOLD);
 	//if(time>=THRESHOLD) 
-	printf("fNAND case A, B time<THRESHOLD: time is %lu\n", time);
+	printf("fNAND case A, B: time is %lu\n", time);
 	
 }
 
 void test_fNOR(){
-	return; // TODO
+	// preparation
+	uint64_t *a = (uint64_t *) malloc(sizeof(uint64_t *));
+	uint64_t *b = (uint64_t *) malloc(sizeof(uint64_t *));
+	uint64_t *c = (uint64_t *) malloc(sizeof(uint64_t *));
+	*a=0;
+	*b=0;
+	*c=0;
+	wait(1E9);
+	uint64_t time;
+	
+	// notA nor notB = C
+	flush(a);
+	flush(b);
+	flush(c);
+	
+	fNOR(c, a, b);
+	time = probe(c);
+	CU_ASSERT_TRUE(time<THRESHOLD);
+	//if(time>=THRESHOLD) 
+	printf("\n\nfNOR case notA, notB: time is %lu\n", time);
+	
+	// notA nor B = notC 
+	flush(a);
+	flush(b);
+	flush(c);
+	load(b);
+	
+	fNOR(c, a, b);
+	time = probe(c);
+	CU_ASSERT_TRUE(time>THRESHOLD);
+	//if(time>=THRESHOLD) 
+	printf("fNOR case notA, B: time is %lu\n", time);
+	
+	// A nor notB = notC 
+	flush(a);
+	flush(b);
+	flush(c);
+	load(a);
+	
+	fNOR(c, a, b);
+	time = probe(c);
+	CU_ASSERT_TRUE(time>THRESHOLD);
+	//if(time>=THRESHOLD) 
+	printf("fNOR case A, notB: time is %lu\n", time);
+	
+	// A nor B = notC 
+	flush(a);
+	flush(b);
+	flush(c);
+	load(a);
+	load(b);
+	
+	fNOR(c, a, b);
+	time = probe(c);
+	CU_ASSERT_TRUE(time>THRESHOLD);
+	//if(time>=THRESHOLD) 
+	printf("fNOR case A, B: time is %lu\n", time);
 }
 
 
