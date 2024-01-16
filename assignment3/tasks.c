@@ -6,19 +6,15 @@
 #define THRESHOLD 150 // timing around 14-16 when cached
 
 static void fNOT(void *out, void *in); // NOT gate
+static void fNOR(void *out, void *in1, void *in2);
+static void NAND(void *out, void *in1, void *in2);
+
 static uint64_t probe(void *adrs); // access adrs and return access
 static void flush(void *adrs); // clflush adrs 
 static void load(void *adrs); // load adrs into cache
 static void wait(uint64_t cycles); // just wait
 static int fibonacci(int n);
 static void clear_cache();
-#ifndef TESTCASE
-
-int main(){
-		
-}
-#endif
-
 
 static int fibonacci(int n) {
     if (n <= 1) {
@@ -68,11 +64,10 @@ static uint64_t probe(void *adrs){
 	return time;
 }
 
-
+// works 50 % of the time lol
 static void fNOT(void *out, void *in){
 	
 	__asm__ volatile(
-		
 		"mov rsi, %1;"
 		"mov rdi, %0;"
 		"lea rbx, [label_2];"
@@ -101,11 +96,4 @@ static void fNOT(void *out, void *in){
 		: "r" (in)
 		: "rax", "rbx", "rdi", "rsi", "r11", "memory"
 	);
-		
-	
-	
-	
-	
-	
-	return; // TODO
 }
