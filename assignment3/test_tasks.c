@@ -19,7 +19,8 @@ void test_fNOT(){
 	time = probe(b);
 	
 	CU_ASSERT_TRUE(time<THRESHOLD);
-	if(time>=THRESHOLD) printf("fNOT case not A: time>THRESHOLD: time is %lu\n", time);
+	//if(time>=THRESHOLD) 
+	printf("fNOT case not A: time>THRESHOLD: time is %lu\n", time);
 
 	// ------------ A ------------
 	flush(a);
@@ -30,7 +31,8 @@ void test_fNOT(){
 	time = probe(b);
 	
 	CU_ASSERT_TRUE(time>THRESHOLD);
-	if(time<=THRESHOLD) printf("fNOT case A: time<THRESHOLD: time is %lu\n", time);
+	//if(time<=THRESHOLD) 
+	printf("fNOT case A: time<THRESHOLD: time is %lu\n", time);
 
 	// not A multiple times // TOdo naive version does not work since training effect
 	/*for (int i=0;i<100;i++){
