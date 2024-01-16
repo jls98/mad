@@ -78,8 +78,8 @@ static void fNOT(void *out, void *in){
 		"call label_1;"
 		"xor rax, rax;"
 		// BEGIN delay ops
-		/*"mov rax, QWORD PTR [rsp+rax];"
-		"and rax, 0x0;"
+		"mov rax, QWORD PTR [rsp+rax];"
+		/*"and rax, 0x0;"
 		"mov rax, QWORD PTR [rsp+rax];"
 		"and rax, 0x0;"
 		"mov rax, QWORD PTR [rsp+rax];"
@@ -99,7 +99,7 @@ static void fNOT(void *out, void *in){
 		"label_2: nop;"
 		: "=r" (out)
 		: "r" (in)
-		: "rax", "rdi", "rsi", "r11", "memory"
+		: "rax", "rdx", "rsx", "r11", "memory"
 	);
 		
 	
