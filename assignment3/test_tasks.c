@@ -217,9 +217,7 @@ void test_fNAND(){
 	flush(c);
 	
 	fNAND(c, a, b);
-	fence();
 	time = probe(c);
-	fence();
 	CU_ASSERT_TRUE(time<THRESHOLD);
 	//if(time>=THRESHOLD) 
 	printf("\n\nfNAND case notA, notB: c %lu\n", time);
