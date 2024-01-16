@@ -18,7 +18,8 @@ void test_fNOT(){
 	fNOT(b, a);
 	time = probe(b);
 	CU_ASSERT_TRUE(time<THRESHOLD);
-	
+	if(!time<THRESHOLD) printf("!time<THRESHOLD: time is %lu\n", time);
+
 	
 	flush(a);
 	flush(b);
@@ -28,7 +29,8 @@ void test_fNOT(){
 	fNOT(b, a);
 	time = probe(b);
 	CU_ASSERT_TRUE(time>THRESHOLD);
-	
+	if(!time>THRESHOLD) printf("!time>THRESHOLD: time is %lu\n", time);
+
 	
 }
 
