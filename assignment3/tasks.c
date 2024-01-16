@@ -15,6 +15,12 @@ static void load(void *adrs); // load adrs into cache
 static void wait(uint64_t cycles); // just wait
 static int fibonacci(int n);
 static void clear_cache();
+#ifndef TESTCASE
+int main(){
+	printf("hi\n");
+}
+#endif
+
 
 static int fibonacci(int n) {
     if (n <= 1) {
