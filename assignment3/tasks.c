@@ -94,7 +94,7 @@ static void fNOT(void *out, void *in){
 		"label_1: lea rax, [label_2];" 
 		"mov QWORD PTR [rsp], rax;"
 		"mov r11, QWORD PTR [rsi];"
-		"add QWORD PTR [rsp], r11;"
+		//"add QWORD PTR [rsp], r11;"
 		"ret;"
 		"label_2: nop;"
 		: "=r" (out)
