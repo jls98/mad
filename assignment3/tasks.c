@@ -145,11 +145,6 @@ static void fNAND(void *out, void *in1, void *in2){
         "and rax, 0x0;"
         "mov rax, [rsp+rax];"
         "and rax, 0x0;"
-		"mov rax, [rsp+rax];"
-        "and rax, 0x0;"
-        "mov rax, [rsp+rax];"
-        "and rax, 0x0;"
-
 		"mov r11, [%0+rax];"
         "lfence;"
         "fNAND_1: mov [rsp], rbx;"
