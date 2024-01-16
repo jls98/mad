@@ -26,6 +26,7 @@ void test_fNOT(){
 	flush(a);
 	flush(b);
 	printf("probe a %lu\n", probe(a));
+	printf("probe a %lu\n", probe(a));
 
 	fNOT(b, a);
 	time = probe(b);
