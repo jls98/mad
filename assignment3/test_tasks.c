@@ -59,7 +59,7 @@ void test_fNOT(){
 	CU_ASSERT_TRUE(ctr_A>90);
 	if(ctr_A<=90) printf("ctr_A %lu\n", ctr_A);*/
 }
-/*
+
 void test_fNAND(){
 	// preparation
 	uint64_t *a = (uint64_t *) malloc(sizeof(uint64_t *));
@@ -84,7 +84,6 @@ void test_fNAND(){
 	
 	// notA nand B = C 
 	flush(a);
-	flush(b);
 	flush(c);
 	load(b);
 	
@@ -95,7 +94,6 @@ void test_fNAND(){
 	printf("fNAND case notA, B: time is %lu\n", time);
 	
 	// A nand notB = C 
-	flush(a);
 	flush(b);
 	flush(c);
 	load(a);
@@ -107,8 +105,6 @@ void test_fNAND(){
 	printf("fNAND case A, notB: time is %lu\n", time);
 	
 	// A nand B = notC 
-	flush(a);
-	flush(b);
 	flush(c);
 	load(a);
 	load(b);
@@ -185,7 +181,7 @@ void test_fNOR(){
 	printf("fNOR case A, B: time is %lu\n", time);
 }
 
-*/
+
 int main() {
     CU_initialize_registry();
 

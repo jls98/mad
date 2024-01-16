@@ -136,17 +136,17 @@ static void fNOR(void *out, void *in1, void *in2){
 
 static void fNAND(void *out, void *in1, void *in2){
 	__asm__ volatile(
-		"lea rbx, QWORD PTR [fNAND_2];"
+		"lea rbx, [fNAND_2];"
         "call fNAND_1;"
         "xor rax, rax;"
-        "mov rax, QWORD PTR [rsp+rax];"
+        "mov rax, [rsp+rax];"
         "and rax, 0x0;"
-        "mov r11, QWORD PTR [%0+rax];"
+        "mov r11, [%0+rax];"
         "lfence;"
-        "fNAND_1: mov QWORD PTR [rsp], rbx;"
-        "mov r11, QWORD PTR [%1];"
-        "add r11, QWORD PTR [%2];"
-        "add QWORD PTR [rsp], r11;"
+        "fNAND_1: mov [rsp], rbx;"
+        "mov r11, [%1];"
+        "add r11, [%2];"
+        "add [rsp], r11;"
         "ret;"
         "fNAND_2: nop;"
         : "=r" (out)
