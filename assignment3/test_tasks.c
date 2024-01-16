@@ -30,18 +30,22 @@ void test_fNOT(){
 	free(b);
 	
 	// ------------ A ------------
-	a = malloc(sizeof(uint64_t *));
-	b = malloc(sizeof(uint64_t *));
-	*a = 0;
-	flush(b);
-	load(a);
+	uint64_t *a2 = malloc(sizeof(uint64_t *));
+	uint64_t *b2 = malloc(sizeof(uint64_t *));
+	*a2 = 0;
+	fence();
+	flush(b2);
+	load(a2);
 
-	fNOT(b, a);
+	fence();
+	fNOT(b2, a2);
 	time = probe(b);
 	
+	fence();
 	CU_ASSERT_TRUE(time>THRESHOLD);
 	printf("fNOT case A: time is %lu\n", time);
 	
+	fence();
 	// ---- not2
 	flush(a);
 	flush(b);
