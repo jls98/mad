@@ -60,38 +60,30 @@ static void fNOT(void *out, void *in){
 	__asm__ volatile(
 		//"mov rsi, %1;"
 		//"mov rdi, %0;"
-		"lea rbx, QWORD [fNOT_2];"
+		"lea rbx, [fNOT_2];"
 		"call fNOT_1;"
 		// BEGIN Spec part 		
 		"xor rax, rax;"
 		// BEGIN delay ops
-		"mov rax, QWORD PTR [rsp+rax];"
+		"mov rax, [rsp+rax];"
 		"and rax, 0x0;"
-		"mov rax, QWORD PTR [rsp+rax];"
+		"mov rax, [rsp+rax];"
 		"and rax, 0x0;"
-		"mov rax, QWORD PTR [rsp+rax];"
+		"mov rax, [rsp+rax];"
 		"and rax, 0x0;"
-		"mov rax, QWORD PTR [rsp+rax];"
+		"mov rax, [rsp+rax];"
 		"and rax, 0x0;"
-		"mov rax, QWORD PTR [rsp+rax];"
+		"mov rax, [rsp+rax];"
 		"and rax, 0x0;"
-		"mov rax, QWORD PTR [rsp+rax];"
-		"and rax, 0x0;"
-		"mov rax, QWORD PTR [rsp+rax];"
-		"and rax, 0x0;"
-		"mov rax, QWORD PTR [rsp+rax];"
-		"and rax, 0x0;"
-		"mov rax, QWORD PTR [rsp+rax];"
-		"and rax, 0x0;"
-		"mov rax, QWORD PTR [rsp+rax];"
+		"mov rax, [rsp+rax];"
 		"and rax, 0x0;"
 		// END delay ops
-		"mov r11, QWORD PTR [%0+rax];" // spec instr
+		"mov r11, [%0+rax];" // spec instr
 		"lfence;"
 		// END Spec part
-		"fNOT_1: mov QWORD PTR [rsp], rbx;" 
-		"mov r11, QWORD PTR [%1];" // load input
-		"add QWORD PTR [rsp], r11;" // data dependency between input and ptr adrs
+		"fNOT_1: mov [rsp], rbx;" 
+		"mov r11, [%1];" // load input
+		"add [rsp], r11;" // data dependency between input and ptr adrs
 		"ret;"
 		
 		"fNOT_2: nop;"
