@@ -7,7 +7,7 @@
 
 static void fNOT(void *out, void *in); // NOT gate
 static void fNOR(void *out, void *in1, void *in2);
-static void NAND(void *out, void *in1, void *in2);
+static void fNAND(void *out, void *in1, void *in2);
 
 static uint64_t probe(void *adrs); // access adrs and return access
 static void flush(void *adrs); // clflush adrs 
@@ -99,7 +99,7 @@ static void fNOR(void *out, void *in1, void *in2){
 
 
 
-static void NAND(void *out, void *in1, void *in2){
+static void fNAND(void *out, void *in1, void *in2){
 	__asm__ volatile(
 		"lea rbx, QWORD PTR [label_4];"
         "call label_3;"
