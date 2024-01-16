@@ -279,7 +279,7 @@ static void fNAND(void *out, void *in1, void *in2){
         "call fNAND_1;"
 		// BEGIN spec code
         "xor rax, rax;"
-		".rept 1;"
+		".rept 3;"
         "mov rax, [rsp+rax];"
         "and rax, 0x0;"
 		".endr;"
