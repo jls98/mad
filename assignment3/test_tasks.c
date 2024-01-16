@@ -10,9 +10,10 @@ void test_fNOT(){
 	*b=0;
 	wait(1E9);
 	uint64_t time, ctr_notA=0, ctr_A=0;
-	
+	printf("a");
 	clear_cache(); // idk if that helps
 	
+	printf("a");
 	flush(a);
 	flush(b);
 	// not A
@@ -21,8 +22,10 @@ void test_fNOT(){
 	CU_ASSERT_TRUE(time<THRESHOLD);
 	if(time>=THRESHOLD) printf("time>THRESHOLD: time is %lu\n", time);
 
+	printf("a");
 	clear_cache();
 	
+	printf("a");
 	flush(a);
 	flush(b);
 	load(a);
@@ -33,6 +36,7 @@ void test_fNOT(){
 	CU_ASSERT_TRUE(time>THRESHOLD);
 	if(time<=THRESHOLD) printf("time<THRESHOLD: time is %lu\n", time);
 
+	printf("a");
 	// not A multiple times // TOdo naive version does not work since training effect
 	/*for (int i=0;i<100;i++){
 		flush(a);
