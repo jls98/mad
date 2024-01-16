@@ -19,10 +19,11 @@ void test_fNOT(){
 	// ------------ not A ------------
 	flush(a);
 	flush(b);
-	
+	fence();
 	fNOT(b, a);
-	time = probe(b);
-	
+	fence();
+	time = probe(b);	
+	fence();
 	CU_ASSERT_TRUE(time<THRESHOLD);
 	printf("fNOT case not A: time is %lu\n", time);
 	free(a);

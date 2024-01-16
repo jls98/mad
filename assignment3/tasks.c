@@ -38,6 +38,10 @@ static void flush(void *adrs){
 	__asm__ volatile("clflush [%0];" ::"r" (adrs));
 }
 
+static void fence(){
+	__asm__ volatile("lfence");
+}
+
 
 static uint64_t probe(void *adrs){
 	volatile uint64_t time;  
