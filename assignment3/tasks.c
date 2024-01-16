@@ -60,7 +60,7 @@ static void fNOT(void *out, void *in){
 	__asm__ volatile(
 		//"mov rsi, %1;"
 		//"mov rdi, %0;"
-		"lea rbx, QWORD PTR [fNOT_2];"
+		//"lea rbx, QWORD PTR [fNOT_2];"
 		"call fNOT_1;"
 		// BEGIN Spec part 		
 		"xor rax, rax;"
