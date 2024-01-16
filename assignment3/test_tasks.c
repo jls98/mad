@@ -11,23 +11,26 @@ void test_fNOT(){
 	wait(1E9);
 	uint64_t time; //, ctr_notA=0, ctr_A=0;
 	
+	// ------------ not A ------------
 	flush(a);
 	flush(b);
-	// not A
+	
 	fNOT(b, a);
 	time = probe(b);
+	
 	CU_ASSERT_TRUE(time<THRESHOLD);
-	if(time>=THRESHOLD) printf("time>THRESHOLD: time is %lu\n", time);
+	if(time>=THRESHOLD) printf("fNOT case not A: time>THRESHOLD: time is %lu\n", time);
 
+	// ------------ A ------------
 	flush(a);
 	flush(b);
 	load(a);
 
-	// A
 	fNOT(b, a);
 	time = probe(b);
+	
 	CU_ASSERT_TRUE(time>THRESHOLD);
-	if(time<=THRESHOLD) printf("time<THRESHOLD: time is %lu\n", time);
+	if(time<=THRESHOLD) printf("fNOT case A: time<THRESHOLD: time is %lu\n", time);
 
 	// not A multiple times // TOdo naive version does not work since training effect
 	/*for (int i=0;i<100;i++){
@@ -60,12 +63,57 @@ void test_fNAND(){
 	// preparation
 	uint64_t *a = (uint64_t *) malloc(sizeof(uint64_t *));
 	uint64_t *b = (uint64_t *) malloc(sizeof(uint64_t *));
+	uint64_t *c = (uint64_t *) malloc(sizeof(uint64_t *));
 	*a=0;
 	*b=0;
+	*c=0;
 	wait(1E9);
-	uint64_t time, ctr_notA=0, ctr_A=0;
+	uint64_t time;
 	
-	return; //TODO
+	// not A nand not B = C
+	flush(a);
+	flush(b);
+	flush(c);
+	
+	fNAND(c, a, b);
+	time = probe(c);
+	CU_ASSERT_TRUE(time<THRESHOLD);
+	if(time>=THRESHOLD) printf("fNAND case not A, not B time>THRESHOLD: time is %lu\n", time);
+	
+	// not A nand B = not C 
+	flush(a);
+	flush(b);
+	flush(c);
+	load(b);
+	
+	fNAND(c, a, b);
+	time = probe(c);
+	CU_ASSERT_TRUE(time>THRESHOLD);
+	if(time>=THRESHOLD) printf("fNAND case not A, B time<THRESHOLD: time is %lu\n", time);
+	
+	// A nand not B = not C 
+	flush(a);
+	flush(b);
+	flush(c);
+	load(a);
+	
+	fNAND(c, a, b);
+	time = probe(c);
+	CU_ASSERT_TRUE(time>THRESHOLD);
+	if(time>=THRESHOLD) printf("fNAND case A, not B time<THRESHOLD: time is %lu\n", time);
+	
+	// A nand B = not C 
+	flush(a);
+	flush(b);
+	flush(c);
+	load(a);
+	load(b);
+	
+	fNAND(c, a, b);
+	time = probe(c);
+	CU_ASSERT_TRUE(time>THRESHOLD);
+	if(time>=THRESHOLD) printf("fNAND case A, B time<THRESHOLD: time is %lu\n", time);
+	
 }
 
 void test_fNOR(){
