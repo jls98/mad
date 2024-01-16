@@ -6,9 +6,9 @@
 #define THRESHOLD 200 // timing around 14-16 when cached
 
 static void fNOT(void *out, void *in); // NOT gate
-static void fNOT2(void *out, void *in); // NOT gate
-static void fNOT3(void *out, void *in); // NOT gate
-static void fNOT4(void *out, void *in); // NOT gate
+static void fNOT2(void *out1, void *out2, void *in); // NOT gate
+static void fNOT3(void *out1, void *out2, void *out3, void *in); // NOT gate
+static void fNOT4(void *out1, void *out2, void *out3, void *out4, void *in); // NOT gate
 static void fNOR(void *out, void *in1, void *in2);
 static void fNAND(void *out, void *in1, void *in2);
 
