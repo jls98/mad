@@ -66,15 +66,15 @@ static void fNOT(void *out, void *in){
 		"xor rax, rax;"
 		// BEGIN delay ops
 		"mov rax, QWORD PTR [rsp+rax];"
-		/*"and rax, 0x0;"
-		"mov rax, QWORD PTR [rsp+rax];"
 		"and rax, 0x0;"
 		"mov rax, QWORD PTR [rsp+rax];"
 		"and rax, 0x0;"
 		"mov rax, QWORD PTR [rsp+rax];"
 		"and rax, 0x0;"
 		"mov rax, QWORD PTR [rsp+rax];"
-		"and rax, 0x0;"*/
+		"and rax, 0x0;"
+		"mov rax, QWORD PTR [rsp+rax];"
+		"and rax, 0x0;"
 		// END delay ops
 		"mov r11, QWORD PTR [%0+rax];" // spec instr
 		"lfence;"
@@ -91,6 +91,7 @@ static void fNOT(void *out, void *in){
 	);
 }
 
+// works like an and logical gate ._.
 
 static void fNOR(void *out, void *in1, void *in2){
 	__asm__ volatile(
