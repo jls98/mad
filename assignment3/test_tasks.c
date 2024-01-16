@@ -78,7 +78,8 @@ void test_fNAND(){
 	fNAND(c, a, b);
 	time = probe(c);
 	CU_ASSERT_TRUE(time<THRESHOLD);
-	if(time>=THRESHOLD) printf("fNAND case not A, not B time>THRESHOLD: time is %lu\n", time);
+	//if(time>=THRESHOLD) 
+	printf("fNAND case not A, not B time>THRESHOLD: time is %lu\n", time);
 	
 	// not A nand B = not C 
 	flush(a);
@@ -89,7 +90,8 @@ void test_fNAND(){
 	fNAND(c, a, b);
 	time = probe(c);
 	CU_ASSERT_TRUE(time>THRESHOLD);
-	if(time>=THRESHOLD) printf("fNAND case not A, B time<THRESHOLD: time is %lu\n", time);
+	//if(time>=THRESHOLD) 
+	printf("fNAND case not A, B time<THRESHOLD: time is %lu\n", time);
 	
 	// A nand not B = not C 
 	flush(a);
@@ -100,7 +102,8 @@ void test_fNAND(){
 	fNAND(c, a, b);
 	time = probe(c);
 	CU_ASSERT_TRUE(time>THRESHOLD);
-	if(time>=THRESHOLD) printf("fNAND case A, not B time<THRESHOLD: time is %lu\n", time);
+	//if(time>=THRESHOLD) 
+	printf("fNAND case A, not B time<THRESHOLD: time is %lu\n", time);
 	
 	// A nand B = not C 
 	flush(a);
@@ -112,7 +115,8 @@ void test_fNAND(){
 	fNAND(c, a, b);
 	time = probe(c);
 	CU_ASSERT_TRUE(time>THRESHOLD);
-	if(time>=THRESHOLD) printf("fNAND case A, B time<THRESHOLD: time is %lu\n", time);
+	//if(time>=THRESHOLD) 
+	printf("fNAND case A, B time<THRESHOLD: time is %lu\n", time);
 	
 }
 
