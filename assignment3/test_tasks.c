@@ -11,6 +11,7 @@ void test_fNOT(){
 	wait(1E9);
 	uint64_t time, ctr_notA=0, ctr_A=0;
 	
+	fibonacci(10);
 	
 	flush(a);
 	flush(b);
@@ -20,6 +21,7 @@ void test_fNOT(){
 	CU_ASSERT_TRUE(time<THRESHOLD);
 	if(time>=THRESHOLD) printf("time>THRESHOLD: time is %lu\n", time);
 
+	fibonacci(10);
 	
 	flush(a);
 	flush(b);
