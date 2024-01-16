@@ -65,7 +65,7 @@ static void fNOT(void *out, void *in){
 		// BEGIN Spec part 		
 		"xor rax, rax;"
 		// BEGIN delay ops
-		"mov rax, QWORD PTR [rsp+rax];"
+		/*"mov rax, QWORD PTR [rsp+rax];"
 		"and rax, 0x0;"
 		"mov rax, QWORD PTR [rsp+rax];"
 		"and rax, 0x0;"
@@ -84,7 +84,7 @@ static void fNOT(void *out, void *in){
 		"mov rax, QWORD PTR [rsp+rax];"
 		"and rax, 0x0;"
 		"mov rax, QWORD PTR [rsp+rax];"
-		"and rax, 0x0;"
+		"and rax, 0x0;"*/
 		// END delay ops
 		"mov r11, QWORD PTR [%0+rax];" // spec instr
 		"lfence;"
