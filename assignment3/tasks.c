@@ -16,7 +16,7 @@ static uint64_t probe(void *adrs); // access adrs and return access
 static void flush(void *adrs); // clflush adrs 
 static void load(void *adrs); // load adrs into cache
 static void wait(uint64_t cycles); // just wait
-
+static void fence();
 #ifndef TESTCASE
 int main(){
 	printf("hi\n");
