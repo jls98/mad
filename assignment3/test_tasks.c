@@ -200,19 +200,20 @@ void test_fNOT(){
 
 void test_fNAND(){
 	// preparation
+
+	wait(1E9);
+	uint64_t time;
+	
 	uint64_t *a = malloc(sizeof(uint64_t *));
 	uint64_t *b = malloc(sizeof(uint64_t *));
 	uint64_t *c = malloc(sizeof(uint64_t *));
 	*a=0;
 	*b=0;
-	*c=0;
-	wait(1E9);
-	uint64_t time;
-	
+	*c=0;	
 	// notA nand notB = C
-	flush((void *) a);
-	flush((void *) b);
-	flush((void *) c);
+	flush(a);
+	flush(b);
+	flush(c);
 	
 	fNAND((void *) c, (void *) a, (void *) b);
 	time = probe((void *) c);
