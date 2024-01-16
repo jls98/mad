@@ -63,7 +63,7 @@ static void fNOT(void *out, void *in){
 		// BEGIN Spec part 		
 		"xor rax, rax;"
 		// BEGIN delay ops
-		".rept 10;"
+		".rept 20;"
 		"mov rax, [rsp+rax];"
 		"and rax, 0x0;"
 		".endr;"
