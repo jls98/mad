@@ -28,8 +28,8 @@ void test_fNOT(){
 	printf("fNOT case not A: time is %lu\n", time);
 	free(a);
 	free(b);
-	uint64_t *a = malloc(sizeof(uint64_t *));
-	uint64_t *b = malloc(sizeof(uint64_t *));
+	a = malloc(sizeof(uint64_t *));
+	b = malloc(sizeof(uint64_t *));
 	*a=0;
 
 	// ------------ A ------------
