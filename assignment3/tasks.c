@@ -75,6 +75,7 @@ static void fNOT(void *out, void *in){
 		
 		"mov rsi, %1;"
 		"mov rdi, %0;"
+		"lea rbx, [label_2];"
 		"call label_1;"
 		"xor rax, rax;"
 		// BEGIN delay ops
@@ -91,15 +92,14 @@ static void fNOT(void *out, void *in){
 		// END delay ops
 		"mov r11, QWORD PTR [rdi+rax];" // spec instr
 		"lfence;"
-		//"label_1: lea rax, [label_2];" 
-		"label_1: mov QWORD PTR [rsp], [label_2];" 
+		"label_1: mov QWORD PTR [rsp], rbx;" 
 		"mov r11, QWORD PTR [rsi];"
 		"add QWORD PTR [rsp], r11;"
 		"ret;"
 		"label_2: nop;"
 		: "=r" (out)
 		: "r" (in)
-		: "rax", "rdi", "rsi", "r11", "memory"
+		: "rax", "rbx", "rdi", "rsi", "r11", "memory"
 	);
 		
 	
