@@ -2,6 +2,7 @@
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
 
+// broken now :S
 void test_fNOT(){
 	// preparation
 	uint64_t *a = (uint64_t *) malloc(sizeof(uint64_t *));
