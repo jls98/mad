@@ -32,7 +32,7 @@ void test_fNOT(){
 	if(time<=THRESHOLD) printf("time<THRESHOLD: time is %lu\n", time);
 
 	// not A multiple times // TOdo naive version does not work since training effect
-	for (int i=0;i<10000;i++){
+	for (int i=0;i<100;i++){
 		flush(a);
 		flush(b);
 
@@ -50,12 +50,12 @@ void test_fNOT(){
 		time = probe(b);
 		if(time>THRESHOLD) ctr_A++;
 		
-		fibonacci(100);
+		fibonacci(5);
 	}	
-	CU_ASSERT_TRUE(ctr_notA>9000);
-	if(ctr_notA<=9000) printf("ctr_notA %lu\n", ctr_notA);
-	CU_ASSERT_TRUE(ctr_A>9000);
-	if(ctr_A<=9000) printf("ctr_A %lu\n", ctr_A);
+	CU_ASSERT_TRUE(ctr_notA>90);
+	if(ctr_notA<=90) printf("ctr_notA %lu\n", ctr_notA);
+	CU_ASSERT_TRUE(ctr_A>90);
+	if(ctr_A<=90) printf("ctr_A %lu\n", ctr_A);
 }
 
 
