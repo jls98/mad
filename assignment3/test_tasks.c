@@ -10,7 +10,8 @@ void test_fNOT(){
 	*a=0;
 	*b=0;
 	wait(1E9);
-	uint64_t time; //, ctr_notA=0, ctr_A=0;
+	uint64_t time; 
+	uint64_t ctr_notA=0, ctr_A=0;
 	
 	// ------------ not A ------------
 	flush(a);
@@ -34,30 +35,27 @@ void test_fNOT(){
 	printf("fNOT case A: time is %lu\n", time);
 	
 	// not A multiple times // TOdo naive version does not work since training effect
-	/*for (int i=0;i<100;i++){
+	for (int i=0;i<100;i++){
+		// not A
 		flush(a);
 		flush(b);
-
-		// not A
+		
 		fNOT(b, a);
 		time = probe(b);
 		if(time<THRESHOLD) ctr_notA++;
 		
-		flush(a);
+		// A
 		flush(b);
 		load(a);
-
-		// A
+		
 		fNOT(b, a);
 		time = probe(b);
 		if(time>THRESHOLD) ctr_A++;
-		
-		fibonacci(10);
 	}	
 	CU_ASSERT_TRUE(ctr_notA>90);
 	if(ctr_notA<=90) printf("ctr_notA %lu\n", ctr_notA);
 	CU_ASSERT_TRUE(ctr_A>90);
-	if(ctr_A<=90) printf("ctr_A %lu\n", ctr_A);*/
+	if(ctr_A<=90) printf("ctr_A %lu\n", ctr_A);
 }
 
 void test_fNAND(){
