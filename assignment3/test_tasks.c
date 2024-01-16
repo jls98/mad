@@ -51,7 +51,9 @@ void test_fNOT(){
 		if(time>THRESHOLD) ctr_A++;
 	}	
 	CU_ASSERT_TRUE(ctr_notA>9000);
+	if(ctr_notA<=9000) printf("ctr_notA %lu\n", ctr_notA);
 	CU_ASSERT_TRUE(ctr_A>9000);
+	if(ctr_A<=9000) printf("ctr_A %lu\n", ctr_A);
 }
 
 
