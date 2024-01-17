@@ -235,26 +235,25 @@ static void fNOT2(void *out1, void *out2 void *in){
 
 static void fNOR(void *out, void *in1, void *in2){
 	__asm__ volatile(
-		"lea rbx, QWORD PTR [fNOR_3];"
+		"lea rbx, [fNOR_3];"
 		"call fNOR_1;"
 		"call fNOR_2;"
 		// BEGIN spec part 
 		"xor rax, rax;"
 		// BEGIN delay ops 
-		".rept 1;"
+		".rept 3;"
 		"mov rax, [rsp+rax];"
 		"and rax, 0x0;"	
 		".endr;"		
 		// END delay ops 
 		"mov r11, [%0+rax];" // addr output + 0
 		// END spec part 
-		// first input 
-		"fNOR_1: mov [rsp], rbx;"
+		"fNOR_1: mov [rsp], rbx;"		// in1
 		"mov r11, [%1];"
 		"add [rsp], r11;"
 		"ret;"
-		//second input 
-		"fNOR_2: mov [rsp], rbx;"
+
+		"fNOR_2: mov [rsp], rbx;"		// in2 
 		"mov r11, [%2];"
 		"add [rsp], r11;"
 		"ret;"
