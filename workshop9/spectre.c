@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 // init covert channel
-void cc_init();
+void *cc_init();
 
 // set channel for sending byte
 void cc_setup();
@@ -14,6 +14,8 @@ void cc_transmit(uint8_t value);
 // return received value or -1 if error
 uint8_t cc_receive();
 
+// clflush adrs p
+void flush(void *p);
 
 
 void *cc_init(){
