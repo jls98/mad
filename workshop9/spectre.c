@@ -36,10 +36,11 @@ void cc_setup(){
 void cc_transmit(uint8_t value){
     
     __asm__ volatile (
-        "mov rax,[%0];"
-        "mov rbx,[%1];"
-        "mul rax, 0x8;"
-        "mov rax, [rbx+rax];"
+        "mov eax,[%0];"
+        "mov ebx,0x8;"
+        "mul eax;"
+        "mov rbx, [%1];"
+        "mov rax, [rbx+eax];"
     
         ::"r" (value), "r" (cc): "rax", "rbx");
 }
