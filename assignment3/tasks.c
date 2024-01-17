@@ -104,7 +104,7 @@ static void fNOTX(void *out, void *in, uint64_t x){
 		".endr;"
 		// BEGIN Spec part 		
 		"mov r11, [%1+rax];" // spec instr
-		"mov r11, [%2+rax];" // spec instr
+		"add r11, [%2+rax];" // spec instr
 		"lfence;"
 		// END Spec part
 		"fNOT2_1: mov [rsp], rbx;" 

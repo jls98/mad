@@ -572,7 +572,7 @@ int main() {
 
     CU_pSuite suite = CU_add_suite("Test Suite assignment 3", NULL, NULL);
     CU_add_test(suite, "Test fNOT", test_fNOT);
-    //CU_add_test(suite, "Test fNOTX", test_fNOTX);
+    CU_add_test(suite, "Test fNOTX", test_fNOTX);
     CU_add_test(suite, "Test fNAND", test_fNAND); 
     CU_add_test(suite, "Test fAND", test_fAND); 
     CU_add_test(suite, "Test fNOR", test_fNOR);
