@@ -5,27 +5,30 @@
 // broken now :S
 void test_fNOT(){
 	// preparation
-	void *mm = malloc(8192);
-	void *in=mm;
-	void *out = mm+4096+64; // +page size +cache line
-	
-	wait(1E9);
 	uint64_t time; 
 	uint64_t ctr_notA=0, ctr_A=0;
-	
-	// ------------ not A ------------
-	flush(in);
-	flush(out);
-	fence();
-	fNOT(out, in);
-	fence();
-	time = probe(out);	
-	fence();
-	CU_ASSERT_TRUE(time<THRESHOLD);
-	printf("fNOT case not A: time is %lu\n", time);
-	
-	free(mm);
-	
+	wait(1E9);
+
+	for(int i=0;i<10000;i++){
+		void *mm = malloc(8192);
+		void *in=mm;
+		void *out = mm+4096+64; // +page size +cache line
+		
+		
+		
+		// ------------ not A ------------
+		flush(in);
+		flush(out);
+		fence();
+		fNOT(out, in);
+		fence();
+		time = probe(out);	
+		fence();
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		printf("fNOT case not A: time is %lu\n", time);
+		
+		free(mm);
+	}
 	/*a = malloc(sizeof(uint64_t *));
 	b = malloc(sizeof(uint64_t *));
 	*a=0;
