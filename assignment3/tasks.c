@@ -103,7 +103,7 @@ static void fNOTX(void *out, void *in, uint64_t x){
 			"and rax, 0x0;"
 			".endr;"
 			// BEGIN Spec part
-			".rept 5;" // accesslen
+			".rept 4;" // accesslen
 			"mov r11, [rdi+rax];" // spec instr
 			"add rdi, 0x1040;" // add stride 4160 = 0x1040
 			".endr;"
