@@ -40,7 +40,6 @@ void cc_transmit(uint8_t value){
         "mov bl,0x8;"
         "mul al;"
         "mov rax, [%1+rax];"
-    
         ::"r" (value), "r" (cc): "rax", "rbx");
 }
 
@@ -48,7 +47,7 @@ uint8_t cc_receive(){
     uint8_t value=0;
     for(int i=0;i<256;i++){
         if (probe(&cc[i]) < THRESHOLD){
-            return 256-i;
+            return i;
         }
     }
     return -1;
@@ -86,7 +85,7 @@ int main(){
     cc_init();
     for(int i=0;i<256;i++){
         cc_setup();
-        cc_transmit(1);
+        cc_transmit(i);
         printf("received %u, sent %i\n", cc_receive(), i);        
     }
 
