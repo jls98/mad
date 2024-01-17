@@ -40,7 +40,7 @@ void cc_transmit(uint8_t value){
         "mov rbx,0x8;"
         "mul rax;"
         "mov rbx, [%1];"
-        "add rbx, rax;"
+        //"add rbx, rax;"
         "mov rax, [rbx];"
     
         ::"r" (value), "r" (cc): "rax", "rbx");
