@@ -464,7 +464,7 @@ void test_fAND(){
 		time = probe(out);	
 		fence();
 		
-		//printf("fNOT case not A: time is %lu\n", time);
+		printf("fand case not A: time is %lu\n", time);
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
 	}
