@@ -95,8 +95,13 @@ static void fNOTX(void *out, void *in, uint64_t x){
 		"mov r8, 4160;"
 		"mov rdx, %0;"
 		"call fNOTX_1;"
+		"xor rax, rax;"
+		// BEGIN delay ops 
+		".rept 1;"
+		"mov rax, [rsp+rax];"
+		"and rax, 0x0;"
 		// BEGIN Spec part 		
-		"loop: mov r11, [rdx];" // spec instr
+		"loop: mov r11, [rdx+rax];" // spec instr
 		"dec rcx;"
 		"add rdx, r8;"
 		"jnz loop;"
