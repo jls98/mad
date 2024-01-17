@@ -260,8 +260,8 @@ static void fNOR(void *out, void *in1, void *in2){
 		"ret;"
 		// end 
 		"fNOR_3: nop;"
-		: "=r" (out)
-		: "r" (in1), "r" (in2)
+		: 
+		: "r" (out), "r" (in1), "r" (in2)
 		: "rax", "rbx", "r11", "memory"
 	);
 }
