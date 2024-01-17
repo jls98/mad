@@ -404,6 +404,7 @@ void test_fAND(){
 		
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;
+		*((uint64_t *)buf) =0;
 		
 		flush(in1);
 		load(in2);
@@ -430,6 +431,7 @@ void test_fAND(){
 		
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;
+		*((uint64_t *)buf) =0;
 		
 		load(in1);
 		flush(in2);
@@ -456,6 +458,7 @@ void test_fAND(){
 		
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;
+		*((uint64_t *)buf) =0;
 		
 		load(in1);
 		load(in2);
