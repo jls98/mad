@@ -247,6 +247,7 @@ static void fNOR(void *out, void *in1, void *in2){
 		".endr;"		
 		// END delay ops 
 		"mov r11, [%0+rax];" // addr output + 0
+		"lfence;"
 		// END spec part 
 		"fNOR_1: mov [rsp], rbx;"		// in1
 		"mov r11, [%1];"
