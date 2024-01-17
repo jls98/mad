@@ -414,6 +414,7 @@ void test_fAND(){
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
 		void *out = mm+8192+128; // +page size +cache line
+		void *buf = mm+12288+192;
 		
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;
@@ -438,6 +439,7 @@ void test_fAND(){
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
 		void *out = mm+8192+128; // +page size +cache line
+		void *buf = mm+12288+192;
 		
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;
@@ -462,6 +464,7 @@ void test_fAND(){
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
 		void *out = mm+8192+128; // +page size +cache line
+		void *buf = mm+12288+192;
 		
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;
