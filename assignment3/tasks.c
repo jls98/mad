@@ -89,7 +89,7 @@ static void fNOT(void *out, void *in){
 		: "rax", "rbx", "r11", "memory"
 	);
 }
-/*
+
 static void fNOTX(void *out, void *in, uint64_t x){	
 	if (x==0) return;
 	else if (x==1) fNOT(out, in);
@@ -122,7 +122,7 @@ static void fNOTX(void *out, void *in, uint64_t x){
 		);
 	}
 }
-*/
+
 void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in){
 	__asm__ volatile(
 		"lea rbx, [fNOT2_2];"
