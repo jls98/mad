@@ -47,7 +47,7 @@ void test_fNOTX(){
 		
 		time = probe(out);			
 		CU_ASSERT_TRUE(time>THRESHOLD);
-		printf("fNOTX case not A: time is %lu\n", time);
+		//printf("fNOTX case not A: time is %lu\n", time);
 		free(mm);
 	}
 	
@@ -93,7 +93,7 @@ void test_fNOTX(){
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		time = probe(out+4160);	
 		CU_ASSERT_TRUE(time>THRESHOLD);
-		//printf("fNOTX case not A: time is %lu\n", time);
+		printf("fNOTX case not A: time is %lu\n", time);
 		free(mm);
 	}
 }
