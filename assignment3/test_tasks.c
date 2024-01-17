@@ -448,7 +448,7 @@ void test_fAND(){
 		free(mm);
 	}
 	
-	// A nand B = C 
+	// A and B = C 
 	for(int i=0;i<CYC;i++){
 		void *mm = malloc(12240);
 		void *in1=mm;
