@@ -72,7 +72,7 @@ void test_fNAND(){
 		flush(out2);
 		
 		fence();
-		fNOT(out, in1, in2);
+		fNAND(out, in1, in2);
 		fence();
 		time = probe(out);	
 		fence();
