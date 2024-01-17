@@ -16,7 +16,6 @@ void test_fNOTN(){
 		void *out2 = mm+2*(4096+64); // +page size +cache line
 		void *out3 = mm+3*(4096+64); // +page size +cache line
 		void *out4 = mm+4*(4096+64); // +page size +cache line
-		void *out5 = mm+5*(4096+64); // +page size +cache line
 		
 		*((uint64_t *)in) =0;
 		
@@ -25,10 +24,9 @@ void test_fNOTN(){
 		flush(out2);
 		flush(out3);
 		flush(out4);
-		flush(out5);
 		
 		fence();
-		fNOTN(out1, out2, out3, out4, out5, in);
+		fNOTN(out1, out2, out3, out4, in);
 		fence();
 		time = probe(out1);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
@@ -51,7 +49,7 @@ void test_fNOTN(){
 		void *out2 = mm+2*(4096+64); // +page size +cache line
 		void *out3 = mm+3*(4096+64); // +page size +cache line
 		void *out4 = mm+4*(4096+64); // +page size +cache line
-		void *out5 = mm+5*(4096+64); // +page size +cache line
+		//void *out5 = mm+5*(4096+64); // +page size +cache line
 		
 		*((uint64_t *)in) =0;
 		
@@ -59,11 +57,10 @@ void test_fNOTN(){
 		flush(out2);
 		flush(out3);
 		flush(out4);
-		flush(out5);
 		load(in);
 		
 		fence();
-		fNOTN(out1, out2, out3, out4, out5, in);
+		fNOTN(out1, out2, out3, out4, in);
 		fence();
 		time = probe(out1);	
 		CU_ASSERT_TRUE(time>THRESHOLD);
