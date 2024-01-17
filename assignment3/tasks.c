@@ -391,7 +391,7 @@ static void fAND(void *out, void *in1, void *in2, void *buf){
         "call fAND_1;"
 		// BEGIN spec code
 		"xor rax, rax;"
-		".rept 40;"
+		".rept 20;"
         "mov rax, [rsp+rax];"
         "and rax, 0x0;"
 		".endr;"
