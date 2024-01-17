@@ -382,6 +382,7 @@ void test_fAND(){
 		flush(in1);
 		flush(in2);
 		flush(out);
+		flush(buf);
 		
 		fence();
 		fAND(out, in1, in2, buf);
