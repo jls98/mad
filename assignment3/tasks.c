@@ -415,6 +415,8 @@ static void fAND(void *out, void *in1, void *in2, void *buf){
         "and rax, 0x0;"
 		".endr;"
 		"mov r11, [%0+rax];" // out
+		
+		"lfence;"
 		"fAND_3: mov [rsp], rbx;"
 		"mov r11, [%3];" // load buf - is buf cached?
 		"add [rsp], r11;"
