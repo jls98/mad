@@ -178,7 +178,7 @@ void test_fNOR(){
 		fence();
 		time = probe(out);	
 		fence();
-		printf("fNOR case notA, notB: C is %lu\n", time);
+		//printf("fNOR case notA, notB: C is %lu\n", time);
 		
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
@@ -203,7 +203,7 @@ void test_fNOR(){
 		fence();
 		time = probe(out);	
 		fence();
-		printf("fNOR case notA, B: C is %lu\n", time);
+		//printf("fNOR case notA, B: C is %lu\n", time);
 		
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
@@ -228,7 +228,7 @@ void test_fNOR(){
 		fence();
 		time = probe(out);	
 		fence();
-		printf("fNOR case A, notB: C is %lu\n", time);
+		//printf("fNOR case A, notB: C is %lu\n", time);
 		
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
@@ -253,7 +253,7 @@ void test_fNOR(){
 		fence();
 		time = probe(out);	
 		fence();
-		printf("fNOR case A, B: C is %lu\n", time);
+		//printf("fNOR case A, B: C is %lu\n", time);
 		
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
