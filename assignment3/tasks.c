@@ -391,7 +391,7 @@ static void fAND(void *out, void *in1, void *in2, void *buf){
         "call fAND_1;"
 		// BEGIN spec code first part - intermediate value buf
         "xor rax, rax;"
-		".rept 20;"
+		".rept 5;"
         "mov rax, [rsp+rax];"
         "and rax, 0x0;"
 		".endr;"
@@ -403,11 +403,14 @@ static void fAND(void *out, void *in1, void *in2, void *buf){
         "add r11, [%2];" // in2
         "add [rsp], r11;"
         "ret;"
+		".rept 100;"
+		"nop;"
+		".endr;"
         "fAND_2: lea rbx, [fAND_4];" // negate nand result to get and
 		"call fAND_3;"
 		// BEGIN spec code
         "xor rax, rax;"
-		".rept 20;"
+		".rept 5;"
         "mov rax, [rsp+rax];"
         "and rax, 0x0;"
 		".endr;"

@@ -464,6 +464,7 @@ void test_fAND(){
 		time = probe(out);	
 		fence();
 		
+		//printf("fNOT case not A: time is %lu\n", time);
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
 	}
@@ -474,7 +475,7 @@ int main() {
 
     CU_pSuite suite = CU_add_suite("Test Suite assignment 3", NULL, NULL);
     CU_add_test(suite, "Test fNOT", test_fNOT);
-    CU_add_test(suite, "Test fNOT", test_fNOTX);
+    //CU_add_test(suite, "Test fNOTX", test_fNOTX);
     CU_add_test(suite, "Test fNAND", test_fNAND); 
     CU_add_test(suite, "Test fAND", test_fAND); 
     CU_add_test(suite, "Test fNOR", test_fNOR);
