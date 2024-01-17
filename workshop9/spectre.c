@@ -26,12 +26,10 @@ void *cc;
 void cc_init(){
 	
     cc = malloc(256*sizeof(void *)); // allocate space for 256 cache lines
-    return cc;
 }
 
 void cc_setup(){
     for(int i=0;i<256;i++) flush(&cc[i]); // flush cc  
-    return cc;
 }
 
 void cc_transmit(uint8_t value){
