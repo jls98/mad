@@ -17,9 +17,9 @@ void test_fNOT(){
 	flush(in);
 	flush(out);
 	fence();
-	fNOT(b, a);
+	fNOT(out, in);
 	fence();
-	time = probe(b);	
+	time = probe(out);	
 	fence();
 	CU_ASSERT_TRUE(time<THRESHOLD);
 	printf("fNOT case not A: time is %lu\n", time);
