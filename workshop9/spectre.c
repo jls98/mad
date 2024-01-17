@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define THRESHOLD 170
 // init covert channel
 void cc_init();
 
@@ -33,24 +34,17 @@ void cc_setup(){
 }
 
 void cc_transmit(uint8_t value){
-    // make val 256 bit binary 
-    uint8_t val_cur=value;
-    uint8_t remainder =0;
-    uint64_t counter = 0;
-    
-    for(uint64_t counter=0; counter<256 && val_cur>0;counter++){
-        // divide by two
-        // if remainder = 1
-        remainder = val_cur%2;
-        val_cur/=2;
-        if(remainder){
-            load(&cc[counter]);
-        }
-    }
+    __asm__ volatile ("mov rax, [%0];mov rax,[%1+rax]"::"r" (value), "r" (cc): "rax");
 }
 
 uint8_t cc_receive(){
-    
+    uint8_t value=0;
+    for(int i=0;i<256;i++){
+        if (probe(&cc[i]) > THRESHOLD){
+            return i;
+        }
+    }
+    return -1;
 }
 
 void flush(void *p)
