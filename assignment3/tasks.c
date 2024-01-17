@@ -390,8 +390,8 @@ static void fAND(void *out, void *in1, void *in2, void *buf){
 		"lea rbx, [fAND_2];"
         "call fAND_1;"
 		// BEGIN spec code
-		"mov r11, [%1+rax];" // in1
-        "add r11, [%2+rax];" // in2
+		"mov rax, [%1];" // in1
+        "add rax, [%2];" // in2
 		"add r11, [%0+rax];"
 		// END spec code
         "lfence;"
