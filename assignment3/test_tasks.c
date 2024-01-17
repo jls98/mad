@@ -160,7 +160,7 @@ void test_fNOR(){
 	uint64_t time;
 	
 	// notA nor notB = C
-	for(int i=0;i<10;i++){
+	for(int i=0;i<10000;i++){
 		void *mm = malloc(12240);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
@@ -185,7 +185,7 @@ void test_fNOR(){
 	}
 	
 	// notA nor B = notC 
-	for(int i=0;i<10;i++){
+	for(int i=0;i<10000;i++){
 		void *mm = malloc(12240);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
@@ -210,7 +210,7 @@ void test_fNOR(){
 	}
 	
 	// A nor notB = notC 
-	for(int i=0;i<10;i++){
+	for(int i=0;i<10000;i++){
 		void *mm = malloc(12240);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
@@ -235,7 +235,7 @@ void test_fNOR(){
 	}
 	
 	// A nor B = notC 
-	for(int i=0;i<10;i++){
+	for(int i=0;i<10000;i++){
 		void *mm = malloc(2*8192);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
