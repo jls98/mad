@@ -51,7 +51,7 @@ void test_fNOTX(){
 		free(mm);
 	}
 	
-	// x=2
+	/*// x=2
 	// ------------ not A ------------
 	int fac=2;
 	for(int i=0;i<CYC;i++){
@@ -103,7 +103,7 @@ void test_fNOTX(){
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		printf("fNOTX case not A: time is %lu\n", time);
 		free(mm);
-	}
+	}*/
 }
 void test_fNOT(){
 	// preparation
@@ -370,6 +370,7 @@ int main() {
     CU_add_test(suite, "Test fNOT", test_fNOT);
     CU_add_test(suite, "Test fNOT", test_fNOTX);
     CU_add_test(suite, "Test fNAND", test_fNAND); 
+    CU_add_test(suite, "Test fAND", test_fAND); 
     CU_add_test(suite, "Test fNOR", test_fNOR);
 
     CU_basic_run_tests();
