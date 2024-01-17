@@ -576,6 +576,7 @@ int main() {
     CU_add_test(suite, "Test fNAND", test_fNAND); 
     CU_add_test(suite, "Test fAND", test_fAND); 
     CU_add_test(suite, "Test fNOR", test_fNOR);
+    CU_add_test(suite, "Test fOR", test_fNOR);
 
     CU_basic_run_tests();
     CU_cleanup_registry();
