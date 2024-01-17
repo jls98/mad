@@ -407,6 +407,7 @@ void test_fAND(){
 		flush(in1);
 		load(in2);
 		flush(out);
+		flush(buf);
 		
 		fence();
 		fAND(out, in1, in2, buf);
@@ -432,6 +433,7 @@ void test_fAND(){
 		load(in1);
 		flush(in2);
 		flush(out);
+		flush(buf);
 		
 		fence();
 		fAND(out, in1, in2, buf);
@@ -457,6 +459,7 @@ void test_fAND(){
 		load(in1);
 		load(in2);
 		flush(out);
+		flush(buf);
 		
 		fence();
 		fAND(out, in1, in2, buf);
@@ -464,7 +467,7 @@ void test_fAND(){
 		time = probe(out);	
 		fence();
 		
-		printf("fand case not A: time is %lu\n", time);
+		printf("fand case A B: C is %lu\n", time);
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
 	}
