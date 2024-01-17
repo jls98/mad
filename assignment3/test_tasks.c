@@ -4,6 +4,45 @@
 
 #define CYC 100
 
+void test_fNOTN(){
+	uint64_t time; 
+	wait(1E9);
+	// x=1
+	// ------------ not A ------------
+	for(int i=0;i<CYC;i++){
+		void *mm = malloc(8192);
+		void *in=mm;
+		void *out1 = mm+4096+64; // +page size +cache line
+		void *out2 = mm+2*(4096+64); // +page size +cache line
+		void *out3 = mm+3*(4096+64); // +page size +cache line
+		void *out4 = mm+4*(4096+64); // +page size +cache line
+		
+		*((uint64_t *)in) =0;
+		
+		flush(in);
+		flush(out1);
+		flush(out2);
+		flush(out3);
+		flush(out4);
+		
+		fence();
+		fNOTN(out1, out2, out3, out4, in);
+		fence();
+		time = probe(out1);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out2);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out3);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out4);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		//printf("fNOT case not A: time is %lu\n", time);
+		free(mm);
+	}
+}
+	
+	
+	
 void test_fNOTX(){
 
 	uint64_t time; 
@@ -53,7 +92,7 @@ void test_fNOTX(){
 	
 	// x=2
 	// ------------ not A ------------
-	int fac=5;
+	int fac=4;
 	for(int i=0;i<CYC;i++){
 		void *mm = malloc(81920);
 		void *in=mm;
@@ -566,7 +605,8 @@ int main() {
 
     CU_pSuite suite = CU_add_suite("Test Suite assignment 3", NULL, NULL);
    // CU_add_test(suite, "Test fNOT", test_fNOT);
-    CU_add_test(suite, "Test fNOTX", test_fNOTX);
+    CU_add_test(suite, "Test fNOTX", test_fNOTN);
+    //CU_add_test(suite, "Test fNOTX", test_fNOTX);
    // CU_add_test(suite, "Test fNAND", test_fNAND); 
     //CU_add_test(suite, "Test fAND", test_fAND); 
     //CU_add_test(suite, "Test fNOR", test_fNOR);
