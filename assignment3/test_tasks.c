@@ -48,7 +48,7 @@ void test_fNOTX(){
 		fence();
 		
 		CU_ASSERT_TRUE(time>THRESHOLD);
-		//printf("fNOT case not A: time is %lu\n", time);
+		printf("fNOTX case not A: time is %lu\n", time);
 		free(mm);
 	}
 }
