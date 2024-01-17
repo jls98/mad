@@ -48,7 +48,7 @@ uint8_t cc_receive(){
     uint8_t value=0;
     for(int i=0;i<256;i++){
         if (probe(&cc[i]) < THRESHOLD){
-            return i;
+            return 256-i;
         }
     }
     return -1;
@@ -84,9 +84,12 @@ uint64_t probe(void *adrs){
 
 int main(){
     cc_init();
-    cc_setup();
-    cc_transmit(1);
-    printf("received %u\n", cc_receive());
+    for(int i=0;i<256;i++){
+        cc_setup();
+        cc_transmit(1);
+        printf("received %u, sent %i\n", cc_receive(), i);        
+    }
+
 }
 
 
