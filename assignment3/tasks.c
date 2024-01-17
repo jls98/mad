@@ -93,30 +93,26 @@ static void fNOTX(void *out, void *in, uint64_t x){
 	if (x==2){
 	__asm__ volatile(
 		"lea rbx, [fNOT2_2];"
-		"mov r8, 4160;"
-		"mov rdx, %0;"
 		"call fNOT2_1;"
 		"xor rax, rax;"
 		// BEGIN delay ops 
-		".rept 1;"
+		".rept 5;"
 		"mov rax, [rsp+rax];"
 		"and rax, 0x0;"
 		".endr;"
 		// BEGIN Spec part 		
-		"mov r11, [rdx+rax];" // spec instr
-		"add rdx, r8;"
-		"mov r11, [rdx+rax];" // spec instr
-		"add rdx, r8;"
+		"mov r11, [%1+rax];" // spec instr
+		"mov r11, [%2+rax];" // spec instr
 		"lfence;"
 		// END Spec part
 		"fNOT2_1: mov [rsp], rbx;" 
-		"mov r11, [%1];" // load input
+		"mov r11, [%0];" // load input
 		"add [rsp], r11;" // data dependency between input and ptr adrs
 		"ret;"
 		
 		"fNOT2_2: nop;"
 		: 
-		: "r" (out), "r" (in)
+		: "r" (in), "r" (out), "r" (out+4160)
 		: "rax", "rbx", "rdx", "r8", "r11", "memory"
 	);
 	}
