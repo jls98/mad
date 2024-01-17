@@ -38,7 +38,9 @@ void flush(void *p)
     __asm__ volatile ("clflush [%0]":: "r" (p));
 }
 
-int main(){}
+int main(){
+    cc_setup();
+}
 
 
 
