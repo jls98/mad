@@ -289,64 +289,6 @@ static void fNOTX(void *out, void *in, uint64_t x){
 	}*/
 }
 
-static void fNOT3(void *out1, void *out2, void *out3, void *in){	
-	__asm__ volatile(
-		"lea rbx, [fNOT3_2];"
-		"call fNOT3_1;"
-		// BEGIN Spec part 		
-		"xor rax, rax;"
-		// BEGIN delay ops
-		".rept 5;"
-		"mov rax, [rsp+rax];"
-		"and rax, 0x0;"
-		".endr;"
-		// END delay ops
-		"mov r11, [%0+rax];" // spec instr
-		"mov r11, [%1+rax];" // spec instr
-		"mov r11, [%2+rax];" // spec instr
-		"lfence;"
-		// END Spec part
-		"fNOT3_1: mov [rsp], rbx;" 
-		"mov r11, [%3];" // load input
-		"add [rsp], r11;" // data dependency between input and ptr adrs
-		"ret;"
-		
-		"fNOT3_2: nop;"
-		: 
-		: "r" (out1), "r" (out2), "r" (out3), "r" (in)
-		: "rax", "rbx", "r11", "memory"
-	);
-}
-
-static void fNOT4(void *out1, void *out2, void *out3, void *out4, void *in){	
-	__asm__ volatile(
-		"lea rbx, [fNOT4_2];"
-		"call fNOT4_1;"
-		// BEGIN Spec part 		
-		"xor rax, rax;"
-		// BEGIN delay ops
-		".rept 5;"
-		"mov rax, [rsp+rax];"
-		"and rax, 0x0;"
-		".endr;"
-		// END delay ops
-		"mov r11, [%0+rax];" // spec instr
-		"mov r11, [%1+rax];" // spec instr
-		"mov r11, [%2+rax];" // spec instr
-		"mov r11, [%3+rax];" // spec instr
-		"lfence;"
-		// END Spec part
-		"fNOT4_1: mov [rsp], rbx;" 
-		"mov r11, [%4];" // load input
-		"add [rsp], r11;" // data dependency between input and ptr adrs
-		"ret;"
-		
-		"fNOT4_2: nop;"
-		: 
-		: "r" (out1), "r" (out2),"r" (out3), "r" (out4), "r" (in)
-		: "rax", "rbx", "r11", "memory"
-	);
-}
 
 
 static void fNOR(void *out, void *in1, void *in2){
