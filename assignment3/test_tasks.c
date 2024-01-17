@@ -55,7 +55,7 @@ void test_fNOTX(){
 	// ------------ not A ------------
 	int fac=2;
 	for(int i=0;i<CYC;i++){
-		void *mm = malloc(819200);
+		void *mm = malloc(81920);
 		void *in=mm;
 		void *out = mm+4096+64; // +page size +cache line
 		
@@ -80,7 +80,7 @@ void test_fNOTX(){
 	
 	// ------------ A ------------
 	for(int i=0;i<CYC;i++){
-		void *mm = malloc(819200);
+		void *mm = malloc(81920);
 		void *in=mm;
 		void *out = mm+4096+64; // +page size +cache line
 
