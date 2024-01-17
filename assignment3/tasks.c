@@ -345,7 +345,81 @@ static void fNAND(void *out, void *in1, void *in2){
     );
 }
 
+static void fOR(void *out, void *in1, void *in2, void *buf){
+	__asm__ volatile(
+		"lea rbx, [fOR_2];"
+        "call fOR_1;"
+		// BEGIN spec code first part - intermediate value buf
+        "xor rax, rax;"
+		".rept 20;"
+        "mov rax, [rsp+rax];"
+        "and rax, 0x0;"
+		".endr;"
+		"mov r11, [%3+rax];" // buf
+		// END spec code
+        "lfence;"
+        "fOR_1: mov [rsp], rbx;" // move 
+        "mov r11, [%1];" // in1
+        "add r11, [%2];" // in2
+        "add [rsp], r11;"
+        "ret;"
+        "fOR_2: lea rbx, [fOR_4];" // negate nand result to get and
+		"call fOR_3;"
+		// BEGIN spec code
+        "xor rax, rax;"
+		".rept 20;"
+        "mov rax, [rsp+rax];"
+        "and rax, 0x0;"
+		".endr;"
+		"mov r11, [%0+rax];" // out
+		"fOR_3: mov [rsp], rbx;"
+		"mov r11, [%3];" // load buf - is buf cached?
+		"add [rsp], r11;"
+		"ret;"
+		"fOR_4: nop;" // end
+        : 
+        : "r" (out), "r" (in1), "r" (in2), "r" (buf)
+        : "rax", "rbx", "r11", "memory"
+    );
+}
 
+static void fAND(void *out, void *in1, void *in2){
+	__asm__ volatile(
+		"lea rbx, [fAND_2];"
+        "call fAND_1;"
+		// BEGIN spec code first part - intermediate value buf
+        "xor rax, rax;"
+		".rept 20;"
+        "mov rax, [rsp+rax];"
+        "and rax, 0x0;"
+		".endr;"
+		"mov r11, [%3+rax];" // buf
+		// END spec code
+        "lfence;"
+        "fAND_1: mov [rsp], rbx;" // move 
+        "mov r11, [%1];" // in1
+        "add r11, [%2];" // in2
+        "add [rsp], r11;"
+        "ret;"
+        "fAND_2: lea rbx, [fAND_4];" // negate nand result to get and
+		"call fAND_3;"
+		// BEGIN spec code
+        "xor rax, rax;"
+		".rept 20;"
+        "mov rax, [rsp+rax];"
+        "and rax, 0x0;"
+		".endr;"
+		"mov r11, [%0+rax];" // out
+		"fAND_3: mov [rsp], rbx;"
+		"mov r11, [%3];" // load buf - is buf cached?
+		"add [rsp], r11;"
+		"ret;"
+		"fAND_4: nop;" // end
+        : 
+        : "r" (out), "r" (in1), "r" (in2), "r" (buf)
+        : "rax", "rbx", "r11", "memory"
+    );
+}
 
 
 
