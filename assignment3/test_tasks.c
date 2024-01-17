@@ -62,6 +62,7 @@ void test_fNOTX(){
 		
 		flush(in);
 		flush(out);
+		flush(out+4160);
 		
 		fence();
 		fNOTX(out, in, 2);
@@ -83,6 +84,7 @@ void test_fNOTX(){
 
 		*((uint64_t *)in) =0;
 		flush(out);
+		flush(out+4160);
 		load(in);
 		
 		fence();
