@@ -6,9 +6,7 @@
 #define THRESHOLD 160 // timing around 14-16 when cached
 
 static void fNOT(void *out, void *in); // NOT gate
-static void fNOT2(void *out1, void *out2, void *in); // NOT gate
-static void fNOT3(void *out1, void *out2, void *out3, void *in); // NOT gate
-static void fNOT4(void *out1, void *out2, void *out3, void *out4, void *in); // NOT gate
+static void fNOTX(void *out, void *in, uint64_t x); // xNOT gate with x out
 static void fNOR(void *out, void *in1, void *in2);
 static void fNAND(void *out, void *in1, void *in2);
 
@@ -17,6 +15,7 @@ static void flush(void *adrs); // clflush adrs
 static void load(void *adrs); // load adrs into cache
 static void wait(uint64_t cycles); // just wait
 static void fence();
+
 #ifndef TESTCASE
 int main(){
 	printf("hi\n");
@@ -88,31 +87,30 @@ static void fNOT(void *out, void *in){
 	);
 }
 
-static void fNOT2(void *out1, void *out2, void *in){	
+static void fNOTX(void *out, void *in, uint64_t x){	
+	if (x==0) return;
 	__asm__ volatile(
-		"lea rbx, [fNOT2_2];"
-		"call fNOT2_1;"
+		"lea rbx, [fNOTX_2];"
+		"mov rcx, %2;" // x
+		"mov r8, 4160;"
+		"mov rdx, %0;"
+		"call fNOTX_1;"
 		// BEGIN Spec part 		
-		"xor rax, rax;"
-		// BEGIN delay ops
-		".rept 5;"
-		"mov rax, [rsp+rax];"
-		"and rax, 0x0;"
-		".endr;"
-		// END delay ops
-		"mov r11, [%0+rax];" // spec instr
-		"mov r11, [%1+rax];" // spec instr
+		"loop: mov r11, [rdx];" // spec instr
+		"dec rcx;"
+		"add rdx, r8;"
+		"jnz loop;"
 		"lfence;"
 		// END Spec part
-		"fNOT2_1: mov [rsp], rbx;" 
-		"mov r11, [%2];" // load input
+		"fNOTX_1: mov [rsp], rbx;" 
+		"mov r11, [%1];" // load input
 		"add [rsp], r11;" // data dependency between input and ptr adrs
 		"ret;"
 		
-		"fNOT2_2: nop;"
+		"fNOTX_2: nop;"
 		: 
-		: "r" (out1), "r" (out2), "r" (in)
-		: "rax", "rbx", "r11", "memory"
+		: "r" (out), "r" (in), "r" (x)
+		: "rax", "rbx", "rcx", "rdx", "r8", "r11", "memory"
 	);
 }
 
@@ -175,63 +173,6 @@ static void fNOT4(void *out1, void *out2, void *out3, void *out4, void *in){
 	);
 }
 
-/*
-static void fNOT2(void *out1, void *out2 void *in){	
-	__asm__ volatile(
-		"lea rbx, [fNOT_2];"
-		"call fNOT_1;"
-		// BEGIN Spec part 		
-		"xor rax, rax;"
-		// BEGIN delay ops
-		".rept 5;"
-		"mov rax, [rsp+rax];"
-		"and rax, 0x0;"
-		".endr;"
-		// END delay ops
-		"mov r11, [%0+rax];" // spec instr
-		"mov r11, [%1+rax];" // spec instr
-		"lfence;"
-		// END Spec part
-		"fNOT_1: mov [rsp], rbx;" 
-		"mov r11, [%1];" // load input
-		"add [rsp], r11;" // data dependency between input and ptr adrs
-		"ret;"
-		
-		"fNOT_2: nop;"
-		: 
-		: "r" (out1), "r" (out2), "r" (in)
-		: "rax", "rbx", "r11", "memory"
-	);
-}
-
-static void fNOT2(void *out1, void *out2 void *in){	
-	__asm__ volatile(
-		"lea rbx, [fNOT_2];"
-		"call fNOT_1;"
-		// BEGIN Spec part 		
-		"xor rax, rax;"
-		// BEGIN delay ops
-		".rept 5;"
-		"mov rax, [rsp+rax];"
-		"and rax, 0x0;"
-		".endr;"
-		// END delay ops
-		"mov r11, [%0+rax];" // spec instr
-		"mov r11, [%1+rax];" // spec instr
-		"lfence;"
-		// END Spec part
-		"fNOT_1: mov [rsp], rbx;" 
-		"mov r11, [%1];" // load input
-		"add [rsp], r11;" // data dependency between input and ptr adrs
-		"ret;"
-		
-		"fNOT_2: nop;"
-		: 
-		: "r" (out1), "r" (out2), "r" (in)
-		: "rax", "rbx", "r11", "memory"
-	);
-}*/
-
 
 static void fNOR(void *out, void *in1, void *in2){
 	__asm__ volatile(
@@ -265,10 +206,6 @@ static void fNOR(void *out, void *in1, void *in2){
 		: "rax", "rbx", "r11", "memory"
 	);
 }
-
-
-
-// works lika an or logic gate!
 
 static void fNAND(void *out, void *in1, void *in2){
 	__asm__ volatile(

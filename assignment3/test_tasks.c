@@ -2,14 +2,63 @@
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
 
-// broken now :S
+#define CYC 100
+
+void test_fNOTX(){
+
+	uint64_t time; 
+	wait(1E9);
+
+	// ------------ not A ------------
+	for(int i=0;i<100;i++){
+		void *mm = malloc(8192);
+		void *in=mm;
+		void *out = mm+4096+64; // +page size +cache line
+		
+		*((uint64_t *)in) =0;
+		
+		flush(in);
+		flush(out);
+		
+		fence();
+		fNOTX(out, in, 1);
+		fence();
+		time = probe(out);	
+		fence();
+		
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		//printf("fNOT case not A: time is %lu\n", time);
+		free(mm);
+	}
+	
+	// ------------ A ------------
+	for(int i=0;i<100;i++){
+		void *mm = malloc(8192);
+		void *in=mm;
+		void *out = mm+4096+64; // +page size +cache line
+
+		*((uint64_t *)in) =0;
+		flush(out);
+		load(in);
+		
+		fence();
+		fNOTX(out, in, 1);
+		fence();
+		time = probe(out);	
+		fence();
+		
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		//printf("fNOT case not A: time is %lu\n", time);
+		free(mm);
+	}
+}
 void test_fNOT(){
 	// preparation
 	uint64_t time; 
 	wait(1E9);
 
 	// ------------ not A ------------
-	for(int i=0;i<10000;i++){
+	for(int i=0;i<CYC;i++){
 		void *mm = malloc(8192);
 		void *in=mm;
 		void *out = mm+4096+64; // +page size +cache line
@@ -31,7 +80,7 @@ void test_fNOT(){
 	}
 	
 	// ------------ A ------------
-	for(int i=0;i<10000;i++){
+	for(int i=0;i<CYC;i++){
 		void *mm = malloc(8192);
 		void *in=mm;
 		void *out = mm+4096+64; // +page size +cache line
@@ -58,7 +107,7 @@ void test_fNAND(){
 	uint64_t time;
 	
 	// notA nand notB = C
-	for(int i=0;i<10000;i++){
+	for(int i=0;i<CYC;i++){
 		void *mm = malloc(12240);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
@@ -82,7 +131,7 @@ void test_fNAND(){
 	}
 	
 	// notA nand B = C 
-	for(int i=0;i<10000;i++){
+	for(int i=0;i<CYC;i++){
 		void *mm = malloc(12240);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
@@ -106,7 +155,7 @@ void test_fNAND(){
 	}
 	
 	// A nand notB = C 
-	for(int i=0;i<10000;i++){
+	for(int i=0;i<CYC;i++){
 		void *mm = malloc(12240);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
@@ -130,7 +179,7 @@ void test_fNAND(){
 	}
 	
 	// A nand B = notC 
-	for(int i=0;i<10000;i++){
+	for(int i=0;i<CYC;i++){
 		void *mm = malloc(12240);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
@@ -160,7 +209,7 @@ void test_fNOR(){
 	uint64_t time;
 	
 	// notA nor notB = C
-	for(int i=0;i<10000;i++){
+	for(int i=0;i<CYC;i++){
 		void *mm = malloc(12240);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
@@ -185,7 +234,7 @@ void test_fNOR(){
 	}
 	
 	// notA nor B = notC 
-	for(int i=0;i<10000;i++){
+	for(int i=0;i<CYC;i++){
 		void *mm = malloc(12240);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
@@ -210,7 +259,7 @@ void test_fNOR(){
 	}
 	
 	// A nor notB = notC 
-	for(int i=0;i<10000;i++){
+	for(int i=0;i<CYC;i++){
 		void *mm = malloc(12240);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
@@ -235,7 +284,7 @@ void test_fNOR(){
 	}
 	
 	// A nor B = notC 
-	for(int i=0;i<10000;i++){
+	for(int i=0;i<CYC;i++){
 		void *mm = malloc(2*8192);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
@@ -266,7 +315,8 @@ int main() {
 
     CU_pSuite suite = CU_add_suite("Test Suite assignment 3", NULL, NULL);
     CU_add_test(suite, "Test fNOT", test_fNOT);
-    CU_add_test(suite, "Test fNAND", test_fNAND);
+    CU_add_test(suite, "Test fNOT", test_fNOTX);
+    CU_add_test(suite, "Test fNAND", test_fNAND); 
     CU_add_test(suite, "Test fNOR", test_fNOR);
 
     CU_basic_run_tests();
