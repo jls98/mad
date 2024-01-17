@@ -113,7 +113,7 @@ static void fNOTX(void *out, void *in, uint64_t x){
 		"fNOT2_2: nop;"
 		: 
 		: "r" (in), "r" (out), "r" (out+4160)
-		: "rax", "rbx", "rdx", "r8", "r11", "memory"
+		: "rax", "rbx", "r11", "memory"
 	);
 	}
 	if (x==4){
