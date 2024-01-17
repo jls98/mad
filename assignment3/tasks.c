@@ -98,7 +98,7 @@ static void fNOTX(void *out, void *in, uint64_t x){
 			"call fNOT2_1;"
 			"xor rax, rax;"
 			// BEGIN delay ops 
-			".rept 6;" // deplen
+			".rept 10;" // deplen
 			"mov rax, [rsp+rax];"
 			"and rax, 0x0;"
 			".endr;"
