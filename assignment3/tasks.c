@@ -92,10 +92,10 @@ static void fNOTX(void *out, void *in, uint64_t x){
 	if (x==1) fNOT(out, in);
 	if (x==2){
 	__asm__ volatile(
-		"lea rbx, [fNOTX_2];"
+		"lea rbx, [fNOT2_2];"
 		"mov r8, 4160;"
 		"mov rdx, %0;"
-		"call fNOTX_1;"
+		"call fNOT2_1;"
 		"xor rax, rax;"
 		// BEGIN delay ops 
 		".rept 5;"
@@ -109,12 +109,12 @@ static void fNOTX(void *out, void *in, uint64_t x){
 		"add rdx, r8;"
 		"lfence;"
 		// END Spec part
-		"fNOTX_1: mov [rsp], rbx;" 
+		"fNOT2_1: mov [rsp], rbx;" 
 		"mov r11, [%1];" // load input
 		"add [rsp], r11;" // data dependency between input and ptr adrs
 		"ret;"
 		
-		"fNOTX_2: nop;"
+		"fNOT2_2: nop;"
 		: 
 		: "r" (out), "r" (in)
 		: "rax", "rbx", "rdx", "r8", "r11", "memory"
@@ -122,10 +122,10 @@ static void fNOTX(void *out, void *in, uint64_t x){
 	}
 	if (x==4){
 	__asm__ volatile(
-		"lea rbx, [fNOTX_2];"
+		"lea rbx, [fNOT4_2];"
 		"mov r8, 4160;"
 		"mov rdx, %0;"
-		"call fNOTX_1;"
+		"call fNOT4_1;"
 		"xor rax, rax;"
 		// BEGIN delay ops 
 		".rept 5;"
@@ -143,12 +143,12 @@ static void fNOTX(void *out, void *in, uint64_t x){
 		"add rdx, r8;"
 		"lfence;"
 		// END Spec part
-		"fNOTX_1: mov [rsp], rbx;" 
+		"fNOT4_1: mov [rsp], rbx;" 
 		"mov r11, [%1];" // load input
 		"add [rsp], r11;" // data dependency between input and ptr adrs
 		"ret;"
 		
-		"fNOTX_2: nop;"
+		"fNOT4_2: nop;"
 		: 
 		: "r" (out), "r" (in)
 		: "rax", "rbx", "rdx", "r8", "r11", "memory"
@@ -157,10 +157,10 @@ static void fNOTX(void *out, void *in, uint64_t x){
 
 	if (x==8){
 	__asm__ volatile(
-		"lea rbx, [fNOTX_2];"
+		"lea rbx, [fNOT8_2];"
 		"mov r8, 4160;"
 		"mov rdx, %0;"
-		"call fNOTX_1;"
+		"call fNOT8_1;"
 		"xor rax, rax;"
 		// BEGIN delay ops 
 		".rept 5;"
@@ -186,18 +186,18 @@ static void fNOTX(void *out, void *in, uint64_t x){
 		"add rdx, r8;"
 		"lfence;"
 		// END Spec part
-		"fNOTX_1: mov [rsp], rbx;" 
+		"fNOT8_1: mov [rsp], rbx;" 
 		"mov r11, [%1];" // load input
 		"add [rsp], r11;" // data dependency between input and ptr adrs
 		"ret;"
 		
-		"fNOTX_2: nop;"
+		"fNOT8_2: nop;"
 		: 
 		: "r" (out), "r" (in)
 		: "rax", "rbx", "rdx", "r8", "r11", "memory"
 	);
 	}
-	if (x==16){
+	/*if (x==16){
 	__asm__ volatile(
 		"lea rbx, [fNOTX_2];"
 		"mov r8, 4160;"
@@ -286,7 +286,7 @@ static void fNOTX(void *out, void *in, uint64_t x){
 		: "r" (out), "r" (in)
 		: "rax", "rbx", "rdx", "r8", "r11", "memory"
 	);
-	}
+	}*/
 }
 
 static void fNOT3(void *out1, void *out2, void *out3, void *in){	
