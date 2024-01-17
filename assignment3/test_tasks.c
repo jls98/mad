@@ -152,110 +152,6 @@ void test_fNAND(){
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
 	}
-	// preparation
-
-
-	/*
-
-	// notA nand notB = C
-	uint64_t *a = malloc(sizeof(uint64_t *));
-	uint64_t *b = malloc(sizeof(uint64_t *));
-	uint64_t *c = malloc(sizeof(uint64_t *));
-	*a=0;
-	*b=0;
-
-	flush(a);
-	flush(b);
-	flush(c);
-	
-	fence();
-	fNAND(c, a, b);
-	fence();
-	time = probe(c);
-	fence();
-	CU_ASSERT_TRUE(time<THRESHOLD);
-	//if(time>=THRESHOLD) 
-	printf("\n\nfNAND case notA, notB: c %lu\n", time);
-	
-	free(a);
-	free(b);
-	free(c);
-	
-	
-	// notA nand B = C 
-	uint64_t *a1 = malloc(sizeof(uint64_t *));
-	uint64_t *b1 = malloc(sizeof(uint64_t *));
-	uint64_t *c1 = malloc(sizeof(uint64_t *));
-	*a1=0;
-	*b1=0;
-
-	flush(a1);
-	flush(c1);
-	load(b1);
-	
-	fence();
-	fNAND(c1, a1, b1);
-	fence();
-	time = probe(c1);
-	fence();
-	CU_ASSERT_TRUE(time>THRESHOLD);
-	//if(time>=THRESHOLD) 
-	printf("fNAND case notA, B: c %lu\n", time);
-	
-	free(a1);
-	free(b1);
-	free(c1);
-	
-	
-	// A nand B = notC 
-	uint64_t *a3 = malloc(sizeof(uint64_t *));
-	uint64_t *b3 = malloc(sizeof(uint64_t *));
-	uint64_t *c3 = malloc(sizeof(uint64_t *));
-	*a3=0;
-	*b3=0;
-
-	flush(c3);
-	load(a3);
-	load(b3);
-
-	fence();
-	fNAND(c3, a3, b3);
-	fence();
-	time = probe(c3);
-	fence();
-	CU_ASSERT_TRUE(time>THRESHOLD);
-	//if(time>=THRESHOLD) 
-	printf("fNAND case A, B: c %lu\n", time);
-	
-	free(a3);
-	free(b3);
-	free(c3);
-	
-	
-	// A nand notB = C 
-	uint64_t *a2 = malloc(sizeof(uint64_t *));
-	uint64_t *b2 = malloc(sizeof(uint64_t *));
-	uint64_t *c2 = malloc(sizeof(uint64_t *));
-	*a2=0;
-	*b2=0;
-
-	flush(b2);
-	flush(c2);
-	load(a2);
-	
-	fence();
-	fNAND(c2, a2, b2);
-	fence();
-	time = probe(c2);
-	fence();
-
-	CU_ASSERT_TRUE(time>THRESHOLD);
-	//if(time>=THRESHOLD) 
-	printf("fNAND case A, notB: c %lu\n", time);
-	
-	free(a2);
-	free(b2);
-	free(c2);*/
 }
 
 void test_fNOR(){
@@ -340,7 +236,7 @@ void test_fNOR(){
 	
 	// A nor B = notC 
 	for(int i=0;i<10;i++){
-		void *mm = malloc(12240);
+		void *mm = malloc(2*8192);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
 		void *out = mm+8192+128; // +page size +cache line
@@ -362,7 +258,6 @@ void test_fNOR(){
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
 	}
-
 }
 
 
@@ -372,7 +267,7 @@ int main() {
     CU_pSuite suite = CU_add_suite("Test Suite assignment 3", NULL, NULL);
     CU_add_test(suite, "Test fNOT", test_fNOT);
     CU_add_test(suite, "Test fNAND", test_fNAND);
-    CU_add_test(suite, "Test fNOT", test_fNOR);
+    CU_add_test(suite, "Test fNOR", test_fNOR);
 
     CU_basic_run_tests();
     CU_cleanup_registry();
