@@ -39,7 +39,7 @@ void cc_transmit(uint8_t value){
         "mov al,%0;"
         "mov bl,0x8;"
         "mul al;"
-        "mov rax, [%1+al];"
+        "mov rax, [%1+rax];"
     
         ::"r" (value), "r" (cc): "rax", "rbx");
 }
