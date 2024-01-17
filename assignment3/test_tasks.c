@@ -53,7 +53,7 @@ void test_fNOTX(){
 	
 	// x=2
 	// ------------ not A ------------
-	int fac=2;
+	int fac=5;
 	for(int i=0;i<CYC;i++){
 		void *mm = malloc(81920);
 		void *in=mm;
@@ -70,10 +70,6 @@ void test_fNOTX(){
 		fNOTX(out, in, i);
 		fence();
 		
-		time = probe(out);	
-		CU_ASSERT_TRUE(time<THRESHOLD);
-		time = probe(out+4160);	
-		CU_ASSERT_TRUE(time<THRESHOLD);
 		for(int i=0;i<fac;i++){
 			time = probe(out+i*4160);	
 			CU_ASSERT_TRUE(time<THRESHOLD);

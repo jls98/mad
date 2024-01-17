@@ -91,200 +91,35 @@ static void fNOT(void *out, void *in){
 
 static void fNOTX(void *out, void *in, uint64_t x){	
 	if (x==0) return;
-	if (x==1) fNOT(out, in);
-	if (x==2){
-	__asm__ volatile(
-		"lea rbx, [fNOT2_2];"
-		"call fNOT2_1;"
-		"xor rax, rax;"
-		// BEGIN delay ops 
-		".rept 5;"
-		"mov rax, [rsp+rax];"
-		"and rax, 0x0;"
-		".endr;"
-		// BEGIN Spec part 		
-		"mov r11, [%1+rax];" // spec instr
-		"add r11, [%2+rax];" // spec instr
-		"lfence;"
-		// END Spec part
-		"fNOT2_1: mov [rsp], rbx;" 
-		"mov r11, [%0];" // load input
-		"add [rsp], r11;" // data dependency between input and ptr adrs
-		"ret;"
-		
-		"fNOT2_2: nop;"
-		: 
-		: "r" (in), "r" (out), "r" (out+4160)
-		: "rax", "rbx", "r11", "memory"
-	);
+	else if (x==1) fNOT(out, in);
+	else {
+		__asm__ volatile(
+			"lea rbx, [fNOT2_2];"
+			"call fNOT2_1;"
+			"xor rax, rax;"
+			// BEGIN delay ops 
+			".rept 5;" // deplen
+			"mov rax, [rsp+rax];"
+			"and rax, 0x0;"
+			".endr;"
+			// BEGIN Spec part
+			".rept 5;" // accesslen
+			"mov r11, [rdi+rax];" // spec instr
+			"add rdi, 0x1040;" // add stride 4160 = 0x1040
+			".endr;"
+			"lfence;"
+			// END Spec part
+			"fNOT2_1: mov [rsp], rbx;" 
+			"mov r11, [rsi];" // load input
+			"add [rsp], r11;" // data dependency between input and ptr adrs
+			"ret;"
+			
+			"fNOT2_2: nop;"
+			: 
+			: "S" (in), "D" (out), "r" (out+4160)
+			: "rax", "rbx", "r11", "memory"
+		);
 	}
-	if (x==4){
-	__asm__ volatile(
-		"lea rbx, [fNOT4_2];"
-		"mov r8, 4160;"
-		"mov rdx, %0;"
-		"call fNOT4_1;"
-		"xor rax, rax;"
-		// BEGIN delay ops 
-		".rept 5;"
-		"mov rax, [rsp+rax];"
-		"and rax, 0x0;"
-		".endr;"
-		// BEGIN Spec part 		
-		"mov r11, [rdx+rax];" // spec instr
-		"add rdx, r8;"
-		"mov r11, [rdx+rax];" // spec instr
-		"add rdx, r8;"
-		"mov r11, [rdx+rax];" // spec instr
-		"add rdx, r8;"
-		"mov r11, [rdx+rax];" // spec instr
-		"add rdx, r8;"
-		"lfence;"
-		// END Spec part
-		"fNOT4_1: mov [rsp], rbx;" 
-		"mov r11, [%1];" // load input
-		"add [rsp], r11;" // data dependency between input and ptr adrs
-		"ret;"
-		
-		"fNOT4_2: nop;"
-		: 
-		: "r" (out), "r" (in)
-		: "rax", "rbx", "rdx", "r8", "r11", "memory"
-	);
-	}
-
-	if (x==8){
-	__asm__ volatile(
-		"lea rbx, [fNOT8_2];"
-		"mov r8, 4160;"
-		"mov rdx, %0;"
-		"call fNOT8_1;"
-		"xor rax, rax;"
-		// BEGIN delay ops 
-		".rept 5;"
-		"mov rax, [rsp+rax];"
-		"and rax, 0x0;"
-		".endr;"
-		// BEGIN Spec part 		
-		"mov r11, [rdx+rax];" // spec instr
-		"add rdx, r8;"
-		"mov r11, [rdx+rax];" // spec instr
-		"add rdx, r8;"
-		"mov r11, [rdx+rax];" // spec instr
-		"add rdx, r8;"
-		"mov r11, [rdx+rax];" // spec instr
-		"add rdx, r8;"
-		"mov r11, [rdx+rax];" // spec instr
-		"add rdx, r8;"
-		"mov r11, [rdx+rax];" // spec instr
-		"add rdx, r8;"
-		"mov r11, [rdx+rax];" // spec instr
-		"add rdx, r8;"
-		"mov r11, [rdx+rax];" // spec instr
-		"add rdx, r8;"
-		"lfence;"
-		// END Spec part
-		"fNOT8_1: mov [rsp], rbx;" 
-		"mov r11, [%1];" // load input
-		"add [rsp], r11;" // data dependency between input and ptr adrs
-		"ret;"
-		
-		"fNOT8_2: nop;"
-		: 
-		: "r" (out), "r" (in)
-		: "rax", "rbx", "rdx", "r8", "r11", "memory"
-	);
-	}
-	/*if (x==16){
-	__asm__ volatile(
-		"lea rbx, [fNOTX_2];"
-		"mov r8, 4160;"
-		"mov rdx, %0;"
-		"call fNOTX_1;"
-		"xor rax, rax;"
-		// BEGIN delay ops 
-		".rept 5;"
-		"mov rax, [rsp+rax];"
-		"and rax, 0x0;"
-		".endr;"
-		// BEGIN Spec part 		
-		"mov r11, [rdx+rax];" // spec instr
-		"add rdx, r8;"
-		"mov r11, [rdx+rax];" // spec instr
-		"add rdx, r8;"
-		"lfence;"
-		// END Spec part
-		"fNOTX_1: mov [rsp], rbx;" 
-		"mov r11, [%1];" // load input
-		"add [rsp], r11;" // data dependency between input and ptr adrs
-		"ret;"
-		
-		"fNOTX_2: nop;"
-		: 
-		: "r" (out), "r" (in)
-		: "rax", "rbx", "rdx", "r8", "r11", "memory"
-	);
-	}
-	if (x==32){
-	__asm__ volatile(
-		"lea rbx, [fNOTX_2];"
-		"mov r8, 4160;"
-		"mov rdx, %0;"
-		"call fNOTX_1;"
-		"xor rax, rax;"
-		// BEGIN delay ops 
-		".rept 5;"
-		"mov rax, [rsp+rax];"
-		"and rax, 0x0;"
-		".endr;"
-		// BEGIN Spec part 		
-		"mov r11, [rdx+rax];" // spec instr
-		"add rdx, r8;"
-		"mov r11, [rdx+rax];" // spec instr
-		"add rdx, r8;"
-		"lfence;"
-		// END Spec part
-		"fNOTX_1: mov [rsp], rbx;" 
-		"mov r11, [%1];" // load input
-		"add [rsp], r11;" // data dependency between input and ptr adrs
-		"ret;"
-		
-		"fNOTX_2: nop;"
-		: 
-		: "r" (out), "r" (in)
-		: "rax", "rbx", "rdx", "r8", "r11", "memory"
-	);
-	}
-	if (x==64){
-	__asm__ volatile(
-		"lea rbx, [fNOTX_2];"
-		"mov r8, 4160;"
-		"mov rdx, %0;"
-		"call fNOTX_1;"
-		"xor rax, rax;"
-		// BEGIN delay ops 
-		".rept 5;"
-		"mov rax, [rsp+rax];"
-		"and rax, 0x0;"
-		".endr;"
-		// BEGIN Spec part 		
-		"mov r11, [rdx+rax];" // spec instr
-		"add rdx, r8;"
-		"mov r11, [rdx+rax];" // spec instr
-		"add rdx, r8;"
-		"lfence;"
-		// END Spec part
-		"fNOTX_1: mov [rsp], rbx;" 
-		"mov r11, [%1];" // load input
-		"add [rsp], r11;" // data dependency between input and ptr adrs
-		"ret;"
-		
-		"fNOTX_2: nop;"
-		: 
-		: "r" (out), "r" (in)
-		: "rax", "rbx", "rdx", "r8", "r11", "memory"
-	);
-	}*/
 }
 
 
