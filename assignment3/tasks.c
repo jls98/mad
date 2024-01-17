@@ -407,6 +407,7 @@ static void fAND(void *out, void *in1, void *in2, void *buf){
 		"nop;"
 		".endr;"
         "fAND_2: lea rbx, [fAND_4];" // negate nand result to get and
+		"lfence;"				
 		"call fAND_3;"
 		// BEGIN spec code
         "xor rax, rax;"
