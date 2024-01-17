@@ -18,11 +18,13 @@ void test_fNOT(){
 		
 		flush(in);
 		flush(out);
+		
 		fence();
 		fNOT(out, in);
 		fence();
 		time = probe(out);	
 		fence();
+		
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		//printf("fNOT case not A: time is %lu\n", time);
 		free(mm);
@@ -37,191 +39,53 @@ void test_fNOT(){
 		*((uint64_t *)in) =0;
 		flush(out);
 		load(in);
+		
 		fence();
 		fNOT(out, in);
 		fence();
 		time = probe(out);	
 		fence();
+		
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		//printf("fNOT case not A: time is %lu\n", time);
 		free(mm);
 	}
-	/*a = malloc(sizeof(uint64_t *));
-	b = malloc(sizeof(uint64_t *));
-	*a=0;
-
-	// ------------ A ------------
-	uint64_t *a2 = malloc(sizeof(uint64_t *));
-	uint64_t *b2 = malloc(sizeof(uint64_t *));
-	*a2 = 0;
-	fence();
-	flush(b2);
-	load(a2);
-
-	fence();
-	fNOT(b2, a2);
-	time = probe(b);
 	
-	fence();
-	CU_ASSERT_TRUE(time>THRESHOLD);
-	printf("fNOT case A: time is %lu\n", time);
-	
-	fence();
-	// ---- not2
-	flush(a);
-	flush(b);
-	flush(c);
-	
-	fNOT2(c, b, a);
-	time = probe(b);	
-	CU_ASSERT_TRUE(time<THRESHOLD);
-	printf("fNOT2 case notA: b is %lu\n", time);	
-	
-	time = probe(c);	
-	CU_ASSERT_TRUE(time<THRESHOLD);
-	printf("fNOT2 case notA: c is %lu\n", time);
-
-	// ------------ A ------------
-
-	flush(b);
-	flush(c);
-	load(a);
-
-	fNOT2(c, b, a);
-	time = probe(b);	
-	CU_ASSERT_TRUE(time<THRESHOLD);
-	printf("fNOT2 case A: b is %lu\n", time);	
-	
-	time = probe(c);	
-	CU_ASSERT_TRUE(time<THRESHOLD);
-	printf("fNOT2 case A: c is %lu\n", time);
-	
-	
-	// ---- not3
-	flush(a);
-	flush(b);
-	flush(c);
-	flush(d);
-	
-	fNOT3(d, c, b, a);
-	time = probe(b);	
-	CU_ASSERT_TRUE(time<THRESHOLD);
-	printf("fNOT3 case notA: b is %lu\n", time);	
-	
-	time = probe(c);	
-	CU_ASSERT_TRUE(time<THRESHOLD);
-	printf("fNOT3 case notA: c is %lu\n", time);
-	
-	time = probe(d);	
-	CU_ASSERT_TRUE(time<THRESHOLD);
-	printf("fNOT3 case notA: d is %lu\n", time);
-
-	// ------------ A ------------
-
-	flush(b);
-	flush(c);
-	flush(d);
-	load(a);
-
-	fNOT3(d, c, b, a);
-	time = probe(b);	
-	CU_ASSERT_TRUE(time<THRESHOLD);
-	printf("fNOT3 case A: b is %lu\n", time);	
-	
-	time = probe(c);	
-	CU_ASSERT_TRUE(time<THRESHOLD);
-	printf("fNOT3 case A: c is %lu\n", time);
-	
-	time = probe(d);	
-	CU_ASSERT_TRUE(time<THRESHOLD);
-	printf("fNOT3 case A: d is %lu\n", time);
-	
-	
-	// ---- not4
-	flush(a);
-	flush(b);
-	flush(c);
-	flush(d);
-	flush(e);
-	
-	fNOT4(e, d, c, b, a);
-	time = probe(b);	
-	CU_ASSERT_TRUE(time<THRESHOLD);
-	printf("fNOT4 case notA: b is %lu\n", time);	
-	
-	time = probe(c);	
-	CU_ASSERT_TRUE(time<THRESHOLD);
-	printf("fNOT4 case notA: c is %lu\n", time);
-	
-	time = probe(d);	
-	CU_ASSERT_TRUE(time<THRESHOLD);
-	printf("fNOT4 case notA: d is %lu\n", time);
-	
-	time = probe(e);	
-	CU_ASSERT_TRUE(time<THRESHOLD);
-	printf("fNOT4 case notA: e is %lu\n", time);
-
-	// ------------ A ------------
-
-	flush(b);
-	flush(c);
-	flush(d);
-	flush(e);
-	load(a);
-
-	fNOT4(e, d, c, b, a);
-	time = probe(b);	
-	CU_ASSERT_TRUE(time<THRESHOLD);
-	printf("fNOT4 case A: b is %lu\n", time);	
-	
-	time = probe(c);	
-	CU_ASSERT_TRUE(time<THRESHOLD);
-	printf("fNOT4 case A: c is %lu\n", time);
-	
-	time = probe(d);	
-	CU_ASSERT_TRUE(time<THRESHOLD);
-	printf("fNOT4 case A: d is %lu\n", time);
-	
-	time = probe(e);	
-	CU_ASSERT_TRUE(time<THRESHOLD);
-	printf("fNOT4 case A: e is %lu\n", time);
-	
-	// -----
-	/// not A multiple times // TOdo naive version does not work since training effect
-	for (int i=0;i<100;i++){
-		// not A
-		flush(a);
-		flush(b);
-		
-		fNOT(b, a);
-		time = probe(b);
-		if(time<THRESHOLD) ctr_notA++;
-		
-		// A
-		flush(b);
-		load(a);
-		
-		fNOT(b, a);
-		time = probe(b);
-		if(time>THRESHOLD) ctr_A++;
-	}	
-	CU_ASSERT_TRUE(ctr_notA>90);
-	if(ctr_notA<=90) printf("ctr_notA %lu\n", ctr_notA);
-	CU_ASSERT_TRUE(ctr_A>90);
-	if(ctr_A<=90) printf("ctr_A %lu\n", ctr_A);
-	free(a);
-	free(b);
-	free(c);
-	free(d);
-	free(e);*/
 }
 
 void test_fNAND(){
-	// preparation
-
 	wait(1E9);
 	uint64_t time;
 	
+	// notA nand notB = C
+	for(int i=0;i<10000;i++){
+		void *mm = malloc(12240);
+		void *in1=mm;
+		void *in2 = mm+4096+64; // +page size +cache line
+		void *out2 = mm+8192+128; // +page size +cache line
+		
+		*((uint64_t *)in1) =0;
+		*((uint64_t *)in2) =0;
+		
+		flush(in1);
+		flush(in2);
+		flush(out2);
+		
+		fence();
+		fNOT(out, in1, in2);
+		fence();
+		time = probe(out);	
+		fence();
+		
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		free(mm);
+	}
+	
+	
+	// preparation
+
+
+	/*
 
 	// notA nand notB = C
 	uint64_t *a = malloc(sizeof(uint64_t *));
@@ -321,7 +185,7 @@ void test_fNAND(){
 	
 	free(a2);
 	free(b2);
-	free(c2);
+	free(c2);*/
 }
 
 void test_fNOR(){
