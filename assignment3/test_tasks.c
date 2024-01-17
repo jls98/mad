@@ -16,6 +16,7 @@ void test_fNOTN(){
 		void *out2 = mm+2*(4096+64); // +page size +cache line
 		void *out3 = mm+3*(4096+64); // +page size +cache line
 		void *out4 = mm+4*(4096+64); // +page size +cache line
+		void *out5 = mm+5*(4096+64); // +page size +cache line
 		
 		*((uint64_t *)in) =0;
 		
@@ -24,6 +25,7 @@ void test_fNOTN(){
 		flush(out2);
 		flush(out3);
 		flush(out4);
+		flush(out5);
 		
 		fence();
 		fNOTN(out1, out2, out3, out4, in);
@@ -36,6 +38,43 @@ void test_fNOTN(){
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out4);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out5);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		//printf("fNOT case not A: time is %lu\n", time);
+		free(mm);
+	}
+	
+		for(int i=0;i<CYC;i++){
+		void *mm = malloc(8192);
+		void *in=mm;
+		void *out1 = mm+4096+64; // +page size +cache line
+		void *out2 = mm+2*(4096+64); // +page size +cache line
+		void *out3 = mm+3*(4096+64); // +page size +cache line
+		void *out4 = mm+4*(4096+64); // +page size +cache line
+		void *out5 = mm+5*(4096+64); // +page size +cache line
+		
+		*((uint64_t *)in) =0;
+		
+		flush(out1);
+		flush(out2);
+		flush(out3);
+		flush(out4);
+		flush(out5);
+		load(in);
+		
+		fence();
+		fNOTN(out1, out2, out3, out4, in);
+		fence();
+		time = probe(out1);	
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		time = probe(out2);	
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		time = probe(out3);	
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		time = probe(out4);	
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		time = probe(out5);	
+		CU_ASSERT_TRUE(time>THRESHOLD);
 		//printf("fNOT case not A: time is %lu\n", time);
 		free(mm);
 	}

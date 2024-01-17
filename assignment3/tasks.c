@@ -11,7 +11,7 @@ static void fNOR(void *out, void *in1, void *in2);
 static void fNAND(void *out, void *in1, void *in2);
 static void fAND(void *out, void *in1, void *in2);
 static void fOR(void *out, void *in1, void *in2);
-static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in);
+static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* out_5, void* in);
 
 static uint64_t probe(void *adrs); // access adrs and return access
 static void flush(void *adrs); // clflush adrs 
@@ -123,7 +123,7 @@ static void fNOTX(void *out, void *in, uint64_t x){
 	}
 }
 
-static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in){
+static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* out_5, void* in){
 	__asm__ volatile(
 		"lea rbx, [fNOTN_2];"
 		"call fNOTN_1;"
@@ -138,6 +138,7 @@ static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in){
 		"add r11, [%2+rax];"
 		"add r11, [%3+rax];"
 		"add r11, [%4+rax];"
+		"add r11, [%5+rax];"
 		"lfence;"
 		// END Spec part
 		"fNOTN_1: mov [rsp], rbx;" 
@@ -147,7 +148,7 @@ static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in){
 		
 		"fNOTN_2: nop;"
 		: 
-		: "S" (in), "r" (out_1), "r" (out_2), "r" (out_3), "r" (out_4)
+		: "S" (in), "r" (out_1), "r" (out_2), "r" (out_3), "r" (out_4), "r" (out_5)
 		: "rax", "rbx", "r11", "memory"
 	);
 }
