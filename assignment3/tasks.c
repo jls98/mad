@@ -397,7 +397,7 @@ static void fAND(void *out, void *in1, void *in2, void *buf){
 		".endr;"
 		"mov r11, [%1+rax];" // in1
         "add r11, [%2+rax];" // in2
-		"mov r11, [%0+rax];"
+		"add r11, [%0+rax];"
 		// END spec code
         "lfence;"
         "fAND_1: mov [rsp], rbx;" // move 
