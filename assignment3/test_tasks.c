@@ -5,20 +5,17 @@
 // broken now :S
 void test_fNOT(){
 	// preparation
-	uint64_t *a = malloc(sizeof(uint64_t *));
-	uint64_t *b = malloc(sizeof(uint64_t *));
-	uint64_t *c = malloc(sizeof(uint64_t *));
-	uint64_t *d = malloc(sizeof(uint64_t *));
-	uint64_t *e = malloc(sizeof(uint64_t *));
-	*a=0;
-	*b=0;
+	void *mm = malloc(8192);
+	void *in=mm;
+	void *out = mm+4096+64; // +page size +cache line
+	
 	wait(1E9);
 	uint64_t time; 
 	uint64_t ctr_notA=0, ctr_A=0;
 	
 	// ------------ not A ------------
-	flush(a);
-	flush(b);
+	flush(in);
+	flush(out);
 	fence();
 	fNOT(b, a);
 	fence();
@@ -26,9 +23,10 @@ void test_fNOT(){
 	fence();
 	CU_ASSERT_TRUE(time<THRESHOLD);
 	printf("fNOT case not A: time is %lu\n", time);
-	free(a);
-	free(b);
-	a = malloc(sizeof(uint64_t *));
+	
+	free(mm);
+	
+	/*a = malloc(sizeof(uint64_t *));
 	b = malloc(sizeof(uint64_t *));
 	*a=0;
 
@@ -169,7 +167,7 @@ void test_fNOT(){
 	printf("fNOT4 case A: e is %lu\n", time);
 	
 	// -----
-	/*// not A multiple times // TOdo naive version does not work since training effect
+	/// not A multiple times // TOdo naive version does not work since training effect
 	for (int i=0;i<100;i++){
 		// not A
 		flush(a);
@@ -190,12 +188,12 @@ void test_fNOT(){
 	CU_ASSERT_TRUE(ctr_notA>90);
 	if(ctr_notA<=90) printf("ctr_notA %lu\n", ctr_notA);
 	CU_ASSERT_TRUE(ctr_A>90);
-	if(ctr_A<=90) printf("ctr_A %lu\n", ctr_A);*/
+	if(ctr_A<=90) printf("ctr_A %lu\n", ctr_A);
 	free(a);
 	free(b);
 	free(c);
 	free(d);
-	free(e);
+	free(e);*/
 }
 
 void test_fNAND(){
@@ -206,20 +204,20 @@ void test_fNAND(){
 	
 
 	// notA nand notB = C
-	uint64_t *a = malloc(4*sizeof(uint64_t *));
-	uint64_t *b = malloc(4*sizeof(uint64_t *));
-	uint64_t *c = malloc(4*sizeof(uint64_t *));
-	a[0]=0;
-	b[0]=0;
+	uint64_t *a = malloc(sizeof(uint64_t *));
+	uint64_t *b = malloc(sizeof(uint64_t *));
+	uint64_t *c = malloc(sizeof(uint64_t *));
+	*a=0;
+	*b=0;
 
-	flush(a[0]);
-	flush(b[0]);
-	flush(c[0]);
+	flush(a);
+	flush(b);
+	flush(c);
 	
 	fence();
-	fNAND(c[0], a[0], b);
+	fNAND(c, a, b);
 	fence();
-	time = probe(c[0]);
+	time = probe(c);
 	fence();
 	CU_ASSERT_TRUE(time<THRESHOLD);
 	//if(time>=THRESHOLD) 
