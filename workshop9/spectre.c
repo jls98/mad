@@ -34,7 +34,14 @@ void cc_setup(){
 }
 
 void cc_transmit(uint8_t value){
-    __asm__ volatile ("mov rax, [%0];mov rax,[%1+rax]"::"r" (value), "r" (cc): "rax");
+    
+    __asm__ volatile (
+        "mov rax,[%0];"
+        "mov rbx,[%1];"
+        "mul rax, 0x8;"
+        "mov rax, [rbx+rax];"
+    
+        ::"r" (value), "r" (cc): "rax", "rbx");
 }
 
 uint8_t cc_receive(){
@@ -78,6 +85,8 @@ uint64_t probe(void *adrs){
 int main(){
     cc_init();
     cc_setup();
+    cc_transmit(1);
+    printf("received %u\n", cc_receive());
 }
 
 
