@@ -28,7 +28,7 @@ void *cc_init(){
 
 void cc_setup(){
     void *cc = cc_init();
-    for(int i=0;i<256;i++) flush(&cc[0]); // flush cc
+    for(int i=0;i<256;i++) flush(&cc[i]); // flush cc
     
 }
 
