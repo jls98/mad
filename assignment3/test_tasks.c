@@ -53,32 +53,34 @@ void test_fNOTX(){
 	
 	// x=2
 	// ------------ not A ------------
+	int fac=2;
 	for(int i=0;i<CYC;i++){
-		void *mm = malloc(81920);
+		void *mm = malloc(819200);
 		void *in=mm;
 		void *out = mm+4096+64; // +page size +cache line
 		
 		*((uint64_t *)in) =0;
 		
 		flush(in);
-		flush(out);
-		flush(out+4160);
+		for(int i=0;i<fac;i++){
+			flush(out+i*4160);
+		}
 		
 		fence();
-		fNOTX(out, in, 2);
+		fNOTX(out, in, i);
 		fence();
 		
-		time = probe(out);	
-		CU_ASSERT_TRUE(time<THRESHOLD);
-		time = probe(out+4160);	
-		CU_ASSERT_TRUE(time<THRESHOLD);
+		for(int i=0;i<fac;i++){
+			time = probe(out+i*4160);	
+			CU_ASSERT_TRUE(time<THRESHOLD);
+		}		
 		//printf("fNOT case not A: time is %lu\n", time);
 		free(mm);
 	}
 	
 	// ------------ A ------------
 	for(int i=0;i<CYC;i++){
-		void *mm = malloc(81920);
+		void *mm = malloc(819200);
 		void *in=mm;
 		void *out = mm+4096+64; // +page size +cache line
 
