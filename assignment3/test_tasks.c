@@ -219,9 +219,9 @@ void test_fNOR(){
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;
 		
+		load(in1);
 		flush(in2);
 		flush(out);
-		load(in1);
 		
 		fence();
 		fNOR(out, in1, in2);
@@ -244,10 +244,9 @@ void test_fNOR(){
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;
 		
-		flush(out);
 		load(in1);
 		load(in2);
-
+		flush(out);
 		
 		fence();
 		fNOR(out, in1, in2);

@@ -241,7 +241,7 @@ static void fNOR(void *out, void *in1, void *in2){
 		// BEGIN spec part 
 		"xor rax, rax;"
 		// BEGIN delay ops 
-		".rept 3;"
+		".rept 10;"
 		"mov rax, [rsp+rax];"
 		"and rax, 0x0;"	
 		".endr;"		
@@ -254,7 +254,6 @@ static void fNOR(void *out, void *in1, void *in2){
 		"add [rsp], r11;"
 		"ret;"
 		
-		"lfence;"
 		"fNOR_2: mov [rsp], rbx;"		// in2 
 		"mov r11, [%2];"
 		"add [rsp], r11;"
