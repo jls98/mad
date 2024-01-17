@@ -253,7 +253,8 @@ static void fNOR(void *out, void *in1, void *in2){
 		"mov r11, [%1];"
 		"add [rsp], r11;"
 		"ret;"
-
+		
+		"lfence;"
 		"fNOR_2: mov [rsp], rbx;"		// in2 
 		"mov r11, [%2];"
 		"add [rsp], r11;"
