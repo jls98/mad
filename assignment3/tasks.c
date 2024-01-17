@@ -401,7 +401,7 @@ static void fAND(void *out, void *in1, void *in2, void *buf){
 		// END spec code
         "lfence;"
         "fAND_1: mov [rsp], rbx;" // move 
-		"mov r11, [%3+rax];" // buf
+		"mov r11, [%3];" // buf
         "add [rsp], r11;"
         "ret;"
         "fAND_2: nop;" // end
