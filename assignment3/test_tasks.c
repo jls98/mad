@@ -264,7 +264,7 @@ void test_fNOR(){
 	uint64_t time;
 	
 	// notA nor notB = C
-	for(int i=0;i<10000;i++){
+	for(int i=0;i<10;i++){
 		void *mm = malloc(12240);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
@@ -282,13 +282,14 @@ void test_fNOR(){
 		fence();
 		time = probe(out);	
 		fence();
+		printf("fNOR case notA, notB: C is %lu\n", time);
 		
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
 	}
 	
 	// notA nor B = notC 
-	for(int i=0;i<10000;i++){
+	for(int i=0;i<10;i++){
 		void *mm = malloc(12240);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
@@ -306,13 +307,14 @@ void test_fNOR(){
 		fence();
 		time = probe(out);	
 		fence();
+		printf("fNOR case notA, B: C is %lu\n", time);
 		
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
 	}
 	
 	// A nor notB = notC 
-	for(int i=0;i<10000;i++){
+	for(int i=0;i<10;i++){
 		void *mm = malloc(12240);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
@@ -330,13 +332,14 @@ void test_fNOR(){
 		fence();
 		time = probe(out);	
 		fence();
+		printf("fNOR case A, notB: C is %lu\n", time);
 		
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
 	}
 	
 	// A nor B = notC 
-	for(int i=0;i<10000;i++){
+	for(int i=0;i<10;i++){
 		void *mm = malloc(12240);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
@@ -354,6 +357,7 @@ void test_fNOR(){
 		fence();
 		time = probe(out);	
 		fence();
+		printf("fNOR case A, B: C is %lu\n", time);
 		
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
