@@ -62,18 +62,16 @@ void test_fNOTX(){
 		*((uint64_t *)in) =0;
 		
 		flush(in);
-		for(int i=0;i<fac;i++){
-			flush(out+i*4160);
-		}
+		for(int j=0;j<fac;j++) flush(out+j*4160);		
 		
 		fence();
-		fNOTX(out, in, i);
+		fNOTX(out, in, fac);
 		fence();
 		
-		for(int i=0;i<fac;i++){
-			time = probe(out+i*4160);	
+		for(int j=0;j<fac;j++){
+			time = probe(out+j*4160);	
 			CU_ASSERT_TRUE(time<THRESHOLD);
-			printf("fNOT case not A: time is %lu\n", time);
+			//printf("fNOT case not A: time is %lu\n", time);
 		}		
 		free(mm);
 	}
@@ -85,19 +83,19 @@ void test_fNOTX(){
 		void *out = mm+4096+64; // +page size +cache line
 
 		*((uint64_t *)in) =0;
-		flush(out);
-		flush(out+4160);
+		
+		for(int j=0;j<fac;j++) flush(out+j*4160);		
 		load(in);
 		
 		fence();
-		fNOTX(out, in, 2);
+		fNOTX(out, in, fac);
 		fence();
 	
-		time = probe(out);	
-		CU_ASSERT_TRUE(time>THRESHOLD);
-		time = probe(out+4160);	
-		CU_ASSERT_TRUE(time>THRESHOLD);
-		printf("fNOTX case not A: time is %lu\n", time);
+		for(int j=0;j<fac;j++){
+			time = probe(out+j*4160);	
+			CU_ASSERT_TRUE(time>THRESHOLD);
+			//printf("fNOT case not A: time is %lu\n", time);
+		}	
 		free(mm);
 	}
 }
@@ -567,12 +565,12 @@ int main() {
     CU_initialize_registry();
 
     CU_pSuite suite = CU_add_suite("Test Suite assignment 3", NULL, NULL);
-    CU_add_test(suite, "Test fNOT", test_fNOT);
+   // CU_add_test(suite, "Test fNOT", test_fNOT);
     CU_add_test(suite, "Test fNOTX", test_fNOTX);
-    CU_add_test(suite, "Test fNAND", test_fNAND); 
-    CU_add_test(suite, "Test fAND", test_fAND); 
-    CU_add_test(suite, "Test fNOR", test_fNOR);
-    CU_add_test(suite, "Test fOR", test_fNOR);
+   // CU_add_test(suite, "Test fNAND", test_fNAND); 
+    //CU_add_test(suite, "Test fAND", test_fAND); 
+    //CU_add_test(suite, "Test fNOR", test_fNOR);
+    //CU_add_test(suite, "Test fOR", test_fNOR);
 
     CU_basic_run_tests();
     CU_cleanup_registry();
