@@ -9,8 +9,8 @@ static void fNOT(void *out, void *in); // NOT gate
 static void fNOTX(void *out, void *in, uint64_t x); // xNOT gate with x out
 static void fNOR(void *out, void *in1, void *in2);
 static void fNAND(void *out, void *in1, void *in2);
-static void fAND(void *out, void *in1, void *in2, void *buf);
-static void fOR(void *out, void *in1, void *in2, void *buf);
+static void fAND(void *out, void *in1, void *in2);
+static void fOR(void *out, void *in1, void *in2);
 
 static uint64_t probe(void *adrs); // access adrs and return access
 static void flush(void *adrs); // clflush adrs 
@@ -347,45 +347,52 @@ static void fNAND(void *out, void *in1, void *in2){
     );
 }
 
-static void fOR(void *out, void *in1, void *in2, void *buf){
+static void fOR(void *out, void *in1, void *in2){
 	__asm__ volatile(
 		"lea rbx, [fOR_2];"
         "call fOR_1;"
-		// BEGIN spec code first part - intermediate value buf
-        "xor rax, rax;"
-		".rept 20;"
-        "mov rax, [rsp+rax];"
-        "and rax, 0x0;"
-		".endr;"
-		"mov r11, [%3+rax];" // buf
-		// END spec code
-        "lfence;"
-        "fOR_1: mov [rsp], rbx;" // move 
-        "mov r11, [%1];" // in1
-        "add r11, [%2];" // in2
-        "add [rsp], r11;"
-        "ret;"
-        "fOR_2: lea rbx, [fOR_4];" // negate nand result to get and
-		"call fOR_3;"
 		// BEGIN spec code
-        "xor rax, rax;"
-		".rept 20;"
+		"mov rax, [%1];" // in1
+        "add r11, [%0+rax];" // out
+		// END spec code
+	
+        "lfence;"
+		
+        "fOR_1: mov [rsp], rbx;" // move 
+		"xor rax, rax;"
+		".rept 50;"
         "mov rax, [rsp+rax];"
         "and rax, 0x0;"
 		".endr;"
-		"mov r11, [%0+rax];" // out
-		"fOR_3: mov [rsp], rbx;"
-		"mov r11, [%3];" // load buf - is buf cached?
-		"add [rsp], r11;"
-		"ret;"
-		"fOR_4: nop;" // end
+        "add [rsp], rax;"
+        "ret;"
+        
+		"fOR_2: lea rbx, [fOR_4];"
+		"call fOR_3;" // end
+		// BEGIN spec code
+		"mov rax, [%2];" // in2
+        "add r11, [%0+rax];" // out
+		// END spec code
+		"lfence;"
+		"fOR_3: mov [rsp], rbx;" // move 
+		"xor rax, rax;"
+		".rept 50;"
+        "mov rax, [rsp+rax];"
+        "and rax, 0x0;"
+		".endr;"
+        "add [rsp], rax;"
+        "ret;"
+		
+		"fOR_4: nop;"
         : 
-        : "r" (out), "r" (in1), "r" (in2), "r" (buf)
+        : "r" (out), "r" (in1), "r" (in2)
         : "rax", "rbx", "r11", "memory"
     );
 }
 
-static void fAND(void *out, void *in1, void *in2, void *buf){
+
+// ~ 99 %
+static void fAND(void *out, void *in1, void *in2){
 	__asm__ volatile(
 		"lea rbx, [fAND_2];"
         "call fAND_1;"
@@ -405,7 +412,7 @@ static void fAND(void *out, void *in1, void *in2, void *buf){
         "ret;"
         "fAND_2: nop;" // end
         : 
-        : "r" (out), "r" (in1), "r" (in2), "r" (buf)
+        : "r" (out), "r" (in1), "r" (in2)
         : "rax", "rbx", "r11", "memory"
     );
 }
