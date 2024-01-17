@@ -28,7 +28,7 @@ void test_fNOTN(){
 		flush(out5);
 		
 		fence();
-		fNOTN(out1, out2, out3, out4, in);
+		fNOTN(out1, out2, out3, out4, out5, in);
 		fence();
 		time = probe(out1);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
@@ -63,7 +63,7 @@ void test_fNOTN(){
 		load(in);
 		
 		fence();
-		fNOTN(out1, out2, out3, out4, in);
+		fNOTN(out1, out2, out3, out4, out5 in);
 		fence();
 		time = probe(out1);	
 		CU_ASSERT_TRUE(time>THRESHOLD);
