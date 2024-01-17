@@ -9,6 +9,8 @@ static void fNOT(void *out, void *in); // NOT gate
 static void fNOTX(void *out, void *in, uint64_t x); // xNOT gate with x out
 static void fNOR(void *out, void *in1, void *in2);
 static void fNAND(void *out, void *in1, void *in2);
+static void fAND(void *out, void *in1, void *in2, void *buf);
+static void fOR(void *out, void *in1, void *in2, void *buf);
 
 static uint64_t probe(void *adrs); // access adrs and return access
 static void flush(void *adrs); // clflush adrs 
@@ -383,7 +385,7 @@ static void fOR(void *out, void *in1, void *in2, void *buf){
     );
 }
 
-static void fAND(void *out, void *in1, void *in2){
+static void fAND(void *out, void *in1, void *in2, void *buf){
 	__asm__ volatile(
 		"lea rbx, [fAND_2];"
         "call fAND_1;"

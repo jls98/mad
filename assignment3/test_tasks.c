@@ -388,16 +388,18 @@ void test_fAND(){
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
 		void *out = mm+8192+128; // +page size +cache line
+		void *buf = mm+12288+192;
 		
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;
+		*((uint64_t *)buf) =0;
 		
 		flush(in1);
 		flush(in2);
 		flush(out);
 		
 		fence();
-		fAND(out, in1, in2);
+		fAND(out, in1, in2, buf);
 		fence();
 		time = probe(out);	
 		fence();
@@ -421,7 +423,7 @@ void test_fAND(){
 		flush(out);
 		
 		fence();
-		fNAND(out, in1, in2);
+		fAND(out, in1, in2, buf);
 		fence();
 		time = probe(out);	
 		fence();
@@ -445,7 +447,7 @@ void test_fAND(){
 		flush(out);
 		
 		fence();
-		fAND(out, in1, in2);
+		fAND(out, in1, in2, buf);
 		fence();
 		time = probe(out);	
 		fence();
@@ -469,7 +471,7 @@ void test_fAND(){
 		flush(out);
 		
 		fence();
-		fAND(out, in1, in2);
+		fAND(out, in1, in2, buf);
 		fence();
 		time = probe(out);	
 		fence();
