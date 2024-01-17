@@ -34,14 +34,15 @@ void test_fNOT(){
 		void *in=mm;
 		void *out = mm+4096+64; // +page size +cache line
 
-		flush(in);
+		*((uint64_t *)in) =0;
 		flush(out);
+		load(in);
 		fence();
 		fNOT(out, in);
 		fence();
 		time = probe(out);	
 		fence();
-		CU_ASSERT_TRUE(time<THRESHOLD);
+		CU_ASSERT_TRUE(time>THRESHOLD);
 		//printf("fNOT case not A: time is %lu\n", time);
 		free(mm);
 	}
