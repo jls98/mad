@@ -37,10 +37,9 @@ void cc_transmit(uint8_t value){
     
     __asm__ volatile (
         "mov al,%0;"
-        "mov rbx,0x8;"
-        "mul rax;"
-        "mov rbx, [%1];"
-        "mov rax, [rbx+rax];"
+        "mov bl,0x8;"
+        "mul al;"
+        "mov rax, [%1+al];"
     
         ::"r" (value), "r" (cc): "rax", "rbx");
 }
