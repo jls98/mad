@@ -8,9 +8,9 @@ void test_fNOTX(){
 
 	uint64_t time; 
 	wait(1E9);
-
+	// x=1
 	// ------------ not A ------------
-	for(int i=0;i<100;i++){
+	for(int i=0;i<CYC;i++){
 		void *mm = malloc(8192);
 		void *in=mm;
 		void *out = mm+4096+64; // +page size +cache line
@@ -32,7 +32,7 @@ void test_fNOTX(){
 	}
 	
 	// ------------ A ------------
-	for(int i=0;i<100;i++){
+	for(int i=0;i<CYC;i++){
 		void *mm = malloc(8192);
 		void *in=mm;
 		void *out = mm+4096+64; // +page size +cache line
@@ -44,11 +44,56 @@ void test_fNOTX(){
 		fence();
 		fNOTX(out, in, 1);
 		fence();
-		time = probe(out);	
-		fence();
 		
+		time = probe(out);			
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		printf("fNOTX case not A: time is %lu\n", time);
+		free(mm);
+	}
+	
+	// x=2
+	// ------------ not A ------------
+	for(int i=0;i<CYC;i++){
+		void *mm = malloc(81920);
+		void *in=mm;
+		void *out = mm+4096+64; // +page size +cache line
+		
+		*((uint64_t *)in) =0;
+		
+		flush(in);
+		flush(out);
+		
+		fence();
+		fNOTX(out, in, 2);
+		fence();
+		
+		time = probe(out);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out+4160);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		//printf("fNOT case not A: time is %lu\n", time);
+		free(mm);
+	}
+	
+	// ------------ A ------------
+	for(int i=0;i<CYC;i++){
+		void *mm = malloc(81920);
+		void *in=mm;
+		void *out = mm+4096+64; // +page size +cache line
+
+		*((uint64_t *)in) =0;
+		flush(out);
+		load(in);
+		
+		fence();
+		fNOTX(out, in, 2);
+		fence();
+	
+		time = probe(out);	
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		time = probe(out+4160);	
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		//printf("fNOTX case not A: time is %lu\n", time);
 		free(mm);
 	}
 }
