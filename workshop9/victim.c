@@ -13,3 +13,7 @@ int victim(uint64_t index) {
     return -1;
   return public[index];
 }
+
+int main(){
+    victim(1);
+}
