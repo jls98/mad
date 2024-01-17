@@ -47,7 +47,7 @@ void cc_transmit(uint8_t value){
 uint8_t cc_receive(){
     uint8_t value=0;
     for(int i=0;i<256;i++){
-        if (probe(&cc[i]) > THRESHOLD){
+        if (probe(&cc[i]) < THRESHOLD){
             return i;
         }
     }
