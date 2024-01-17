@@ -397,10 +397,10 @@ static void fAND(void *out, void *in1, void *in2, void *buf){
         "lfence;"
         "fAND_1: mov [rsp], rbx;" // move 
 		"xor rax, rax;"
-		/*".rept 10;"
+		".rept 100;"
         "mov rax, [rsp+rax];"
         "and rax, 0x0;"
-		".endr;"*/
+		".endr;"
         "add [rsp], rax;"
         "ret;"
         "fAND_2: nop;" // end
