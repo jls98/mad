@@ -100,6 +100,7 @@ static void fNOTX(void *out, void *in, uint64_t x){
 		".rept 1;"
 		"mov rax, [rsp+rax];"
 		"and rax, 0x0;"
+		".endr;"
 		// BEGIN Spec part 		
 		"loop: mov r11, [rdx+rax];" // spec instr
 		"dec rcx;"
