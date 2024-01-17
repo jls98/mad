@@ -94,7 +94,7 @@ void test_fNOTX(){
 		for(int j=0;j<fac;j++){
 			time = probe(out+j*4160);	
 			CU_ASSERT_TRUE(time>THRESHOLD);
-			//printf("fNOT case not A: time is %lu\n", time);
+			printf("fNOT case not A: c is %lu, j is %i\n", time, j);
 		}	
 		free(mm);
 	}
