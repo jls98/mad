@@ -3,10 +3,10 @@
 #include <stdlib.h>
 
 // init covert channel
-void *cc_init();
+void cc_init();
 
 // set channel for sending byte
-void *cc_setup();
+void cc_setup();
 
 // transmit a value through channel
 void cc_transmit(uint8_t value);
