@@ -390,17 +390,18 @@ static void fAND(void *out, void *in1, void *in2, void *buf){
 		"lea rbx, [fAND_2];"
         "call fAND_1;"
 		// BEGIN spec code
+		"xor rax, rax;"
+		".rept 20;"
+        "mov rax, [rsp+rax];"
+        "and rax, 0x0;"
+		".endr;"
 		"mov r11, [%1];" // in1
         "add r11, [%2];" // in2
         "add [rsp], r11;"
 		// END spec code
         "lfence;"
         "fAND_1: mov [rsp], rbx;" // move 
-		"xor rax, rax;"
-		".rept 20;"
-        "mov rax, [rsp+rax];"
-        "and rax, 0x0;"
-		".endr;"
+		
 		"mov r11, [%3+rax];" // buf
         "ret;"
         "fAND_2: nop;" // end
