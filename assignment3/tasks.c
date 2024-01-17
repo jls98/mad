@@ -11,6 +11,7 @@ static void fNOR(void *out, void *in1, void *in2);
 static void fNAND(void *out, void *in1, void *in2);
 static void fAND(void *out, void *in1, void *in2);
 static void fOR(void *out, void *in1, void *in2);
+void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in);
 
 static uint64_t probe(void *adrs); // access adrs and return access
 static void flush(void *adrs); // clflush adrs 
@@ -88,7 +89,7 @@ static void fNOT(void *out, void *in){
 		: "rax", "rbx", "r11", "memory"
 	);
 }
-
+/*
 static void fNOTX(void *out, void *in, uint64_t x){	
 	if (x==0) return;
 	else if (x==1) fNOT(out, in);
@@ -121,8 +122,35 @@ static void fNOTX(void *out, void *in, uint64_t x){
 		);
 	}
 }
-
-
+*/
+void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in){
+	__asm__ volatile(
+		"lea rbx, [fNOT2_2];"
+		"call fNOT2_1;"
+		"xor rax, rax;"
+		// BEGIN delay ops 
+		".rept 15;" // deplen
+		"mov rax, [rsp+rax];"
+		"and rax, 0x0;"
+		".endr;"
+		// BEGIN Spec part
+		"mov r11, [%1+rax];"
+		"add r11, [%2+rax];"
+		"add r11, [%3+rax];"
+		"add r11, [%4+rax];"
+		"lfence;"
+		// END Spec part
+		"fNOT2_1: mov [rsp], rbx;" 
+		"mov r11, [rsi];" // load input
+		"add [rsp], r11;" // data dependency between input and ptr adrs
+		"ret;"
+		
+		"fNOT2_2: nop;"
+		: 
+		: "S" (in), "r" (out_1), "r" (out_2), "r" (out_3), "r" (out_4)
+		: "rax", "rbx", "r11", "memory"
+	);
+}
 
 static void fNOR(void *out, void *in1, void *in2){
 	__asm__ volatile(
