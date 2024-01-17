@@ -61,7 +61,6 @@ static uint64_t probe(void *adrs){
 	return time;
 }
 
-// works 50 % of the time lol
 static void fNOT(void *out, void *in){
 	
 	__asm__ volatile(
@@ -82,7 +81,6 @@ static void fNOT(void *out, void *in){
 		"mov r11, [rsi];" // load input
 		"add [rsp], r11;" // data dependency between input and ptr adrs
 		"ret;"
-		
 		"fNOT_2: nop;"
 		: 
 		: "D" (out), "S" (in)
@@ -234,7 +232,6 @@ static void fNOT2(void *out1, void *out2 void *in){
 	);
 }*/
 
-// works like an and logical gate ._.
 
 static void fNOR(void *out, void *in1, void *in2){
 	__asm__ volatile(
