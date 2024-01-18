@@ -813,7 +813,7 @@ void test_fOR(){
 		free(mm);
 	}
 }
-/*
+
 void test_fXOR(){
 	wait(1E9);
 	uint64_t time;
@@ -939,7 +939,7 @@ void test_fXOR(){
 		free(mm);
 	}
 }
-*/
+
 void test(){
 	wait(1E9);
 	void *mm = malloc(81920);
@@ -986,7 +986,7 @@ int main() {
 	}
 	//CU_add_test(suite, "Test fNANDN", test_fNANDN); // TODO
     //CU_add_test(suite, "Test fNORN", test_fNORN); // TODO
-    //CU_add_test(suite, "Test fXOR", test_fXOR); // TODO
+    CU_add_test(suite, "Test fXOR", test_fXOR); // TODO
     test();
 	CU_basic_run_tests();
     CU_cleanup_registry();
