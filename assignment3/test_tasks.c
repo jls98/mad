@@ -10,12 +10,10 @@ void test_fNOTN(){
 	// x=1
 	// ------------ not A ------------
 	for(int i=0;i<CYC;i++){
-		void *mm = malloc(8192);
+		void *mm = malloc(81920);
 		void *in=mm;
 		void *out1 = mm+4096+64; // +page size +cache line
 		void *out2 = mm+2*(4096+64); // +page size +cache line
-        void *out1 = mm+2*(4096+64); // +page size +cache line
-		void *out2 = mm+3*(4096+64); // +page size +cache line
         void *out3 = mm+4*(4096+64); // +page size +cache line
 		void *out4 = mm+5*(4096+64); // +page size +cache line
 		void *out5 = mm+6*(4096+64); // +page size +cache line
@@ -73,12 +71,10 @@ void test_fNOTN(){
 	
 	// ------------ not A ------------
 		for(int i=0;i<CYC;i++){
-		void *mm = malloc(8192);
+		void *mm = malloc(81920);
 		void *in=mm;
 		void *out1 = mm+4096+64; // +page size +cache line
 		void *out2 = mm+2*(4096+64); // +page size +cache line
-        void *out1 = mm+2*(4096+64); // +page size +cache line
-		void *out2 = mm+3*(4096+64); // +page size +cache line
         void *out3 = mm+4*(4096+64); // +page size +cache line
 		void *out4 = mm+5*(4096+64); // +page size +cache line
 		void *out5 = mm+6*(4096+64); // +page size +cache line
