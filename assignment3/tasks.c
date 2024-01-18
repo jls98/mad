@@ -466,15 +466,24 @@ static void fLET7(void *in1, void *in2, void *in3, void *in4, void *out){
 static void fLED(void *in1, void *in2, void *in3, void *in4, void *out1, void *out2, void *out3, void *out4, void *out5, void *out6, void *out7, void **buf){
     // A 3, 7, 10, 11, 12, 13, 14,
     fNOT2(buf[0], buf[1], in1); // !
+    fence();
     fNOT2(buf[2], buf[3], buf[0]);
+    fence();
     fNOT2(buf[4], buf[5], buf[2]); // !
+    fence();
     fNOT2(buf[6], buf[7], buf[4]);
+    fence();
     fNOT2(buf[8], buf[9], buf[6]); // !
+    fence();
     fNOT2(buf[10], buf[11], buf[8]);
+    fence();
     
     fNOT(buf[12], buf[1]);
+    fence();
     fNOT(buf[13], buf[5]);
+    fence();
     fNOT(buf[14], buf[9]);
+    fence();
     
     flush(buf[0]);
     flush(buf[1]);
@@ -496,15 +505,24 @@ static void fLED(void *in1, void *in2, void *in3, void *in4, void *out1, void *o
     // >14
     // B 4, 9, 17, 18, 19, 20, 21
     fNOT2(buf[0], buf[1], in2); // !
+    fence();
     fNOT2(buf[2], buf[4], buf[0]);
+    fence();
     fNOT2(buf[5], buf[6], buf[2]); // !
+    fence();
     fNOT2(buf[8], buf[9], buf[5]);
+    fence();
     fNOT2(buf[15], buf[16], buf[8]); // !
+    fence();
     fNOT2(buf[17], buf[18], buf[15]);
+    fence();
     
     fNOT(buf[19], buf[1]);
+    fence();
     fNOT(buf[20], buf[6]);
+    fence();
     fNOT(buf[21], buf[16]);
+    fence();
     
     flush(buf[0]);
     flush(buf[1]);
@@ -525,16 +543,27 @@ static void fLED(void *in1, void *in2, void *in3, void *in4, void *out1, void *o
     
     // > 21
     // C 5, 16, 24, 25, 26, 27, 28
+    fence();
     fNOT2(buf[0], buf[1], in3); // !
+    fence();
     fNOT2(buf[2], buf[5], buf[0]);
+    fence();
     fNOT2(buf[6], buf[8], buf[2]); // !
+    fence();
     fNOT2(buf[15], buf[16], buf[6]);
+    fence();
     fNOT2(buf[22], buf[23], buf[15]); // !
+    fence();
     fNOT2(buf[24], buf[25], buf[22]);
+    fence();
     
     fNOT(buf[26], buf[1]);
+    fence();
+    fence();
     fNOT(buf[27], buf[8]);
+    fence();
     fNOT(buf[28], buf[23]);
+    fence();
     
     flush(buf[0]);
     flush(buf[1]);
@@ -557,21 +586,38 @@ static void fLED(void *in1, void *in2, void *in3, void *in4, void *out1, void *o
     // > 28
     // D 0, 1, 2, 6, 8, 15, 23
     fNOT2(buf[0], buf[1], in4); // !
+    fence();
     fNOT2(buf[2], buf[6], buf[0]);
+    fence();
     flush(buf[0]);
+    fence();
     fNOT2(buf[0], buf[8], buf[2]); // !
+    fence();
     flush(buf[2]);
+    fence();
     fNOT2(buf[2], buf[15], buf[0]);
+    fence();
     flush(buf[0]);
+    fence();
     fNOT2(buf[0], buf[22], buf[2]); // !
+    fence();
     flush(buf[2]);
+    fence();
     fNOT2(buf[2], buf[23], buf[0]);
+    fence();
     flush(buf[0]);
+    fence();
     fNOT(buf[0], buf[1]);
+    fence();
     flush(buf[1]);
+    fence();
     fNOT(buf[1], buf[8]);
+    fence();
+    fence();
     flush(buf[8]);
+    fence();
     fNOT(buf[8], buf[22]);
+    fence();
 
     printf("d dup is %lu\n", probe(buf[0]));
     printf("d dup is %lu\n", probe(buf[1]));
