@@ -1508,6 +1508,7 @@ void test_fXOR(){
 }
 void test_LED(){
 	wait(1E9);
+	uint64_t time;
 	// 1111
 	for(int i=0;i<CYC;i++){
 		void *mm = malloc(512000);
