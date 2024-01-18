@@ -941,32 +941,33 @@ void test_fXOR(){
 }
 */
 void test(){
-		void *mm = malloc(81920);
-		void *in1=mm;
-		void *in2 = mm+4096+64; // +page size +cache line
-		void *out = mm+8192+128; // +page size +cache line
-		
-		*((uint64_t *)in1) =0;
-		*((uint64_t *)in2) =0;		
-		
-		void **buf = malloc(7*sizeof(void *));
-		for(int j=0;j<7;j++){
-			buf[j]=mm+(3+j)*(4096+64);
-			*((uint64_t *)buf[j]) = 0;
-			flush(buf[j]);
-		}		
-		flush(out);
-		load(in1);
-		load(in2);
-		
-		fence();
-		fXOR(out, in1, in2, buf[1], buf);
-		fence();
-		uint64_t time = probe(out);	
-		fence();
-		
-		//CU_ASSERT_TRUE(time>THRESHOLD);
-		free(mm);
+	wait(1E9);
+	void *mm = malloc(81920);
+	void *in1=mm;
+	void *in2 = mm+4096+64; // +page size +cache line
+	void *out = mm+8192+128; // +page size +cache line
+	
+	*((uint64_t *)in1) =0;
+	*((uint64_t *)in2) =0;		
+	
+	void **buf = malloc(7*sizeof(void *));
+	for(int j=0;j<7;j++){
+		buf[j]=mm+(3+j)*(4096+64);
+		*((uint64_t *)buf[j]) = 0;
+		flush(buf[j]);
+	}		
+	flush(out);
+	load(in1);
+	load(in2);
+	
+	fence();
+	fXOR(out, in1, in2, buf[1], buf);
+	fence();
+	uint64_t time = probe(out);	
+	fence();
+	
+	//CU_ASSERT_TRUE(time>THRESHOLD);
+	free(mm);
 }
 
 int main() {
