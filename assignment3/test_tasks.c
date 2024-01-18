@@ -499,10 +499,10 @@ void test_fNORN(){
 		fence();
 		fNORN(in1, in2, out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out11, out12);
 		fence();
-		time = probe(out6);	
+		time = probe(out1);	
 		printf("fNOrn1 case A notB: c is %lu\n", time);
 		CU_ASSERT_TRUE(time>THRESHOLD);
-		time = probe(out5);	
+		time = probe(out3);	
 		printf("fNOrn2 case A notB: c is %lu\n", time);
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		time = probe(out3);	
