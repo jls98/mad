@@ -169,7 +169,7 @@ static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* out_
 static void fNOT2(void* out_1, void* out_2, void* in){
 	__asm__ volatile(
 		
-		"call fNOTN_1;"
+		"call fNOT2_1;"
 		"xor rax, rax;"
 		// BEGIN delay ops 
 		".rept 4;" // deplen
@@ -181,13 +181,13 @@ static void fNOT2(void* out_1, void* out_2, void* in){
 		"mov rbx, [%2+rax];"
 		"lfence;"
 		// END Spec part
-		"fNOTN_1: lea rbx, [rip+fNOTN_2];"
+		"fNOT2_1: lea rbx, [rip+fNOT2_2];"
         "mov [rsp], rbx;" 
 		"mov rbx, [rsi];" // load input
 		"add [rsp], rbx;" // data dependency between input and ptr adrs
 		"ret;"
 		
-		"fNOTN_2: nop;"
+		"fNOT2_2: nop;"
 		: 
 		: "S" (in), "r" (out_1), "r" (out_2)
 		: "rax", "rbx", "memory"
