@@ -1194,6 +1194,8 @@ void test_fXOR(){
 	}
 }
 void test_LED(){
+	wait(1E9);
+
     void *mm = malloc(256000);
     void *in1=mm;
     void *in2 = mm+4096+64; // +page size +cache line
