@@ -15,7 +15,7 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2/*, void *out3, v
 static void fAND(void *out, void *in1, void *in2);
 static void fOR(void *out, void *in1, void *in2);
 
-static void fXOR(void *out, void *in1, void *in2, void **buf);
+static void fXOR(void *out, void *in1, void *in2, void *buf0,  void **buf);
 
 static uint64_t probe(void *adrs); // access adrs and return access
 static void flush(void *adrs); // clflush adrs 
@@ -351,9 +351,14 @@ static void fAND(void *out, void *in1, void *in2){
     );
 }
 
-static void fXOR(void *out, void *in1, void *in2, void **buf){
+static void fXOR(void *out, void *in1, void *in2, void *buf0, void **buf){
 	
-	
+	printf("buf0 %lu\n", probe(buf0));
+	flush(buf0);
+	printf("buf0 %lu\n", probe(buf0));
+	load(buf0);
+	printf("buf0 %lu\n", probe(buf0));
+
 	fNOTN(in1, buf[0], buf[1]); // 6 dump
 	fNOTN(in2, buf[2], buf[3]); // 
 	

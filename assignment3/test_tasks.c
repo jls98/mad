@@ -960,7 +960,7 @@ void test(){
 		load(in2);
 		
 		fence();
-		fXOR(out, in1, in2, buf);
+		fXOR(out, in1, in2, buf[1], buf);
 		fence();
 		uint64_t time = probe(out);	
 		fence();
