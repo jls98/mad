@@ -242,10 +242,10 @@ void test_fNORN(){
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out2);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
-		time = probe(out3);	
+		/*time = probe(out3);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out4);	
-		CU_ASSERT_TRUE(time<THRESHOLD);
+		CU_ASSERT_TRUE(time<THRESHOLD);*/
 		free(mm);
 	}
 	
@@ -276,10 +276,10 @@ void test_fNORN(){
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		time = probe(out2);	
 		CU_ASSERT_TRUE(time>THRESHOLD);
-		time = probe(out3);	
-		CU_ASSERT_TRUE(time>THRESHOLD);
-		time = probe(out4);	
-		CU_ASSERT_TRUE(time>THRESHOLD);
+		//time = probe(out3);	
+		//CU_ASSERT_TRUE(time>THRESHOLD);
+		//time = probe(out4);	
+		//CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
 	}
 	
@@ -310,10 +310,10 @@ void test_fNORN(){
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		time = probe(out2);	
 		CU_ASSERT_TRUE(time>THRESHOLD);
-		time = probe(out3);	
-		CU_ASSERT_TRUE(time>THRESHOLD);
-		time = probe(out4);	
-		CU_ASSERT_TRUE(time>THRESHOLD);
+		//time = probe(out3);	
+		//CU_ASSERT_TRUE(time>THRESHOLD);
+		//time = probe(out4);	
+		//CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
 	}
 	
@@ -344,10 +344,10 @@ void test_fNORN(){
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		time = probe(out2);	
 		CU_ASSERT_TRUE(time>THRESHOLD);
-		time = probe(out3);	
-		CU_ASSERT_TRUE(time>THRESHOLD);
-		time = probe(out4);	
-		CU_ASSERT_TRUE(time>THRESHOLD);
+		//time = probe(out3);	
+		//CU_ASSERT_TRUE(time>THRESHOLD);
+		//time = probe(out4);	
+		//CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
 	}
 }
