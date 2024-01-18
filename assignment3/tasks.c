@@ -358,7 +358,9 @@ static void fXOR(void *out, void *in1, void *in2, void *buf0, void **buf){
 	printf("buf0 %lu\n", probe(buf0));
 	load(buf0);
 	printf("buf0 %lu\n", probe(buf0));
-
+	printf("in1 %lu\n", probe(in1));
+	
+	
 	fNOTN(in1, buf[0], buf[1]); // 6 dump
 	fNOTN(in2, buf[2], buf[3]); // 
 	
