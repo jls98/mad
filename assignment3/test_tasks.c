@@ -4,7 +4,7 @@
 
 #define CYC 100
 
-void test_fNOTN(){
+void test_fNOT2(){
 	uint64_t time; 
 	wait(1E9);
 	// x=1
@@ -26,7 +26,7 @@ void test_fNOTN(){
 		//flush(out4);
 		
 		fence();
-		fNOTN(out1, out2/*, out3, out4*/, in);
+		fNOT2(out1, out2/*, out3, out4*/, in);
 		fence();
 		time = probe(out1);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
@@ -57,7 +57,7 @@ void test_fNOTN(){
 		load(in);
 		
 		fence();
-		fNOTN(out1, out2/*, out3, out4*/, in);
+		fNOT2(out1, out2/*, out3, out4*/, in);
 		fence();
 		time = probe(out1);	
 		CU_ASSERT_TRUE(time>THRESHOLD);
@@ -1086,7 +1086,7 @@ int main() {
 	
 	if(normal){
 		CU_add_test(suite, "Test fNOT", test_fNOT);
-		CU_add_test(suite, "Test fNOTN", test_fNOTN);
+		CU_add_test(suite, "Test fNOTN", test_fNOT2);
 		CU_add_test(suite, "Test fNAND", test_fNAND); 
 		CU_add_test(suite, "Test fAND", test_fAND); 
 		CU_add_test(suite, "Test fNOR", test_fNOR);

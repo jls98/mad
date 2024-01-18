@@ -6,7 +6,7 @@
 #define THRESHOLD 160 // timing around 14-16 when cached
 
 static void fNOT(void *out, void *in); // NOT gate
-static void fNOTN(void* out_1, void* out_2/*, void* out_3, void* out_4*/, void* in);
+static void fNOT2(void* out_1, void* out_2/*, void* out_3, void* out_4*/, void* in);
 //static void fNOTX(void *out, void *in, uint64_t x); // xNOT gate with x out
 static void fNOR(void *out, void *in1, void *in2);
 static void fNORN(void *in1, void *in2, void *out1, void *out2/*, void *out3, void *out4*/);
@@ -128,7 +128,7 @@ static void fNOT(void *out, void *in){
 }*/
 
 // 78 % success on 4 outputs for case in = not out (weirdly, the false hits all appear at the beginning in a row, 100 100 89 89), 49 % success on 5 outputs for same case
-static void fNOTN(void* out_1, void* out_2/*, void* out_3, void* out_4*/, void* in){
+static void fNOT2(void* out_1, void* out_2/*, void* out_3, void* out_4*/, void* in){
 	__asm__ volatile(
 		"lea rbx, [rip+fNOTN_2];"
 		"call fNOTN_1;"
@@ -360,8 +360,8 @@ static void fAND(void *out, void *in1, void *in2){
 
 static void fXOR(void *out, void *in1, void *in2, void **buf){
 
-	fNOTN(buf[0], buf[1], in1); // 6 dump
-	fNOTN(buf[2], buf[3], in2); // 
+	fNOT2(buf[0], buf[1], in1); // 6 dump
+	fNOT2(buf[2], buf[3], in2); // 
 
 	//printf("b4 nand 0 %lu 2 %lu\n", probe(buf[0]), probe(buf[2]));
 
