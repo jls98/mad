@@ -6,12 +6,13 @@
 #define THRESHOLD 160 // timing around 14-16 when cached
 
 static void fNOT(void *out, void *in); // NOT gate
+static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in);
 //static void fNOTX(void *out, void *in, uint64_t x); // xNOT gate with x out
 static void fNOR(void *out, void *in1, void *in2);
 static void fNAND(void *out, void *in1, void *in2);
+static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4)
 static void fAND(void *out, void *in1, void *in2);
 static void fOR(void *out, void *in1, void *in2);
-static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in);
 
 static uint64_t probe(void *adrs); // access adrs and return access
 static void flush(void *adrs); // clflush adrs 
@@ -123,7 +124,7 @@ static void fNOT(void *out, void *in){
 	}
 }*/
 
-// 78 % success on 4 outputs for case in = not out, 49 % success on 5 outputs for same case
+// 78 % success on 4 outputs for case in = not out (weirdly, the false hits all appear at the beginning in a row), 49 % success on 5 outputs for same case
 static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in){
 	__asm__ volatile(
 		"lea rbx, [fNOTN_2];"
@@ -210,31 +211,34 @@ static void fNAND(void *out, void *in1, void *in2){
         : "rax", "rbx", "r11", "memory"
     );
 }
-/*
-static void fNANDN(void *out, void *in1, void *in2){
+
+static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4){
 	__asm__ volatile(
 		"lea rbx, [fNAND_2];"
         "call fNAND_1;"
 		// BEGIN spec code
         "xor rax, rax;"
-		".rept 20;"
+		".rept 5;"
         "mov rax, [rsp+rax];"
         "and rax, 0x0;"
 		".endr;"
-		"mov r11, [%0+rax];" // out
+		"mov r11, [%2+rax];" // out
+		"mov r11, [%3+rax];" // out
+		"mov r11, [%4+rax];" // out
+		"mov r11, [%5+rax];" // out
 		// END spec code
         "lfence;"
         "fNAND_1: mov [rsp], rbx;" // move 
-        "mov r11, [%1];" // in1
-        "add r11, [%2];" // in2
+        "mov r11, [%0];" // in1
+        "add r11, [%1];" // in2
         "add [rsp], r11;"
         "ret;"
         "fNAND_2: nop;"
         : 
-        : "r" (out), "r" (in1), "r" (in2)
+        : "r" (in1), "r" (in2), "r" (out1), "r" (out2), "r" (out3), "r" (out4)
         : "rax", "rbx", "r11", "memory"
     );
-}*/
+}
 
 static void fOR(void *out, void *in1, void *in2){
 	__asm__ volatile(
