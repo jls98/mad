@@ -638,13 +638,13 @@ static void fLED(void *in1, void *in2, void *in3, void *in4, void *out1, void *o
     printf("d dup is %lu\n", probe(buf[23]));*/
 
     void **buff = buf+29*sizeof(void *);
-    fLED1(buf[3], buf[4], buf[5], buf[0], out1);
-    fLED2(buf[7], buf[9], buf[16], buf[1], out2);
-    fLED3(buf[10], buf[17], buf[24], buf[2], out3);
-    fLED4(buf[11], buf[18], buf[25], buf[6], out4);
-    fLED5(buf[12], buf[19], buf[26], buf[8], out5);
-    fLED6(buf[13], buf[20], buf[27], buf[15], out6);
-    fLED7(buf[14], buf[21], buf[28], buf[23], out7);
+    fLED1(buf[3], buf[4], buf[5], buf[0], out1, buff);
+    fLED2(buf[7], buf[9], buf[16], buf[1], out2, buff);
+    fLED3(buf[10], buf[17], buf[24], buf[2], out3, buff);
+    fLED4(buf[11], buf[18], buf[25], buf[6], out4, buff);
+    fLED5(buf[12], buf[19], buf[26], buf[8], out5, buff);
+    fLED6(buf[13], buf[20], buf[27], buf[15], out6, buff);
+    fLED7(buf[14], buf[21], buf[28], buf[23], out7, buff);
 }
 
 
