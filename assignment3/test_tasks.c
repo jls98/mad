@@ -72,6 +72,106 @@ void test_fNOT2(){
 	}
 }
 
+void test_fNOTN(){
+	uint64_t time; 
+	wait(1E9);
+	// x=1
+	// ------------ not A ------------
+	for(int i=0;i<CYC;i++){
+		void *mm = malloc(81920);
+		void *in=mm;
+		void *out1 = mm+4096+64; // +page size +cache line
+		void *out2 = mm+2*(4096+64); // +page size +cache line
+		void *out3 = mm+3*(4096+64); // +page size +cache line
+		void *out4 = mm+4*(4096+64); // +page size +cache line
+		void *out5 = mm+5*(4096+64); // +page size +cache line
+		void *out6 = mm+6*(4096+64); // +page size +cache line
+		void *out7 = mm+7*(4096+64); // +page size +cache line
+		void *out8 = mm+8*(4096+64); // +page size +cache line
+		void *out9 = mm+9*(4096+64); // +page size +cache line
+		void *out10 = mm+10*(4096+64); // +page size +cache line
+		void *out11 = mm+11*(4096+64); // +page size +cache line
+		void *out12 = mm+12*(4096+64); // +page size +cache line
+
+		*((uint64_t *)in) =0;
+		
+		flush(in);
+		flush(out1);
+		flush(out2);
+		flush(out3);
+		flush(out4);
+		flush(out5);
+		flush(out6);
+		flush(out7);
+		flush(out8);
+		flush(out9);
+		flush(out10);
+		flush(out11);
+		flush(out12);
+		
+		fence();
+		fNOTN(out1, out2, out3, out4, in);
+		fence();
+		time = probe(out1);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out2);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out3);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out4);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		free(mm);
+	}
+	
+	// ------------ not A ------------
+		for(int i=0;i<CYC;i++){
+		void *mm = malloc(8192);
+		void *in=mm;
+		void *out1 = mm+4096+64; // +page size +cache line
+		void *out2 = mm+2*(4096+64); // +page size +cache line
+		void *out3 = mm+3*(4096+64); // +page size +cache line
+		void *out4 = mm+4*(4096+64); // +page size +cache line
+		void *out5 = mm+5*(4096+64); // +page size +cache line
+		void *out6 = mm+6*(4096+64); // +page size +cache line
+		void *out7 = mm+7*(4096+64); // +page size +cache line
+		void *out8 = mm+8*(4096+64); // +page size +cache line
+		void *out9 = mm+9*(4096+64); // +page size +cache line
+		void *out10 = mm+10*(4096+64); // +page size +cache line
+		void *out11 = mm+11*(4096+64); // +page size +cache line
+		void *out12 = mm+12*(4096+64); // +page size +cache line
+
+		*((uint64_t *)in) =0;
+		
+		flush(out1);
+		flush(out2);
+		flush(out3);
+		flush(out4);
+		flush(out5);
+		flush(out6);
+		flush(out7);
+		flush(out8);
+		flush(out9);
+		flush(out10);
+		flush(out11);
+		flush(out12);
+		load(in);
+		
+		fence();
+		fNOT2(out1, out2/*, out3, out4*/, in);
+		fence();
+		time = probe(out1);	
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		time = probe(out2);	
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		time = probe(out3);	
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		time = probe(out4);	
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		//printf("fNOT case not A: time is %lu\n", time);
+		free(mm);
+	}
+}
+
 void test_fNANDN(){
 	uint64_t time; 
 	wait(1E9);
