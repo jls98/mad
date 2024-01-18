@@ -136,9 +136,9 @@ static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in){
 		".endr;"
 		// BEGIN Spec part
 		"mov r11, [%1+rax];"
-		"add r11, [%2+r11];"
-		"add r11, [%3+r11];"
-		"add r11, [%4+r11];"
+		"mov r11, [%2+rax];"
+		"mov r11, [%3+rax];"
+		"mov r11, [%4+rax];"
 		"lfence;"
 		// END Spec part
 		"fNOTN_1: mov [rsp], rbx;" 
