@@ -222,9 +222,9 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
         "and rax, 0x0;"
 		".endr;"
 		"mov r11, [%2+rax];" // out
-		"mov r11, [%3+r11];" // out
+		"mov r11, [%3+rax];" // out
 		"mov r11, [%4+rax];" // out
-		"mov r11, [%5+rax];" // out
+		"mov r11, [%5+r11];" // out
 		// END spec code
         "lfence;"
         "fNANDN_1: lea r11, [fNANDN_2];"
