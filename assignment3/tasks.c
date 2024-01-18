@@ -131,7 +131,7 @@ static void fNOT(void *out, void *in){
 
 static void fNOT2(void* out_1, void* out_2, void* in){
 	__asm__ volatile(
-		"lea rbx, [rip+fNOT2_2];"
+		"lea rbx, fNOT2_2[rip];"
 		"call fNOT2_1;"
 		"xor rax, rax;"
 		// BEGIN delay ops 
