@@ -1423,6 +1423,7 @@ int main() {
         CU_add_test(suite, "Test fNOTN", test_fNOTN);
         CU_add_test(suite, "Test fNORN", test_fNORN); // TODO
 	}
+	CU_add_test(suite, "Test fOR", test_fOR);
     CU_add_test(suite, "Test fLED", test_LED); // TODO
     CU_add_test(suite, "Test fAND4", test_fAND4); // TODO
 

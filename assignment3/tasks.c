@@ -319,7 +319,7 @@ static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void
 		: "rax", "rbx", "memory"
 	);
 }
-
+/*
 static void fOR(void *out, void *in1, void *in2){
 	__asm__ volatile(
 		"lea rbx, [rip+fOR_2];"
@@ -361,15 +361,16 @@ static void fOR(void *out, void *in1, void *in2){
         : "r" (out), "r" (in1), "r" (in2)
         : "rax", "rbx", "r11", "memory"
     );
-}
-static void fORX(void *out, void *in1, void *in2){
+}*/
+static void fOR(void *out, void *in1, void *in2){
 	__asm__ volatile(
 		"lea rbx, [rip+fORX_2];"
         "call fORX_1;"
 		// BEGIN spec code
 		"mov rax, [%1];" // in1
-        "add rax, [%2];" // in2
-		"add r11, [%0+rax];"
+        "mov rbx, [%2];" // in2
+		"add rax, [%0+rax];"
+		"add rbx, [%0+rbx];"
 		// END spec code
         "lfence;"
         "fORX_1: mov [rsp], rbx;" // move 
