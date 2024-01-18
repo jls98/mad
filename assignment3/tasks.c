@@ -236,7 +236,6 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
 		"mov r11, [%10+rax];" // out
 		"mov r11, [%11+rax];" // out
 		"mov r11, [%12+rax];" // out
-		"mov r11, [%13+rax];" // out
 		// END spec code
         "lfence;"
         "fNANDN_1: lea r11, [rip+fNANDN_2];"
@@ -247,7 +246,7 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
         "ret;"
         "fNANDN_2: nop;"
         : 
-        : "r" (in1), "r" (in2), "r" (out1), "r" (out2), "r" (out3), "r" (out4), "r" (out5), "r" (out6), "r" (out7), "r" (out8), "r" (out9), "r" (out10), "r" (out11), "r" (out12)
+        : "r" (in1), "r" (in2), "r" (out1), "r" (out2), "r" (out3), "r" (out4), "r" (out5), "r" (out6), "r" (out7), "r" (out8), "r" (out9), "r" (out10), "r" (out11)
         : "rax", "r11", "memory"
     );
 }
