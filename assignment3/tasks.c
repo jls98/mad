@@ -353,18 +353,18 @@ static void fAND(void *out, void *in1, void *in2){
 
 static void fXOR(void *out, void *in1, void *in2, void **buf){
 
-	fNOTN(in1, buf[0], buf[1]); // 6 dump
-	fNOTN(in2, buf[2], buf[3]); // 
+	fNOTN(buf[0], buf[1], in1); // 6 dump
+	fNOTN(buf[2], buf[3], in2); // 
 
 	//printf("b4 nand 0 %lu 2 %lu\n", probe(buf[0]), probe(buf[2]));
 
 	fence();
 	//!(!A & !B)
 	fNAND(buf[4], buf[0], buf[2]);
-	printf("after nand %lu\n", probe(buf[4]));
+	//printf("after nand %lu\n", probe(buf[4]));
 	// !A | !B
 	fOR(buf[5], buf[1], buf[3]);	
-	printf("after or %lu\n", probe(buf[5]));
+	//printf("after or %lu\n", probe(buf[5]));
 	fence();
 
 	//!(!A & !B) & (!A | !B) <=> (A | B) & !(A & B) <=> A & !B | !A & B

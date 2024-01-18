@@ -986,9 +986,7 @@ int main() {
 	}
 	//CU_add_test(suite, "Test fNANDN", test_fNANDN); // TODO
     //CU_add_test(suite, "Test fNORN", test_fNORN); // TODO
-    //CU_add_test(suite, "Test fXOR", test_fXOR); // TODO
-    //CU_add_test(suite, "Test fNAND", test_fNAND); 
-	CU_add_test(suite, "Test fNOTN", test_fNOTN);
+    CU_add_test(suite, "Test fXOR", test_fXOR); // TODO
 	test();
 	CU_basic_run_tests();
     CU_cleanup_registry();
