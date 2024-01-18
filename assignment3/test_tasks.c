@@ -1508,52 +1508,149 @@ void test_fXOR(){
 }
 void test_LED(){
 	wait(1E9);
-
-    void *mm = malloc(512000);
-    void *in1=mm;
-    void *in2 = mm+4096+64; // +page size +cache line
-    void *in3 = mm+2*(4096+64); // +page size +cache line
-    void *in4 = mm+3*(4096+64); // +page size +cache line
-    void *out1 = mm+4*(4096+64); // +page size +cache line
-    void *out2 = mm+5*(4096+64); // +page size +cache line
-    void *out3 = mm+6*(4096+64); // +page size +cache line
-    void *out4 = mm+7*(4096+64); // +page size +cache line
-    void *out5 = mm+8*(4096+64); // +page size +cache line
-    void *out6 = mm+9*(4096+64); // +page size +cache line
-    void *out7 = mm+10*(4096+64); // +page size +cache line
-    
-    *((uint64_t *)in1) =0;
-    *((uint64_t *)in2) =0;		
-    *((uint64_t *)in3) =0;		
-    *((uint64_t *)in4) =0;		
-    
-    void **buf = malloc(50*sizeof(void *));
-    for(int j=0;j<50;j++){
-        buf[j]=mm+(11+j)*(4096+64);
-        *((uint64_t *)buf[j]) = 0;
-        flush(buf[j]);
-    }		
-    load(in1);
-    load(in2);
-    load(in3);
-    load(in4);
-    flush(out1);
-    flush(out2);
-    flush(out3);
-    flush(out4);
-    flush(out5);
-    flush(out6);
-    flush(out7);
-    
-    fence();
-    fLED(in1, in2, in3, in4, out1, out2, out3, out4, out5, out6, out7, buf);
-    fence();
-    //time = probe(out);	
-    fence();
-    
-    //CU_ASSERT_TRUE(time>THRESHOLD);
-    free(mm);
-    free(buf);
+	// 1111
+	for(int i=0;i<CYC;i++){
+		void *mm = malloc(512000);
+		void *in1=mm;
+		void *in2 = mm+4096+64; // +page size +cache line
+		void *in3 = mm+2*(4096+64); // +page size +cache line
+		void *in4 = mm+3*(4096+64); // +page size +cache line
+		void *out1 = mm+4*(4096+64); // +page size +cache line
+		void *out2 = mm+5*(4096+64); // +page size +cache line
+		void *out3 = mm+6*(4096+64); // +page size +cache line
+		void *out4 = mm+7*(4096+64); // +page size +cache line
+		void *out5 = mm+8*(4096+64); // +page size +cache line
+		void *out6 = mm+9*(4096+64); // +page size +cache line
+		void *out7 = mm+10*(4096+64); // +page size +cache line
+		
+		*((uint64_t *)in1) =0;
+		*((uint64_t *)in2) =0;		
+		*((uint64_t *)in3) =0;		
+		*((uint64_t *)in4) =0;		
+		
+		void **buf = malloc(50*sizeof(void *));
+		for(int j=0;j<50;j++){
+			buf[j]=mm+(11+j)*(4096+64);
+			*((uint64_t *)buf[j]) = 0;
+			flush(buf[j]);
+		}		
+		load(in1);
+		load(in2);
+		load(in3);
+		load(in4);
+		flush(out1);
+		flush(out2);
+		flush(out3);
+		flush(out4);
+		flush(out5);
+		flush(out6);
+		flush(out7);
+		
+		fence();
+		fLED(in1, in2, in3, in4, out1, out2, out3, out4, out5, out6, out7, buf);
+		fence();
+		time = probe(out1);	
+		fence();
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		free(mm);
+		free(buf);
+	}
+	
+	// 0000
+	for(int i=0;i<CYC;i++){
+		void *mm = malloc(512000);
+		void *in1=mm;
+		void *in2 = mm+4096+64; // +page size +cache line
+		void *in3 = mm+2*(4096+64); // +page size +cache line
+		void *in4 = mm+3*(4096+64); // +page size +cache line
+		void *out1 = mm+4*(4096+64); // +page size +cache line
+		void *out2 = mm+5*(4096+64); // +page size +cache line
+		void *out3 = mm+6*(4096+64); // +page size +cache line
+		void *out4 = mm+7*(4096+64); // +page size +cache line
+		void *out5 = mm+8*(4096+64); // +page size +cache line
+		void *out6 = mm+9*(4096+64); // +page size +cache line
+		void *out7 = mm+10*(4096+64); // +page size +cache line
+		
+		*((uint64_t *)in1) =0;
+		*((uint64_t *)in2) =0;		
+		*((uint64_t *)in3) =0;		
+		*((uint64_t *)in4) =0;		
+		
+		void **buf = malloc(50*sizeof(void *));
+		for(int j=0;j<50;j++){
+			buf[j]=mm+(11+j)*(4096+64);
+			*((uint64_t *)buf[j]) = 0;
+			flush(buf[j]);
+		}		
+		flush(in1);
+		flush(in2);
+		flush(in3);
+		flush(in4);
+		flush(out1);
+		flush(out2);
+		flush(out3);
+		flush(out4);
+		flush(out5);
+		flush(out6);
+		flush(out7);
+		
+		fence();
+		fLED(in1, in2, in3, in4, out1, out2, out3, out4, out5, out6, out7, buf);
+		fence();
+		time = probe(out1);	
+		fence();
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		free(mm);
+		free(buf);
+	}
+	
+		// 1010
+	for(int i=0;i<CYC;i++){
+		void *mm = malloc(512000);
+		void *in1=mm;
+		void *in2 = mm+4096+64; // +page size +cache line
+		void *in3 = mm+2*(4096+64); // +page size +cache line
+		void *in4 = mm+3*(4096+64); // +page size +cache line
+		void *out1 = mm+4*(4096+64); // +page size +cache line
+		void *out2 = mm+5*(4096+64); // +page size +cache line
+		void *out3 = mm+6*(4096+64); // +page size +cache line
+		void *out4 = mm+7*(4096+64); // +page size +cache line
+		void *out5 = mm+8*(4096+64); // +page size +cache line
+		void *out6 = mm+9*(4096+64); // +page size +cache line
+		void *out7 = mm+10*(4096+64); // +page size +cache line
+		
+		*((uint64_t *)in1) =0;
+		*((uint64_t *)in2) =0;		
+		*((uint64_t *)in3) =0;		
+		*((uint64_t *)in4) =0;		
+		
+		void **buf = malloc(50*sizeof(void *));
+		for(int j=0;j<50;j++){
+			buf[j]=mm+(11+j)*(4096+64);
+			*((uint64_t *)buf[j]) = 0;
+			flush(buf[j]);
+		}		
+		load(in1);
+		flush(in2);
+		load(in3);
+		flush(in4);
+		flush(out1);
+		flush(out2);
+		flush(out3);
+		flush(out4);
+		flush(out5);
+		flush(out6);
+		flush(out7);
+		
+		fence();
+		fLED(in1, in2, in3, in4, out1, out2, out3, out4, out5, out6, out7, buf);
+		fence();
+		time = probe(out1);	
+		fence();
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		free(mm);
+		free(buf);
+	}
 }
 
 int main() {

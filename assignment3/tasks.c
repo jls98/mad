@@ -457,75 +457,92 @@ static void fXOR(void *out, void *in1, void *in2, void **buf){
 static void fLED1(void *in1, void *in2, void *in3, void *in4, void *out, void **buf){
     
     // !A: 1, 4, A: 3 
+	__asm__ volatile("lfence");
     fNOT2(buf[0], buf[1], in1); // !
-    fNOT2(buf[2], buf[3], buf[0]);
+ 	__asm__ volatile("lfence");
+   fNOT2(buf[2], buf[3], buf[0]);
+	__asm__ volatile("lfence");
     fNOT(buf[4], buf[2]); // !
     
+	__asm__ volatile("lfence");
     flush(buf[0]);
     flush(buf[2]);
     
     // !b: 6, b: 7, 8
+	__asm__ volatile("lfence");
     fNOT2(buf[5], buf[6], in2); //!
+	__asm__ volatile("lfence");
     fNOT2(buf[7], buf[8], buf[5]);
+	__asm__ volatile("lfence");
 
     flush(buf[5]);
 
     // !c: 10, 13, c: 12, 16
+	__asm__ volatile("lfence");
     fNOT2(buf[9], buf[10], in3); //!
+	__asm__ volatile("lfence");
     fNOT2(buf[11], buf[12], buf[9]);    
+	__asm__ volatile("lfence");
 	fNOT2(buf[14], buf[13], buf[11]); //!
+	__asm__ volatile("lfence");
     fNOT(buf[16], buf[14]); 
+	__asm__ volatile("lfence");
 
     flush(buf[9]);
     flush(buf[11]);
     flush(buf[14]);
 
+	__asm__ volatile("lfence");
     // !d: 2, 14, d: 9, 15
     fNOT2(buf[0], buf[2], in4); //!
+	__asm__ volatile("lfence");
     fNOT2(buf[5], buf[9], buf[0]);
+	__asm__ volatile("lfence");
     fNOT2(buf[11], buf[14], buf[5]); //!
+	__asm__ volatile("lfence");
     fNOT(buf[15], buf[11]);   
+	__asm__ volatile("lfence");
 
     flush(buf[0]);
     flush(buf[5]);
     flush(buf[11]);
     
     // !A*D
+	__asm__ volatile("lfence");
 	fAND(buf[0], buf[1], buf[9]);
     flush(buf[1]);
     flush(buf[9]);
 	
 	// B*C
+	__asm__ volatile("lfence");
 	fAND(buf[5], buf[7], buf[12]);
     flush(buf[7]);
     flush(buf[12]);
 
 	// !A*!C
+	__asm__ volatile("lfence");
 	fAND(buf[1], buf[4], buf[10]);
-    flush(buf[4]);
-    flush(buf[10]);	
+
 	
 	// B*!D
+	__asm__ volatile("lfence");
 	fAND(buf[9], buf[8], buf[2]);
-    flush(buf[8]);
-    flush(buf[2]);	
+	
 	
 	// !B*!C*D
+	__asm__ volatile("lfence");
 	fAND4(buf[7], buf[6], buf[13], buf[15], buf[15]);
-    flush(buf[6]);
-    flush(buf[13]);	
-    flush(buf[15]);	
+
 
 	// A*C*!D
+	__asm__ volatile("lfence");
 	fAND4(buf[12], buf[3], buf[16], buf[15], buf[15]);
-    flush(buf[3]);
-    flush(buf[16]);	
-    flush(buf[15]);	
+
 	
-	
-	
-    
-    
+	// result
+	__asm__ volatile("lfence");
+	fORX(out, buf[0], buf[5], buf[1], buf[9], buf[7], buf[12]);
+	for (int i=0;i<17;i++) flush(buf[i]);    
 }
 
 static void fLED2(void *in1, void *in2, void *in3, void *in4, void *out, void **buf){
