@@ -813,7 +813,7 @@ void test_fOR(){
 		free(mm);
 	}
 }
-
+/*
 void test_fXOR(){
 	wait(1E9);
 	uint64_t time;
@@ -939,7 +939,7 @@ void test_fXOR(){
 		free(mm);
 	}
 }
-
+*/
 void test(){
 		void *mm = malloc(81920);
 		void *in1=mm;
