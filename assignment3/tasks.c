@@ -244,9 +244,9 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
 
 static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4){
 	__asm__ volatile(
-		"lea rbx, [fNOR_3];"
-		"call fNOR_1;"
-		"call fNOR_2;"
+		"lea rbx, [fNORN_3];"
+		"call fNORN_1;"
+		"call fNORN_2;"
 		// BEGIN spec part 
 		"xor rax, rax;"
 		// BEGIN delay ops 
@@ -261,17 +261,17 @@ static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void
 		"mov r11, [%5+rax];" // addr output + 0
 		"lfence;"
 		// END spec part 
-		"fNOR_1: mov [rsp], rbx;"		// in2
+		"fNORN_1: mov [rsp], rbx;"		// in2
 		"mov r11, [%1];"
 		"add [rsp], r11;"
 		"ret;"
 		
-		"fNOR_2: mov [rsp], rbx;"		// in1
+		"fNORN_2: mov [rsp], rbx;"		// in1
 		"mov r11, [%0];"
 		"add [rsp], r11;"
 		"ret;"
 		// end 
-		"fNOR_3: nop;"
+		"fNORN_3: nop;"
 		: 
 		: "r" (in1), "r" (in2), "r" (out1), "r" (out2), "r" (out3), "r" (out4)
 		: "rax", "rbx", "r11", "memory"
