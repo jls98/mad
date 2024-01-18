@@ -8,7 +8,7 @@
 static void fNOT(void *out, void *in); // NOT gate
 static void fNOT2(void* out_1, void* out_2, void* in);
 static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4,void* out_5, void* out_6,void* out_7, void* out_8,void* out_9,void* out_10,void* out_11, void* in);
-
+static void fAND4(void *out, void *in1, void *in2, void *in3, void *in4);
 static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4, void *out5, void *out6, void *out7, void *out8, void *out9, void *out10, void *out11, void *out12);
 static void fORX(void *out, void *in1, void *in2, void *in3, void *in4, void *in5, void *in6);
 //static void fNOTX(void *out, void *in, uint64_t x); // xNOT gate with x out
@@ -555,12 +555,12 @@ static void fLED2(void *in1, void *in2, void *in3, void *in4, void *out, void **
 	__asm__ volatile("lfence");
    fNOT(buf[14], buf[2]); //!
     
-	__asm__ volatile("lfence");
+	__asm__ volatile("mfence");
     flush(buf[0]);
     flush(buf[2]);
     
     // !b: 6, 17 b: 18, 8
-	__asm__ volatile("lfence");
+	__asm__ volatile("mfence");
     fNOT2(buf[5], buf[6], in2); //!
 	__asm__ volatile("lfence");
     fNOT2(buf[7], buf[8], buf[5]);
@@ -568,13 +568,13 @@ static void fLED2(void *in1, void *in2, void *in3, void *in4, void *out, void **
     fNOT2(buf[11], buf[17], buf[7]); //!
 	__asm__ volatile("lfence");
     fNOT(buf[18], buf[11]); 
-	__asm__ volatile("lfence");
+	__asm__ volatile("mfence");
     flush(buf[5]);
     flush(buf[7]);
     flush(buf[11]);
 
     // !c: 10, 13, c: 12, 16
-	__asm__ volatile("lfence");
+	__asm__ volatile("mfence");
     fNOT2(buf[9], buf[10], in3); //!
 	__asm__ volatile("lfence");
     fNOT2(buf[11], buf[12], buf[9]);    
@@ -582,34 +582,36 @@ static void fLED2(void *in1, void *in2, void *in3, void *in4, void *out, void **
 	fNOT2(buf[14], buf[13], buf[11]); //!
 	__asm__ volatile("lfence");
     fNOT(buf[16], buf[14]); 
-	__asm__ volatile("lfence");
+	__asm__ volatile("mfence");
 
     flush(buf[9]);
     flush(buf[11]);
     flush(buf[14]);
 
-	__asm__ volatile("lfence");
+	__asm__ volatile("mfence");
     // !d: 2 d: 5, 9
     fNOT2(buf[0], buf[2], in4); //!
 	__asm__ volatile("lfence");
     fNOT2(buf[5], buf[9], buf[0]);
-	__asm__ volatile("lfence");
+	__asm__ volatile("mfence");
 
     flush(buf[0]);
 	
 	// !C*D
-	__asm__ volatile("lfence");
+	__asm__ volatile("mfence");
 	fAND(buf[0], buf[10], buf[5]);
+	__asm__ volatile("mfence");
     flush(buf[10]);
     flush(buf[5]);
 	
 	// B*D
 	__asm__ volatile("lfence");
 	fAND(buf[5], buf[18], buf[9]);
+	__asm__ volatile("mfence");
     flush(buf[9]);
 	
 	// !A*C
-	__asm__ volatile("lfence");
+	__asm__ volatile("mfence");
 	fAND(buf[11], buf[1], buf[12]);
 	
 	// !A*!B
@@ -631,8 +633,88 @@ static void fLED2(void *in1, void *in2, void *in3, void *in4, void *out, void **
 	
 }
 
+// out3: !B*!C + !A*!C + !A*!B*!D + A*!B*D + A*B*C*!D
 static void fLED3(void *in1, void *in2, void *in3, void *in4, void *out, void **buf){
+    // !A: 1, 14, A: 3, 4
+	__asm__ volatile("lfence");
+    fNOT2(buf[0], buf[1], in1); // !
+ 	__asm__ volatile("lfence");
+	fNOT2(buf[2], buf[3], buf[0]);
+	__asm__ volatile("lfence");
+	fNOT2(buf[11],buf[14], buf[2]); //!
+	__asm__ volatile("lfence");
+	fNOT(buf[4], buf[11]); 
     
+	__asm__ volatile("lfence");
+    flush(buf[0]);
+    flush(buf[2]);
+    flush(buf[11]);
+    
+    // !b: 6, 0, 2, b: 8
+	__asm__ volatile("lfence");
+    fNOT2(buf[5], buf[6], in2); //!
+	__asm__ volatile("lfence");
+    fNOT2(buf[7], buf[8], buf[5]);
+	__asm__ volatile("lfence");
+    fNOT2(buf[0], buf[2], buf[7]); //!
+	__asm__ volatile("lfence");
+
+    flush(buf[5]);
+    flush(buf[7]);
+
+    // !c: 10, 13, c: 12
+	__asm__ volatile("lfence");
+    fNOT2(buf[9], buf[10], in3); //!
+	__asm__ volatile("lfence");
+    fNOT2(buf[11], buf[12], buf[9]);    
+	__asm__ volatile("lfence");
+	fNOT(buf[13], buf[11]); //!
+	__asm__ volatile("lfence");
+
+    flush(buf[9]);
+    flush(buf[11]);
+
+	__asm__ volatile("lfence");
+    // !d: 7, 15, d: 9
+    fNOT2(buf[5], buf[7], in4); //!
+	__asm__ volatile("lfence");
+    fNOT2(buf[11], buf[9], buf[5]);
+	__asm__ volatile("lfence");
+    fNOT(buf[15], buf[11]); //!
+	__asm__ volatile("lfence");
+
+    flush(buf[5]);
+    flush(buf[11]);
+	
+	//!B*!C
+	__asm__ volatile("mfence");
+	fAND(buf[5], buf[6], buf[10]);
+	
+	//!A*!C
+	__asm__ volatile("lfence");
+	fAND(buf[11], buf[1], buf[13]);
+
+    flush(buf[6]);
+    flush(buf[10]);
+    flush(buf[1]);
+    flush(buf[13]);
+	
+	//!A*!B*!D
+	__asm__ volatile("mfence");
+	fAND4(buf[6], buf[14], buf[0], buf[7], buf[7]);	
+	
+	// A*!B*D
+	__asm__ volatile("lfence");
+	fAND4(buf[10], buf[3], buf[2], buf[9], buf[9]);	
+	
+	//A*B*C*!D
+	__asm__ volatile("lfence");
+	fAND4(buf[1], buf[4], buf[8], buf[12], buf[15]);
+
+	// result
+	__asm__ volatile("lfence");
+	fORX(out, buf[1], buf[10], buf[6], buf[11], buf[5], buf[13]);
+	for (int i=0;i<17;i++) flush(buf[i]);  	
 }
 
 static void fLED4(void *in1, void *in2, void *in3, void *in4, void *out, void **buf){
