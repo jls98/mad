@@ -181,7 +181,7 @@ static void fNOTN(void* out_1, void* out_2,void* out_3, void* out_4,void* out_5,
 		"fNOTN_2: nop;"
 		: 
 		: "S" (in), "r" (out_1), "r" (out_2), "r" (out_3), "r" (out_4)
-		: "rax", , "r11", "rbx", "memory"
+		: "rax", "r11", "rbx", "memory"
 	);
 }
 
