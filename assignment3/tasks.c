@@ -10,7 +10,7 @@ static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in);
 //static void fNOTX(void *out, void *in, uint64_t x); // xNOT gate with x out
 static void fNOR(void *out, void *in1, void *in2);
 static void fNAND(void *out, void *in1, void *in2);
-static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4)
+static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4);
 static void fAND(void *out, void *in1, void *in2);
 static void fOR(void *out, void *in1, void *in2);
 
