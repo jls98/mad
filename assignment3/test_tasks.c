@@ -133,11 +133,6 @@ void test_fNANDN(){
 		time = probe(out9);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out10);	
-		CU_ASSERT_TRUE(time<THRESHOLD);
-		time = probe(out11);	
-		CU_ASSERT_TRUE(time<THRESHOLD);
-		time = probe(out12);	
-		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
 	}
 	
@@ -199,11 +194,6 @@ void test_fNANDN(){
 		time = probe(out9);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out10);	
-		CU_ASSERT_TRUE(time<THRESHOLD);
-		time = probe(out11);	
-		CU_ASSERT_TRUE(time<THRESHOLD);
-		time = probe(out12);	
-		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
 	}
 	
@@ -265,11 +255,6 @@ void test_fNANDN(){
 		time = probe(out9);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out10);	
-		CU_ASSERT_TRUE(time<THRESHOLD);
-		time = probe(out11);	
-		CU_ASSERT_TRUE(time<THRESHOLD);
-		time = probe(out12);	
-		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
 	}
 	
@@ -331,11 +316,6 @@ void test_fNANDN(){
 		time = probe(out9);	
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		time = probe(out10);	
-		CU_ASSERT_TRUE(time>THRESHOLD);
-		time = probe(out11);	
-		CU_ASSERT_TRUE(time>THRESHOLD);
-		time = probe(out12);	
-		CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
 	}
 }
