@@ -1219,8 +1219,16 @@ void test_LED(){
         flush(buf[j]);
     }		
     load(in1);
-    flush(out);
     load(in2);
+    flush(in3);
+    load(in4);
+    flush(out1);
+    flush(out2);
+    flush(out3);
+    flush(out4);
+    flush(out5);
+    flush(out6);
+    flush(out7);
     
     fence();
     fLED(in1, in2, in3, in4, out1, out2, out3, out4, out5, out6, out7, buf);

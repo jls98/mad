@@ -485,13 +485,13 @@ static void fLED(void *in1, void *in2, void *in3, void *in4, void *out1, void *o
     flush(buf[8]);
     flush(buf[9]);
     
-    printf("a dup is %lu\n", load(buf[3]));
-    printf("a dup is %lu\n", load(buf[7]));
-    printf("a dup is %lu\n", load(buf[10]));
-    printf("a dup is %lu\n", load(buf[11]));
-    printf("a dup is %lu\n", load(buf[12]));
-    printf("a dup is %lu\n", load(buf[13]));
-    printf("a dup is %lu\n", load(buf[14]));
+    printf("a dup is %lu\n", probe(buf[3]));
+    printf("a dup is %lu\n", probe(buf[7]));
+    printf("a dup is %lu\n", probe(buf[10]));
+    printf("a dup is %lu\n", probe(buf[11]));
+    printf("a dup is %lu\n", probe(buf[12]));
+    printf("a dup is %lu\n", probe(buf[13]));
+    printf("a dup is %lu\n", probe(buf[14]));
     
     // >14
     // B 4, 9, 17, 18, 19, 20, 21
@@ -515,13 +515,13 @@ static void fLED(void *in1, void *in2, void *in3, void *in4, void *out1, void *o
     flush(buf[15]);
     flush(buf[16]);
 
-    printf("b dup is %lu\n", load(buf[4]));
-    printf("b dup is %lu\n", load(buf[9]));
-    printf("b dup is %lu\n", load(buf[17]));
-    printf("b dup is %lu\n", load(buf[18]));
-    printf("b dup is %lu\n", load(buf[19]));
-    printf("b dup is %lu\n", load(buf[20]));
-    printf("b dup is %lu\n", load(buf[21]));
+    printf("b dup is %lu\n", probe(buf[4]));
+    printf("b dup is %lu\n", probe(buf[9]));
+    printf("b dup is %lu\n", probe(buf[17]));
+    printf("b dup is %lu\n", probe(buf[18]));
+    printf("b dup is %lu\n", probe(buf[19]));
+    printf("b dup is %lu\n", probe(buf[20]));
+    printf("b dup is %lu\n", probe(buf[21]));
     
     // > 21
     // C 5, 16, 24, 25, 26, 27, 28
@@ -545,13 +545,13 @@ static void fLED(void *in1, void *in2, void *in3, void *in4, void *out1, void *o
     flush(buf[22]);
     flush(buf[23]);
     
-    printf("c dup is %lu\n", load(buf[5]));
-    printf("c dup is %lu\n", load(buf[16]));
-    printf("c dup is %lu\n", load(buf[24]));
-    printf("c dup is %lu\n", load(buf[25]));
-    printf("c dup is %lu\n", load(buf[26]));
-    printf("c dup is %lu\n", load(buf[27]));
-    printf("c dup is %lu\n", load(buf[28]]));
+    printf("c dup is %lu\n", probe(buf[5]));
+    printf("c dup is %lu\n", probe(buf[16]));
+    printf("c dup is %lu\n", probe(buf[24]));
+    printf("c dup is %lu\n", probe(buf[25]));
+    printf("c dup is %lu\n", probe(buf[26]));
+    printf("c dup is %lu\n", probe(buf[27]));
+    printf("c dup is %lu\n", probe(buf[28]]));
 
     
     // > 28
@@ -573,13 +573,13 @@ static void fLED(void *in1, void *in2, void *in3, void *in4, void *out1, void *o
     flush(buf[8]);
     fNOT(buf[8], buf[22]);
 
-    printf("d dup is %lu\n", load(buf[0]));
-    printf("d dup is %lu\n", load(buf[1]));
-    printf("d dup is %lu\n", load(buf[2]));
-    printf("d dup is %lu\n", load(buf[7]));
-    printf("d dup is %lu\n", load(buf[8]));
-    printf("d dup is %lu\n", load(buf[15]));
-    printf("d dup is %lu\n", load(buf[23]));
+    printf("d dup is %lu\n", probe(buf[0]));
+    printf("d dup is %lu\n", probe(buf[1]));
+    printf("d dup is %lu\n", probe(buf[2]));
+    printf("d dup is %lu\n", probe(buf[7]));
+    printf("d dup is %lu\n", probe(buf[8]));
+    printf("d dup is %lu\n", probe(buf[15]));
+    printf("d dup is %lu\n", probe(buf[23]));
 
     
 }
