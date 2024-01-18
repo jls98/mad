@@ -1222,7 +1222,7 @@ void test_LED(){
     }		
     load(in1);
     load(in2);
-    flush(in3);
+    load(in3);
     load(in4);
     flush(out1);
     flush(out2);

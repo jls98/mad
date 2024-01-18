@@ -413,52 +413,62 @@ static void fXOR(void *out, void *in1, void *in2, void **buf){
 
 // out1: !A*D + B*C + !A*!C + B*!D + !B*!C*D + A*C*!D
 
-static void fLET1(void *in1, void *in2, void *in3, void *in4, void *out, void **buf){
+static void fLED1(void *in1, void *in2, void *in3, void *in4, void *out, void **buf){
     
     
     // !A: 1, 4, A: 3 
-    fNOT2(buf[0], buf[1], in1);
+    fNOT2(buf[0], buf[1], in1); // !
     fNOT2(buf[2], buf[3], buf[0]);
-    fNOT(buf[4], buf[2]);
+    fNOT(buf[4], buf[2]); // !
+    
+    flush(buf[0]);
+    flush(buf[2]);
     
     // !b: 6, b: 7, 8
-    fNOT2(buf[5], buf[6], in2);
+    fNOT2(buf[5], buf[6], in2); //!
     fNOT2(buf[7], buf[8], buf[5]);
-    
+
+    flush(buf[5]);
+
     // !c: 10, 13, c: 12
-    fNOT2(buf[9], buf[10], in3);
+    fNOT2(buf[9], buf[10], in3); //!
     fNOT2(buf[11], buf[12], buf[9]);
-    fNOT(buf[13], buf[11]);
-    
-    // !d: , d:
-    fNOT2(buf[14], buf[15], in4);
-    fNOT2(buf[11], buf[12], buf[9]);
-    fNOT(buf[13], buf[11]);   
+    fNOT(buf[13], buf[11]); //!
 
-    
-}
+    flush(buf[9]);
+    flush(buf[11]);
 
-static void fLET2(void *in1, void *in2, void *in3, void *in4, void *out){
-    
-}
+    // !d: 2, 11, d: 9
+    fNOT2(buf[0], buf[2], in4); //!
+    fNOT2(buf[5], buf[9], buf[0]);
+    fNOT(buf[11], buf[5]);   //!
 
-static void fLET3(void *in1, void *in2, void *in3, void *in4, void *out){
+    flush(buf[0]);
+    flush(buf[5]);
     
 }
 
-static void fLET4(void *in1, void *in2, void *in3, void *in4, void *out){
+static void fLED2(void *in1, void *in2, void *in3, void *in4, void *out){
     
 }
 
-static void fLET5(void *in1, void *in2, void *in3, void *in4, void *out){
+static void fLED3(void *in1, void *in2, void *in3, void *in4, void *out){
     
 }
 
-static void fLET6(void *in1, void *in2, void *in3, void *in4, void *out){
+static void fLED4(void *in1, void *in2, void *in3, void *in4, void *out){
     
 }
 
-static void fLET7(void *in1, void *in2, void *in3, void *in4, void *out){
+static void fLED5(void *in1, void *in2, void *in3, void *in4, void *out){
+    
+}
+
+static void fLED6(void *in1, void *in2, void *in3, void *in4, void *out){
+    
+}
+
+static void fLED7(void *in1, void *in2, void *in3, void *in4, void *out){
     
 }
 
@@ -494,13 +504,13 @@ static void fLED(void *in1, void *in2, void *in3, void *in4, void *out1, void *o
     flush(buf[8]);
     flush(buf[9]);
     
-    printf("a dup is %lu\n", probe(buf[3]));
+   /* printf("a dup is %lu\n", probe(buf[3]));
     printf("a dup is %lu\n", probe(buf[7]));
     printf("a dup is %lu\n", probe(buf[10]));
     printf("a dup is %lu\n", probe(buf[11]));
     printf("a dup is %lu\n", probe(buf[12]));
     printf("a dup is %lu\n", probe(buf[13]));
-    printf("a dup is %lu\n", probe(buf[14]));
+    printf("a dup is %lu\n", probe(buf[14]));*/
     
     // >14
     // B 4, 9, 17, 18, 19, 20, 21
@@ -534,13 +544,13 @@ static void fLED(void *in1, void *in2, void *in3, void *in4, void *out1, void *o
     flush(buf[15]);
     flush(buf[16]);
 
-    printf("b dup is %lu\n", probe(buf[4]));
+    /*printf("b dup is %lu\n", probe(buf[4]));
     printf("b dup is %lu\n", probe(buf[9]));
     printf("b dup is %lu\n", probe(buf[17]));
     printf("b dup is %lu\n", probe(buf[18]));
     printf("b dup is %lu\n", probe(buf[19]));
     printf("b dup is %lu\n", probe(buf[20]));
-    printf("b dup is %lu\n", probe(buf[21]));
+    printf("b dup is %lu\n", probe(buf[21]));*/
     
     // > 21
     // C 5, 16, 24, 25, 26, 27, 28
@@ -573,14 +583,14 @@ static void fLED(void *in1, void *in2, void *in3, void *in4, void *out1, void *o
     flush(buf[15]);
     flush(buf[22]);
     flush(buf[23]);
-    
+   /* 
     printf("c dup is %lu\n", probe(buf[5]));
     printf("c dup is %lu\n", probe(buf[16]));
     printf("c dup is %lu\n", probe(buf[24]));
     printf("c dup is %lu\n", probe(buf[25]));
     printf("c dup is %lu\n", probe(buf[26]));
     printf("c dup is %lu\n", probe(buf[27]));
-    printf("c dup is %lu\n", probe(buf[28]));
+    printf("c dup is %lu\n", probe(buf[28]));*/
 
     
     // > 28
@@ -618,16 +628,23 @@ static void fLED(void *in1, void *in2, void *in3, void *in4, void *out1, void *o
 	__asm__ volatile("mfence");
     fNOT(buf[8], buf[22]);
 	__asm__ volatile("mfence");
-
+/*
     printf("d dup is %lu\n", probe(buf[0]));
     printf("d dup is %lu\n", probe(buf[1]));
     printf("d dup is %lu\n", probe(buf[2]));
     printf("d dup is %lu\n", probe(buf[7]));
     printf("d dup is %lu\n", probe(buf[8]));
     printf("d dup is %lu\n", probe(buf[15]));
-    printf("d dup is %lu\n", probe(buf[23]));
+    printf("d dup is %lu\n", probe(buf[23]));*/
 
-    
+    void **buff = buf+29*sizeof(void *);
+    fLED1(buf[3], buf[4], buf[5], buf[0], out1);
+    fLED2(buf[7], buf[9], buf[16], buf[1], out2);
+    fLED3(buf[10], buf[17], buf[24], buf[2], out3);
+    fLED4(buf[11], buf[18], buf[25], buf[6], out4);
+    fLED5(buf[12], buf[19], buf[26], buf[8], out5);
+    fLED6(buf[13], buf[20], buf[27], buf[15], out6);
+    fLED7(buf[14], buf[21], buf[28], buf[23], out7);
 }
 
 
