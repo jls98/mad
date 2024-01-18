@@ -345,7 +345,7 @@ static void fOR(void *out, void *in1, void *in2){
         : "rax", "rbx", "r11", "memory"
 	);
 }
-static void fORX(void *out, void *in1, void *in2, void *in3, void *in4, "r" (in5), "r" (in6)){
+static void fORX(void *out, void *in1, void *in2, void *in3, void *in4, void *in5, void *in6){
 	__asm__ volatile(
 		"lea rbx, [rip+fORX_2];"
         "call fORX_1;"
