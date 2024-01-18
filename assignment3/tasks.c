@@ -9,6 +9,7 @@ static void fNOT(void *out, void *in); // NOT gate
 static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in);
 //static void fNOTX(void *out, void *in, uint64_t x); // xNOT gate with x out
 static void fNOR(void *out, void *in1, void *in2);
+static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4);
 static void fNAND(void *out, void *in1, void *in2);
 static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4);
 static void fAND(void *out, void *in1, void *in2);
@@ -239,6 +240,42 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
         : "r" (in1), "r" (in2), "r" (out1), "r" (out2), "r" (out3)//, "r" (out4)
         : "rax", "r11", "memory"
     );
+}
+
+static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4){
+	__asm__ volatile(
+		"lea rbx, [fNOR_3];"
+		"call fNOR_1;"
+		"call fNOR_2;"
+		// BEGIN spec part 
+		"xor rax, rax;"
+		// BEGIN delay ops 
+		".rept 5;"
+		"mov rax, [rsp+rax];"
+		"and rax, 0x0;"	
+		".endr;"		
+		// END delay ops 
+		"mov r11, [%2+rax];" // addr output + 0
+		"mov r11, [%3+rax];" // addr output + 0
+		"mov r11, [%4+rax];" // addr output + 0
+		"mov r11, [%5+rax];" // addr output + 0
+		"lfence;"
+		// END spec part 
+		"fNOR_1: mov [rsp], rbx;"		// in2
+		"mov r11, [%1];"
+		"add [rsp], r11;"
+		"ret;"
+		
+		"fNOR_2: mov [rsp], rbx;"		// in1
+		"mov r11, [%0];"
+		"add [rsp], r11;"
+		"ret;"
+		// end 
+		"fNOR_3: nop;"
+		: 
+		: "r" (in1), "r" (in2), "r" (out1), "r" (out2), "r" (out3), "r" (out4)
+		: "rax", "rbx", "r11", "memory"
+	);
 }
 
 static void fOR(void *out, void *in1, void *in2){
