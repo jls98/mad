@@ -1697,8 +1697,8 @@ void test_LED(){
 		*((uint64_t *)in3) =0;		
 		*((uint64_t *)in4) =0;		
 		
-		void **buf = malloc(50*sizeof(void *));
-		for(int j=0;j<50;j++){
+		void **buf = malloc(55*sizeof(void *));
+		for(int j=0;j<55;j++){
 			buf[j]=mm+(11+j)*(4096+64);
 			*((uint64_t *)buf[j]) = 0;
 			flush(buf[j]);
