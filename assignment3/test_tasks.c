@@ -410,13 +410,21 @@ void test_fNORN(){
 	wait(1E9);
 	// ------------ notA nor notB ------------
 	for(int i=0;i<CYC;i++){
-		void *mm = malloc(8192);
+		void *mm = malloc(81920);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
 		void *out1 = mm+2*(4096+64); // +page size +cache line
 		void *out2 = mm+3*(4096+64); // +page size +cache line
-		//void *out3 = mm+4*(4096+64); // +page size +cache line
-		//void *out4 = mm+5*(4096+64); // +page size +cache line
+		void *out3 = mm+4*(4096+64); // +page size +cache line
+		void *out4 = mm+5*(4096+64); // +page size +cache line
+		void *out5 = mm+6*(4096+64); // +page size +cache line
+		void *out6 = mm+7*(4096+64); // +page size +cache line
+		void *out7 = mm+8*(4096+64); // +page size +cache line
+		void *out8 = mm+9*(4096+64); // +page size +cache line
+		void *out9 = mm+10*(4096+64); // +page size +cache line
+		void *out10 = mm+11*(4096+64); // +page size +cache line
+		void *out11 = mm+12*(4096+64); // +page size +cache line
+		void *out12 = mm+13*(4096+64); // +page size +cache line
 		
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;		
@@ -425,20 +433,28 @@ void test_fNORN(){
 		flush(in2);
 		flush(out1);
 		flush(out2);
-		//flush(out3);
-		//flush(out4);
+		flush(out3);
+		flush(out4);
+		flush(out5);
+		flush(out6);
+		flush(out7);
+		flush(out8);
+		flush(out9);
+		flush(out10);
+		flush(out11);
+		flush(out12);
 		
 		fence();
-		fNORN(in1, in2, out1, out2/*, out3, out4*/);
+		fNORN(in1, in2, out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out11, out12);
 		fence();
 		time = probe(out1);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out2);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
-		/*time = probe(out3);	
+		time = probe(out3);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out4);	
-		CU_ASSERT_TRUE(time<THRESHOLD);*/
+		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
 	}
 	
@@ -1149,8 +1165,8 @@ int main() {
 		CU_add_test(suite, "Test fOR", test_fNOR);
 		CU_add_test(suite, "Test fXOR", test_fXOR);
 	}
-	CU_add_test(suite, "Test fNOTN", test_fNOTN);
-    //CU_add_test(suite, "Test fNORN", test_fNORN); // TODO
+	//CU_add_test(suite, "Test fNOTN", test_fNOTN);
+    CU_add_test(suite, "Test fNORN", test_fNORN); // TODO
 
 	CU_basic_run_tests();
     CU_cleanup_registry();

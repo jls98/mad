@@ -7,7 +7,7 @@
 
 static void fNOT(void *out, void *in); // NOT gate
 static void fNOT2(void* out_1, void* out_2, void* in);
-static void fNOTN(void* out_1, void* out_2,void* out_3, void* out_4,void* out_5, void* out_6,void* out_7, void* out_8,void* out_9,void* out_10,void* out_11, void* in);
+static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4, void *out5, void *out6, void *out7, void *out8, void *out9, void *out10, void *out11, void *out12);
 
 //static void fNOTX(void *out, void *in, uint64_t x); // xNOT gate with x out
 static void fNOR(void *out, void *in1, void *in2);
@@ -156,7 +156,7 @@ static void fNOT2(void* out_1, void* out_2, void* in){
 	);
 }
 
-static void fNOTN(void* out_1, void* out_2,void* out_3, void* out_4,void* out_5, void* out_6,void* out_7, void* out_8,void* out_9,void* out_10,void* out_11, void* in){
+static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4,void* out_5, void* out_6,void* out_7, void* out_8,void* out_9,void* out_10,void* out_11, void* in){
 	__asm__ volatile(
 		"lea rbx, fNOTN_2[rip];"
 		"call fNOTN_1;"
@@ -280,9 +280,9 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
 }
 
 // 4 outputs 51 % correct on A nor notB, 2 outputs 100 %
-static void fNORN(void *in1, void *in2, void *out1, void *out2/*, void *out3, void *out4*/){
+static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4, void *out5, void *out6, void *out7, void *out8, void *out9, void *out10, void *out11, void *out12){
 	__asm__ volatile(
-		"lea rbx, [rip+fNORN_3];"
+		"lea r11, fNORN_3[rip];"
 		"call fNORN_1;"
 		"call fNORN_2;"
 		// BEGIN spec part 
@@ -295,8 +295,8 @@ static void fNORN(void *in1, void *in2, void *out1, void *out2/*, void *out3, vo
 		// END delay ops 
 		"mov r11, [%2+rax];" // addr output + 0
 		"mov r11, [%3+rax];" // addr output + 0
-		//"mov r11, [%4+rax];" // addr output + 0
-		//"mov r11, [%5+rax];" // addr output + 0
+		"mov r11, [%4+rax];" // addr output + 0
+		"mov r11, [%5+rax];" // addr output + 0
 		"lfence;"
 		// END spec part 
 		"fNORN_1: mov [rsp], rbx;"		// in2
@@ -304,15 +304,15 @@ static void fNORN(void *in1, void *in2, void *out1, void *out2/*, void *out3, vo
 		"add [rsp], r11;"
 		"ret;"
 		
-		"fNORN_2: mov [rsp], rbx;"		// in1
+		"fNORN_2: mov [rsp], r11;"		// in1
 		"mov r11, [%0];"
 		"add [rsp], r11;"
 		"ret;"
 		// end 
 		"fNORN_3: nop;"
 		: 
-		: "r" (in1), "r" (in2), "r" (out1), "r" (out2)//, "r" (out3), "r" (out4)
-		: "rax", "rbx", "r11", "memory"
+		: "r" (in1), "r" (in2), "r" (out1), "r" (out2), "r" (out3), "r" (out4)//, "r" (out5), "r" (out6), "r" (out7), "r" (out8), "r" (out9), "r" (out10), "r" (out11), "r" (out12)
+		: "rax", "r11", "memory"
 	);
 }
 
