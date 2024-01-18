@@ -225,16 +225,16 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
         "mov rax, [rsp+rax];"
         "and rax, 0x0;"
 		".endr;"
-		"mov r11, [%2+rax];" // out
-		"mov r11, [%3+rax];" // out
-		"mov r11, [%4+rax];" // out
-		"mov r11, [%5+rax];" // out
-		"mov r11, [%6+rax];" // out
-		"mov r11, [%7+rax];" // out
-		"mov r11, [%8+rax];" // out
-		"mov r11, [%9+rax];" // out
-//		"mov r11, [%10+rax];" // out
-//		"mov r11, [%11+rax];" // out
+		"mov r11, [%2+rax];" // out1
+		"mov r11, [%3+rax];" // out2
+		"mov r11, [%4+rax];" // out3
+		"mov r11, [%5+rax];" // out4
+		"mov r11, [%6+rax];" // out5
+		"mov r11, [%7+rax];" // out6
+		"mov r11, [%8+rax];" // out7
+		"mov r11, [%9+rax];" // out8
+		"mov r11, [%10+rax];" // out9
+		"mov r11, [%11+rax];" // out10
 	//	"mov r11, [%12+rax];" // out
 		// END spec code
         "lfence;"
