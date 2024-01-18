@@ -128,7 +128,7 @@ static void fNOT(void *out, void *in){
 }*/
 
 // 78 % success on 4 outputs for case in = not out (weirdly, the false hits all appear at the beginning in a row, 100 100 89 89), 49 % success on 5 outputs for same case
-static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in){
+static void fNOTN(void* out_1, void* out_2/*, void* out_3, void* out_4*/, void* in){
 	__asm__ volatile(
 		"lea rbx, [fNOTN_2];"
 		"call fNOTN_1;"
@@ -141,8 +141,8 @@ static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in){
 		// BEGIN Spec part
 		"mov rbx, [%1+rax];" // prob leads to some interleaving/parallel processing which is desired
 		"mov rbx, [%2+rax];"
-		"mov rbx, [%3+rax];"
-		"mov rbx, [%4+rax];"
+		//"mov rbx, [%3+rax];"
+		//"mov rbx, [%4+rax];"
 		"lfence;"
 		// END Spec part
 		"fNOTN_1: mov [rsp], rbx;" 
@@ -152,7 +152,7 @@ static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in){
 		
 		"fNOTN_2: nop;"
 		: 
-		: "S" (in), "r" (out_1), "r" (out_2), "r" (out_3), "r" (out_4)
+		: "S" (in), "r" (out_1), "r" (out_2)//, "r" (out_3), "r" (out_4)
 		: "rax", "rbx", "memory"
 	);
 }
@@ -216,7 +216,7 @@ static void fNAND(void *out, void *in1, void *in2){
 }
 
 // 4 outputs 51 % correct on a nand b: 
-static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4){
+static void fNANDN(void *in1, void *in2, void *out1, void *out2/*, void *out3, void *out4*/){
 	__asm__ volatile(
         "call fNANDN_1;"
 		// BEGIN spec code
@@ -227,7 +227,7 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
 		".endr;"
 		"mov r11, [%2+rax];" // out
 		"mov r11, [%3+rax];" // out
-		"mov r11, [%4+rax];" // out
+		//"mov r11, [%4+rax];" // out
 		//"mov r11, [%5+rax];" // out
 		// END spec code
         "lfence;"
@@ -239,7 +239,7 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
         "ret;"
         "fNANDN_2: nop;"
         : 
-        : "r" (in1), "r" (in2), "r" (out1), "r" (out2), "r" (out3)//, "r" (out4)
+        : "r" (in1), "r" (in2), "r" (out1), "r" (out2)//, "r" (out3)//, "r" (out4)
         : "rax", "r11", "memory"
     );
 }
