@@ -1238,21 +1238,27 @@ void test_fORX(){
 		void *in2 = mm+4096+64; // +page size +cache line
 		void *in3 = mm+2*(4096+64); // +page size +cache line
 		void *in4 = mm+3*(4096+64); // +page size +cache line
-		void *out = mm+4*(4096+64); // +page size +cache line
+		void *in5 = mm+4*(4096+64); // +page size +cache line
+		void *in6 = mm+5*(4096+64); // +page size +cache line
+		void *out = mm+6*(4096+64); // +page size +cache line
 		
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;
 		*((uint64_t *)in3) =0;
 		*((uint64_t *)in4) =0;
+		*((uint64_t *)in5) =0;
+		*((uint64_t *)in6) =0;
 		
 		flush(in1);
 		flush(in2);
 		flush(in3);
 		flush(in4);
+		flush(in5);
+		flush(in6);
 		flush(out);
 		
 		fence();
-		fORX(out, in1, in2, in3, in4);
+		fORX(out, in1, in2, in3, in4, in5, in6);
 		fence();
 		time = probe(out);	
 		fence();
@@ -1268,21 +1274,27 @@ void test_fORX(){
 		void *in2 = mm+4096+64; // +page size +cache line
 		void *in3 = mm+2*(4096+64); // +page size +cache line
 		void *in4 = mm+3*(4096+64); // +page size +cache line
-		void *out = mm+4*(4096+64); // +page size +cache line
+		void *in5 = mm+4*(4096+64); // +page size +cache line
+		void *in6 = mm+5*(4096+64); // +page size +cache line
+		void *out = mm+6*(4096+64); // +page size +cache line
 		
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;
 		*((uint64_t *)in3) =0;
 		*((uint64_t *)in4) =0;
+		*((uint64_t *)in5) =0;
+		*((uint64_t *)in6) =0;
 		
 		flush(in1);
 		flush(in3);
 		load(in4);
 		load(in2);
+		flush(in5);
+		flush(in6);
 		flush(out);
 		
 		fence();
-		fORX(out, in1, in2, in3, in4);
+		fORX(out, in1, in2, in3, in4, in5, in6);
 		fence();
 		time = probe(out);	
 		fence();
@@ -1298,21 +1310,27 @@ void test_fORX(){
 		void *in2 = mm+4096+64; // +page size +cache line
 		void *in3 = mm+2*(4096+64); // +page size +cache line
 		void *in4 = mm+3*(4096+64); // +page size +cache line
-		void *out = mm+4*(4096+64); // +page size +cache line
+		void *in5 = mm+4*(4096+64); // +page size +cache line
+		void *in6 = mm+5*(4096+64); // +page size +cache line
+		void *out = mm+6*(4096+64); // +page size +cache line
 		
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;
 		*((uint64_t *)in3) =0;
 		*((uint64_t *)in4) =0;
+		*((uint64_t *)in5) =0;
+		*((uint64_t *)in6) =0;
 		
 		load(in1);
 		load(in2);
 		flush(in3);
 		flush(in4);
+		flush(in5);
+		flush(in6);
 		flush(out);
 		
 		fence();
-		fORX(out, in1, in2, in3, in4);
+		fORX(out, in1, in2, in3, in4, in5, in6);
 		fence();
 		time = probe(out);	
 		fence();
@@ -1328,21 +1346,27 @@ void test_fORX(){
 		void *in2 = mm+4096+64; // +page size +cache line
 		void *in3 = mm+2*(4096+64); // +page size +cache line
 		void *in4 = mm+3*(4096+64); // +page size +cache line
-		void *out = mm+4*(4096+64); // +page size +cache line
+		void *in5 = mm+4*(4096+64); // +page size +cache line
+		void *in6 = mm+5*(4096+64); // +page size +cache line
+		void *out = mm+6*(4096+64); // +page size +cache line
 		
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;
 		*((uint64_t *)in3) =0;
 		*((uint64_t *)in4) =0;
+		*((uint64_t *)in5) =0;
+		*((uint64_t *)in6) =0;
 		
 		load(in1);
 		load(in2);
 		load(in3);
 		load(in4);
+		load(in5);
+		load(in6);
 		flush(out);
 		
 		fence();
-		fORX(out, in1, in2, in3, in4);
+		fORX(out, in1, in2, in3, in4, in5, in6);
 		fence();
 		time = probe(out);	
 		fence();
