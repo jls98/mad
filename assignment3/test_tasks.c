@@ -966,6 +966,165 @@ void test_fAND(){
 	}
 }
 
+
+
+void test_fAND4(){
+	wait(1E9);
+	uint64_t time;
+	
+	// notA and notB = notC
+	for(int i=0;i<CYC;i++){
+		void *mm = malloc(81920);
+		void *in1=mm;
+		void *in2 = mm+4096+64; // +page size +cache line
+		void *in3 = mm+2*(4096+64); // +page size +cache line
+		void *in4 = mm+3*(4096+64); // +page size +cache line
+		void *out = mm+4*(4096+64); // +page size +cache line
+		
+		*((uint64_t *)in1) =0;
+		*((uint64_t *)in2) =0;
+		*((uint64_t *)in3) =0;
+		*((uint64_t *)in4) =0;
+		
+		flush(in1);
+		flush(in2);
+		flush(in3);
+		flush(in4);
+		flush(out);
+		
+		fence();
+		fAND4(out, in1, in2, in3, in4);
+		fence();
+		time = probe(out);	
+		fence();
+		
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		free(mm);
+	}
+	
+	// notA and B = notC 
+	for(int i=0;i<CYC;i++){
+		void *mm = malloc(12240);
+		void *in1=mm;
+		void *in2 = mm+4096+64; // +page size +cache line
+		void *in3 = mm+2*(4096+64); // +page size +cache line
+		void *in4 = mm+3*(4096+64); // +page size +cache line
+		void *out = mm+4*(4096+64); // +page size +cache line
+		
+		*((uint64_t *)in1) =0;
+		*((uint64_t *)in2) =0;
+		*((uint64_t *)in3) =0;
+		*((uint64_t *)in4) =0;
+		
+		flush(in1);
+		load(in2);
+		flush(in3);
+		flush(in4);
+		flush(out);
+		
+		
+		fence();
+		fAND4(out, in1, in2, in3, in4);
+		fence();
+		time = probe(out);	
+		fence();
+		
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		free(mm);
+	}
+	
+	// A and notB = notC 
+	for(int i=0;i<CYC;i++){
+		void *mm = malloc(12240);
+		void *in1=mm;
+		void *in2 = mm+4096+64; // +page size +cache line
+		void *in3 = mm+2*(4096+64); // +page size +cache line
+		void *in4 = mm+3*(4096+64); // +page size +cache line
+		void *out = mm+4*(4096+64); // +page size +cache line
+		
+		*((uint64_t *)in1) =0;
+		*((uint64_t *)in2) =0;
+		*((uint64_t *)in3) =0;
+		*((uint64_t *)in4) =0;
+		
+		load(in1);
+		flush(in2);
+		flush(in3);
+		flush(in4);
+		flush(out);
+		
+		fence();
+		fAND4(out, in1, in2, in3, in4);
+		fence();
+		time = probe(out);	
+		fence();
+		
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		free(mm);
+	}
+	
+		// A and notB = notC 
+	for(int i=0;i<CYC;i++){
+		void *mm = malloc(12240);
+		void *in1=mm;
+		void *in2 = mm+4096+64; // +page size +cache line
+		void *in3 = mm+2*(4096+64); // +page size +cache line
+		void *in4 = mm+3*(4096+64); // +page size +cache line
+		void *out = mm+4*(4096+64); // +page size +cache line
+		
+		*((uint64_t *)in1) =0;
+		*((uint64_t *)in2) =0;
+		*((uint64_t *)in3) =0;
+		*((uint64_t *)in4) =0;
+		
+		load(in1);
+		flush(in2);
+		flush(in3);
+		load(in4);
+		flush(out);
+		
+		fence();
+		fAND4(out, in1, in2, in3, in4);
+		fence();
+		time = probe(out);	
+		fence();
+		
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		free(mm);
+	}
+	
+	// A and B = C 
+	for(int i=0;i<CYC;i++){
+		void *mm = malloc(12240);
+		void *in1=mm;
+		void *in2 = mm+4096+64; // +page size +cache line
+		void *in3 = mm+2*(4096+64); // +page size +cache line
+		void *in4 = mm+3*(4096+64); // +page size +cache line
+		void *out = mm+4*(4096+64); // +page size +cache line
+		
+		*((uint64_t *)in1) =0;
+		*((uint64_t *)in2) =0;
+		*((uint64_t *)in3) =0;
+		*((uint64_t *)in4) =0;
+		
+		load(in1);
+		load(in2);
+		load(in3);
+		load(in4);
+		flush(out);
+		
+		fence();
+		fAND4(out, in1, in2, in3, in4);
+		fence();
+		time = probe(out);	
+		fence();
+		
+		//printf("fand case A B: C is %lu\n", time);
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		free(mm);
+	}
+}
+
 void test_fOR(){
 	wait(1E9);
 	uint64_t time;
@@ -1265,6 +1424,7 @@ int main() {
         CU_add_test(suite, "Test fNORN", test_fNORN); // TODO
 	}
     CU_add_test(suite, "Test fLED", test_LED); // TODO
+    CU_add_test(suite, "Test fAND4", test_fAND4); // TODO
 
 
 	CU_basic_run_tests();

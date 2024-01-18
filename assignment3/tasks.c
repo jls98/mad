@@ -390,6 +390,33 @@ static void fAND(void *out, void *in1, void *in2){
     );
 }
 
+static void fAND4(void *out, void *in1, void *in2, void *in3, void *in4){
+	__asm__ volatile(
+		"lea rbx, [rip+fAND_2];"
+        "call fAND_1;"
+		// BEGIN spec code
+		"mov rax, [%1];" // in1
+        "add rax, [%2];" // in2
+        "add rax, [%3];" // in2
+        "add rax, [%4];" // in2
+		"add r11, [%0+rax];"
+		// END spec code
+        "lfence;"
+        "fAND_1: mov [rsp], rbx;" // move 
+		"xor rax, rax;"
+		".rept 50;"
+        "mov rax, [rsp+rax];"
+        "and rax, 0x0;"
+		".endr;"
+        "add [rsp], rax;"
+        "ret;"
+        "fAND_2: nop;" // end
+        : 
+        : "r" (out), "r" (in1), "r" (in2), "r" (in3), "r" (in4)
+        : "rax", "rbx", "r11", "memory"
+    );
+}
+
 static void fXOR(void *out, void *in1, void *in2, void **buf){
 
 	fNOT2(buf[0], buf[1], in1); // 6 dump
@@ -428,23 +455,62 @@ static void fLED1(void *in1, void *in2, void *in3, void *in4, void *out, void **
 
     flush(buf[5]);
 
-    // !c: 10, 13, c: 12
+    // !c: 10, 13, c: 12, 16
     fNOT2(buf[9], buf[10], in3); //!
-    fNOT2(buf[11], buf[12], buf[9]);
-    fNOT(buf[13], buf[11]); //!
+    fNOT2(buf[11], buf[12], buf[9]);    
+	fNOT2(buf[14], buf[13], buf[11]); //!
+    fNOT(buf[16], buf[14]); 
 
     flush(buf[9]);
     flush(buf[11]);
+    flush(buf[14]);
 
-    // !d: 2, 11, d: 9
+    // !d: 2, 14, d: 9, 15
     fNOT2(buf[0], buf[2], in4); //!
     fNOT2(buf[5], buf[9], buf[0]);
-    fNOT(buf[11], buf[5]);   //!
+    fNOT2(buf[11], buf[14], buf[5]); //!
+    fNOT(buf[15], buf[11]);   
 
     flush(buf[0]);
     flush(buf[5]);
+    flush(buf[11]);
     
     // !A*D
+	fAND(buf[0], buf[1], buf[9]);
+    flush(buf[1]);
+    flush(buf[9]);
+	
+	// B*C
+	fAND(buf[5], buf[7], buf[12]);
+    flush(buf[7]);
+    flush(buf[12]);
+
+	// !A*!C
+	fAND(buf[1], buf[4], buf[10]);
+    flush(buf[4]);
+    flush(buf[10]);	
+	
+	// B*!D
+	fAND(buf[9], buf[8], buf[2]);
+    flush(buf[8]);
+    flush(buf[2]);	
+	
+	// !B*!C*D
+	fAND(buf[7], buf[6], buf[13]);
+    flush(buf[6]);
+    flush(buf[13]);	
+	fAND(buf[12], buf[7], buf[15]);
+    flush(buf[7]);
+    flush(buf[15]);	
+
+	// A*C*!D
+	fAND(buf[4], buf[3], buf[16]);
+    flush(buf[3]);
+    flush(buf[16]);	
+	fAND(buf[10], buf[4], buf[15]);
+    flush(buf[7]);
+    flush(buf[15]);	
+	
     
     
 }
