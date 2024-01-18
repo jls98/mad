@@ -129,7 +129,7 @@ static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in){
 		"call fNOTN_1;"
 		"xor rax, rax;"
 		// BEGIN delay ops 
-		".rept 1;" // deplen
+		".rept 10;" // deplen
 		"mov rax, [rsp+rax];"
 		"and rax, 0x0;"
 		".endr;"
