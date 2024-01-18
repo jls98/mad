@@ -214,8 +214,8 @@ static void fNAND(void *out, void *in1, void *in2){
 
 static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4){
 	__asm__ volatile(
-		"lea rbx, [fNAND_2];"
-        "call fNAND_1;"
+		"lea rbx, [fNANDN_2];"
+        "call fNANDN_1;"
 		// BEGIN spec code
         "xor rax, rax;"
 		".rept 5;"
@@ -228,12 +228,12 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
 		"mov r11, [%5+rax];" // out
 		// END spec code
         "lfence;"
-        "fNAND_1: mov [rsp], rbx;" // move 
+        "fNANDN_1: mov [rsp], rbx;" // move 
         "mov r11, [%0];" // in1
         "add r11, [%1];" // in2
         "add [rsp], r11;"
         "ret;"
-        "fNAND_2: nop;"
+        "fNANDN_2: nop;"
         : 
         : "r" (in1), "r" (in2), "r" (out1), "r" (out2), "r" (out3), "r" (out4)
         : "rax", "rbx", "r11", "memory"
