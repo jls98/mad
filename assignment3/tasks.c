@@ -11,7 +11,7 @@ static void fNOTN(void* out_1, void* out_2/*, void* out_3, void* out_4*/, void* 
 static void fNOR(void *out, void *in1, void *in2);
 static void fNORN(void *in1, void *in2, void *out1, void *out2/*, void *out3, void *out4*/);
 static void fNAND(void *out, void *in1, void *in2);
-static void fNANDN(void *in1, void *in2, void *out1, void *out2/*, void *out3, void *out4*/);
+static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4);
 static void fAND(void *out, void *in1, void *in2);
 static void fOR(void *out, void *in1, void *in2);
 
@@ -216,7 +216,7 @@ static void fNAND(void *out, void *in1, void *in2){
 }
 
 // 4 outputs 51 % correct on a nand b: 
-static void fNANDN(void *in1, void *in2, void *out1, void *out2/*, void *out3, void *out4*/){
+static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4){
 	__asm__ volatile(
         "call fNANDN_1;"
 		// BEGIN spec code
@@ -227,8 +227,8 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2/*, void *out3, v
 		".endr;"
 		"mov r11, [%2+rax];" // out
 		"mov r11, [%3+rax];" // out
-		//"mov r11, [%4+rax];" // out
-		//"mov r11, [%5+rax];" // out
+		"mov r11, [%4+rax];" // out
+		"mov r11, [%5+rax];" // out
 		// END spec code
         "lfence;"
         "fNANDN_1: lea r11, [rip+fNANDN_2];"
@@ -239,7 +239,7 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2/*, void *out3, v
         "ret;"
         "fNANDN_2: nop;"
         : 
-        : "r" (in1), "r" (in2), "r" (out1), "r" (out2)//, "r" (out3)//, "r" (out4)
+        : "r" (in1), "r" (in2), "r" (out1), "r" (out2), "r" (out3), "r" (out4)
         : "rax", "r11", "memory"
     );
 }
