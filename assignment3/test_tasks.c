@@ -941,7 +941,7 @@ void test_fXOR(){
 }
 
 void test(){
-			void *mm = malloc(81920);
+		void *mm = malloc(81920);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
 		void *out = mm+8192+128; // +page size +cache line
@@ -962,7 +962,7 @@ void test(){
 		fence();
 		fXOR(out, in1, in2, buf);
 		fence();
-		time = probe(out);	
+		uint64_t time = probe(out);	
 		fence();
 		
 		//CU_ASSERT_TRUE(time>THRESHOLD);
