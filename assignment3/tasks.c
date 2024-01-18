@@ -359,10 +359,11 @@ static void fXOR(void *out, void *in1, void *in2, void **buf){
 	
 	//!(!A & !B)
 	fNAND(buf[4], buf[0], buf[2]);
-	
+	printf("after nand %lu\n", probe(buf[4]));
 	// !A | !B
-	fOR(buf[5], buf[1], buf[3]);
-	
+	fOR(buf[5], buf[1], buf[3]);	
+	printf("after or %lu\n", probe(buf[5]));
+
 	//!(!A & !B) & (!A | !B) <=> (A | B) & !(A & B) <=> A & !B | !A & B
 	fAND(out, buf[4], buf[5]);
 	
