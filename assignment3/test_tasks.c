@@ -1182,18 +1182,18 @@ int main() {
     CU_initialize_registry();
 
     CU_pSuite suite = CU_add_suite("Test Suite assignment 3", NULL, NULL);
-    int normal = 1;
+    int normal = 0;
 	
 	if(normal){
 		CU_add_test(suite, "Test fNOT", test_fNOT);
-		CU_add_test(suite, "Test fNOTN", test_fNOT2);
+		CU_add_test(suite, "Test fNOT2", test_fNOT2);
 		CU_add_test(suite, "Test fNAND", test_fNAND); 
 		CU_add_test(suite, "Test fAND", test_fAND); 
 		CU_add_test(suite, "Test fNOR", test_fNOR);
 		CU_add_test(suite, "Test fOR", test_fNOR);
 		CU_add_test(suite, "Test fXOR", test_fXOR);
 	}
-	CU_add_test(suite, "Test fNANDN", test_fNANDN); // TODO
+	CU_add_test(suite, "Test fNOTN", test_fNOTN);
     //CU_add_test(suite, "Test fNORN", test_fNORN); // TODO
 
 	CU_basic_run_tests();
