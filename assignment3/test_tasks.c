@@ -96,7 +96,7 @@ void test_fNANDN(){
 		flush(out4);
 		
 		fence();
-		fNANDN(out1, out2, out3, out4, in1, in2);
+		fNANDN(in1, in2, out1, out2, out3, out4);
 		fence();
 		time = probe(out1);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
@@ -130,7 +130,7 @@ void test_fNANDN(){
 		load(in1);
 		
 		fence();
-		fNANDN(out1, out2, out3, out4, in1, in2);
+		fNANDN(in1, in2, out1, out2, out3, out4);
 		fence();
 		time = probe(out1);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
@@ -164,7 +164,7 @@ void test_fNANDN(){
 		load(in2);
 		
 		fence();
-		fNANDN(out1, out2, out3, out4, in1, in2);
+		fNANDN(in1, in2, out1, out2, out3, out4);
 		fence();
 		time = probe(out1);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
@@ -198,7 +198,7 @@ void test_fNANDN(){
 		load(in2);
 		
 		fence();
-		fNANDN(out1, out2, out3, out4, in1, in2);
+		fNANDN(in1, in2, out1, out2, out3, out4);
 		fence();
 		time = probe(out1);	
 		CU_ASSERT_TRUE(time>THRESHOLD);
