@@ -462,7 +462,7 @@ void test_fNORN(){
 	
 	// ------------ A nor notB = notC------------
 	for(int i=0;i<CYC;i++){
-		void *mm = malloc(81920);
+		void *mm = malloc(128000);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
 		void *out1 = mm+2*(4096+64); // +page size +cache line
