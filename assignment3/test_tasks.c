@@ -77,15 +77,17 @@ void test_fNANDN(){
 	wait(1E9);
 	// ------------ notA nand notB ------------
 	for(int i=0;i<CYC;i++){
-		void *mm = malloc(8192);
+		void *mm = malloc(81920);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
-		void *out1 = mm+2*(4096+64); // +page size +cache line
+        void *out1 = mm+2*(4096+64); // +page size +cache line
 		void *out2 = mm+3*(4096+64); // +page size +cache line
         void *out3 = mm+4*(4096+64); // +page size +cache line
 		void *out4 = mm+5*(4096+64); // +page size +cache line
 		void *out5 = mm+6*(4096+64); // +page size +cache line
 		void *out6 = mm+7*(4096+64); // +page size +cache line
+		void *out7 = mm+8*(4096+64); // +page size +cache line
+		void *out8 = mm+9*(4096+64); // +page size +cache line
 		
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;		
@@ -98,9 +100,11 @@ void test_fNANDN(){
 		flush(out4);
 		flush(out5);
 		flush(out6);
+		flush(out7);
+		flush(out8);
 		
 		fence();
-		fNANDN(in1, in2, out1, out2, out3, out4, out5, out6);
+		fNANDN(in1, in2, out1, out2, out3, out4, out5, out6, out7, out8);
 		fence();
 		time = probe(out1);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
@@ -113,36 +117,44 @@ void test_fNANDN(){
 		time = probe(out5);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out6);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out7);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out8);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
 	}
 	
 	// ------------ A nand notB ------------
 	for(int i=0;i<CYC;i++){
-		void *mm = malloc(8192);
+		void *mm = malloc(81920);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
-		void *out1 = mm+2*(4096+64); // +page size +cache line
+        void *out1 = mm+2*(4096+64); // +page size +cache line
 		void *out2 = mm+3*(4096+64); // +page size +cache line
-		void *out3 = mm+4*(4096+64); // +page size +cache line
+        void *out3 = mm+4*(4096+64); // +page size +cache line
 		void *out4 = mm+5*(4096+64); // +page size +cache line
 		void *out5 = mm+6*(4096+64); // +page size +cache line
 		void *out6 = mm+7*(4096+64); // +page size +cache line
+		void *out7 = mm+8*(4096+64); // +page size +cache line
+		void *out8 = mm+9*(4096+64); // +page size +cache line
 		
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;		
 		
+		load(in1);
 		flush(in2);
 		flush(out1);
 		flush(out2);
-        flush(out3);
+		flush(out3);
 		flush(out4);
 		flush(out5);
 		flush(out6);
-		load(in1);
+		flush(out7);
+		flush(out8);
 		
 		fence();
-		fNANDN(in1, in2, out1, out2, out3, out4, out5, out6);
+		fNANDN(in1, in2, out1, out2, out3, out4, out5, out6, out7, out8);
 		fence();
 		time = probe(out1);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
@@ -155,36 +167,44 @@ void test_fNANDN(){
 		time = probe(out5);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out6);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out7);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out8);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
 	}
 	
 		// ------------ notA nand B ------------
 	for(int i=0;i<CYC;i++){
-		void *mm = malloc(8192);
+		void *mm = malloc(81920);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
-		void *out1 = mm+2*(4096+64); // +page size +cache line
+        void *out1 = mm+2*(4096+64); // +page size +cache line
 		void *out2 = mm+3*(4096+64); // +page size +cache line
-		void *out3 = mm+4*(4096+64); // +page size +cache line
+        void *out3 = mm+4*(4096+64); // +page size +cache line
 		void *out4 = mm+5*(4096+64); // +page size +cache line
 		void *out5 = mm+6*(4096+64); // +page size +cache line
 		void *out6 = mm+7*(4096+64); // +page size +cache line
+		void *out7 = mm+8*(4096+64); // +page size +cache line
+		void *out8 = mm+9*(4096+64); // +page size +cache line
 		
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;		
 		
 		flush(in1);
+		load(in2);
 		flush(out1);
 		flush(out2);
 		flush(out3);
 		flush(out4);
 		flush(out5);
 		flush(out6);
-		load(in2);
+		flush(out7);
+		flush(out8);
 		
 		fence();
-		fNANDN(in1, in2, out1, out2, out3, out4, out5, out6);
+		fNANDN(in1, in2, out1, out2, out3, out4, out5, out6, out7, out8);
 		fence();
 		time = probe(out1);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
@@ -197,36 +217,44 @@ void test_fNANDN(){
 		time = probe(out5);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out6);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out7);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out8);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
 	}
 	
 		// ------------ A nand B ------------
 	for(int i=0;i<CYC;i++){
-		void *mm = malloc(8192);
+		void *mm = malloc(81920);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
-		void *out1 = mm+2*(4096+64); // +page size +cache line
+        void *out1 = mm+2*(4096+64); // +page size +cache line
 		void *out2 = mm+3*(4096+64); // +page size +cache line
-		void *out3 = mm+4*(4096+64); // +page size +cache line
+        void *out3 = mm+4*(4096+64); // +page size +cache line
 		void *out4 = mm+5*(4096+64); // +page size +cache line
 		void *out5 = mm+6*(4096+64); // +page size +cache line
 		void *out6 = mm+7*(4096+64); // +page size +cache line
+		void *out7 = mm+8*(4096+64); // +page size +cache line
+		void *out8 = mm+9*(4096+64); // +page size +cache line
 		
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;		
 		
+		load(in1);
+		load(in2);
 		flush(out1);
 		flush(out2);
 		flush(out3);
 		flush(out4);
 		flush(out5);
 		flush(out6);
-		load(in1);
-		load(in2);
+		flush(out7);
+		flush(out8);
 		
 		fence();
-		fNANDN(in1, in2, out1, out2, out3, out4, out5, out6);
+		fNANDN(in1, in2, out1, out2, out3, out4, out5, out6, out7, out8);
 		fence();
 		time = probe(out1);	
 		CU_ASSERT_TRUE(time>THRESHOLD);
@@ -239,6 +267,10 @@ void test_fNANDN(){
 		time = probe(out5);	
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		time = probe(out6);	
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		time = probe(out7);	
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		time = probe(out8);	
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
 	}
