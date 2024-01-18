@@ -123,6 +123,7 @@ static void fNOTX(void *out, void *in, uint64_t x){
 	}
 }
 
+// 78 % on 4 outputs for case in = not out
 static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in){
 	__asm__ volatile(
 		"lea rbx, [fNOTN_2];"
@@ -135,9 +136,9 @@ static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in){
 		".endr;"
 		// BEGIN Spec part
 		"mov r11, [%1+rax];"
-		"add r11, [%2+rax];"
-		"add r11, [%3+rax];"
-		"add r11, [%4+rax];"
+		"add r11, [%2+r11];"
+		"add r11, [%3+r11];"
+		"add r11, [%4+r11];"
 		"lfence;"
 		// END Spec part
 		"fNOTN_1: mov [rsp], rbx;" 
