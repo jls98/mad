@@ -448,27 +448,27 @@ static void fLED1(void *in1, void *in2, void *in3, void *in4, void *out, void **
     
 }
 
-static void fLED2(void *in1, void *in2, void *in3, void *in4, void *out){
+static void fLED2(void *in1, void *in2, void *in3, void *in4, void *out, void **buf){
     
 }
 
-static void fLED3(void *in1, void *in2, void *in3, void *in4, void *out){
+static void fLED3(void *in1, void *in2, void *in3, void *in4, void *out, void **buf){
     
 }
 
-static void fLED4(void *in1, void *in2, void *in3, void *in4, void *out){
+static void fLED4(void *in1, void *in2, void *in3, void *in4, void *out, void **buf){
     
 }
 
-static void fLED5(void *in1, void *in2, void *in3, void *in4, void *out){
+static void fLED5(void *in1, void *in2, void *in3, void *in4, void *out, void **buf){
     
 }
 
-static void fLED6(void *in1, void *in2, void *in3, void *in4, void *out){
+static void fLED6(void *in1, void *in2, void *in3, void *in4, void *out, void **buf){
     
 }
 
-static void fLED7(void *in1, void *in2, void *in3, void *in4, void *out){
+static void fLED7(void *in1, void *in2, void *in3, void *in4, void *out, void **buf){
     
 }
 
