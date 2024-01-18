@@ -217,7 +217,7 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
         "call fNANDN_1;"
 		// BEGIN spec code
         "xor rax, rax;"
-		".rept 5;"
+		".rept 10;"
         "mov rax, [rsp+rax];"
         "and rax, 0x0;"
 		".endr;"
