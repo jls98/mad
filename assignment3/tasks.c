@@ -359,6 +359,7 @@ static void fXOR(void *out, void *in1, void *in2, void **buf){
 	
 	//!(!A & !B)
 	fNAND(buf[4], buf[0], buf[2]);
+	load(buf[4]);
 	printf("after nand %lu\n", probe(buf[4]));
 	// !A | !B
 	fOR(buf[5], buf[1], buf[3]);	
