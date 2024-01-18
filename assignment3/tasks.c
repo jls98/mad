@@ -6,7 +6,7 @@
 #define THRESHOLD 160 // timing around 14-16 when cached
 
 static void fNOT(void *out, void *in); // NOT gate
-static void fNOTN(void* out_1, void* out_2/*, void* out_3, void* out_4*/, void* in);
+static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* out_5, void* out_6, void* out_7, void* out_8, void* out_9, void* out_10, void *out_11, void* in);
 //static void fNOTX(void *out, void *in, uint64_t x); // xNOT gate with x out
 static void fNOR(void *out, void *in1, void *in2);
 static void fNORN(void *in1, void *in2, void *out1, void *out2/*, void *out3, void *out4*/);
@@ -128,9 +128,9 @@ static void fNOT(void *out, void *in){
 }*/
 
 // 78 % success on 4 outputs for case in = not out (weirdly, the false hits all appear at the beginning in a row, 100 100 89 89), 49 % success on 5 outputs for same case
-static void fNOTN(void* out_1, void* out_2/*, void* out_3, void* out_4*/, void* in){
+static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* out_5, void* out_6, void* out_7, void* out_8, void* out_9, void* out_10, void* out_11, void* in){
 	__asm__ volatile(
-		"lea rbx, [rip+fNOTN_2];"
+		
 		"call fNOTN_1;"
 		"xor rax, rax;"
 		// BEGIN delay ops 
@@ -141,18 +141,26 @@ static void fNOTN(void* out_1, void* out_2/*, void* out_3, void* out_4*/, void* 
 		// BEGIN Spec part
 		"mov rbx, [%1+rax];" // prob leads to some interleaving/parallel processing which is desired
 		"mov rbx, [%2+rax];"
-		//"mov rbx, [%3+rax];"
-		//"mov rbx, [%4+rax];"
+		"mov rbx, [%3+rax];"
+		"mov rbx, [%4+rax];"
+		"mov rbx, [%5+rax];"
+		"mov rbx, [%6+rax];"
+		"mov rbx, [%7+rax];"
+		"mov rbx, [%8+rax];"
+		"mov rbx, [%9+rax];"
+		"mov rbx, [%10+rax];"
+		"mov rbx, [%11+rax];"
 		"lfence;"
 		// END Spec part
-		"fNOTN_1: mov [rsp], rbx;" 
+		"fNOTN_1: lea rbx, [rip+fNOTN_2];"
+        "mov [rsp], rbx;" 
 		"mov rbx, [rsi];" // load input
 		"add [rsp], rbx;" // data dependency between input and ptr adrs
 		"ret;"
 		
 		"fNOTN_2: nop;"
 		: 
-		: "S" (in), "r" (out_1), "r" (out_2)//, "r" (out_3), "r" (out_4)
+		: "S" (in), "r" (out_1), "r" (out_2), "r" (out_3), "r" (out_4), "r" (out_5), "r" (out_6), "r" (out_7), "r" (out_8), "r" (out_9), "r" (out_10), "r" (out_11)
 		: "rax", "rbx", "memory"
 	);
 }
@@ -215,7 +223,7 @@ static void fNAND(void *out, void *in1, void *in2){
     );
 }
 
-// 4 outputs 51 % correct on a nand b: 
+// 10 out stable
 static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4, void *out5, void *out6, void *out7, void *out8, void *out9, void *out10, void *out11, void *out12){
 	__asm__ volatile(
         "call fNANDN_1;"
