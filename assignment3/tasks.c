@@ -411,7 +411,178 @@ static void fXOR(void *out, void *in1, void *in2, void **buf){
 	
 }
 
+// out1: !A*D + B*C + !A*!C + B*!D + !B*!C*D + A*C*!D
 
+static void fLET1(void *in1, void *in2, void *in3, void *in4, void *out, void **buf){
+    
+    
+    // !A: 1, 4, A: 3 
+    fNOT2(buf[0], buf[1], in1);
+    fNOT2(buf[2], buf[3], buf[0]);
+    fNOT(buf[4], buf[2]);
+    
+    // !b: 6, b: 7, 8
+    fNOT2(buf[5], buf[6], in2);
+    fNOT2(buf[7], buf[8], buf[5]);
+    
+    // !c: 10, 13, c: 12
+    fNOT2(buf[9], buf[10], in3);
+    fNOT2(buf[11], buf[12], buf[9]);
+    fNOT(buf[13], buf[11]);
+    
+    // !d: , d:
+    fNOT2(buf[14], buf[15], in4);
+    fNOT2(buf[11], buf[12], buf[9]);
+    fNOT(buf[13], buf[11]);   
+
+    
+}
+
+static void fLET2(void *in1, void *in2, void *in3, void *in4, void *out){
+    
+}
+
+static void fLET3(void *in1, void *in2, void *in3, void *in4, void *out){
+    
+}
+
+static void fLET4(void *in1, void *in2, void *in3, void *in4, void *out){
+    
+}
+
+static void fLET5(void *in1, void *in2, void *in3, void *in4, void *out){
+    
+}
+
+static void fLET6(void *in1, void *in2, void *in3, void *in4, void *out){
+    
+}
+
+static void fLET7(void *in1, void *in2, void *in3, void *in4, void *out){
+    
+}
+
+// according to the naming convention of the first gates, I started counting from 1 and not from 0, so in1 is in0 from the task and out1 is out0 from the task respectively
+static void fLED(void *in1, void *in2, void *in3, void *in4, void *out1, void *out2, void *out3, void *out4, void *out5, void *out6, void *out7, void **buf){
+    // A 3, 7, 10, 11, 12, 13, 14,
+    fNOT2(buf[0], buf[1], in1); // !
+    fNOT2(buf[2], buf[3], buf[0]);
+    fNOT2(buf[4], buf[5], buf[2]); // !
+    fNOT2(buf[6], buf[7], buf[4]);
+    fNOT2(buf[8], buf[9], buf[6]); // !
+    fNOT2(buf[10], buf[11], buf[8]);
+    
+    fNOT(buf[12], buf[1]);
+    fNOT(buf[13], buf[5]);
+    fNOT(buf[14], buf[9]);
+    
+    flush(buf[0]);
+    flush(buf[1]);
+    flush(buf[2]);
+    flush(buf[4]);
+    flush(buf[5]);
+    flush(buf[6]);
+    flush(buf[8]);
+    flush(buf[9]);
+    
+    printf("a dup is %lu\n", load(buf[3]));
+    printf("a dup is %lu\n", load(buf[7]));
+    printf("a dup is %lu\n", load(buf[10]));
+    printf("a dup is %lu\n", load(buf[11]));
+    printf("a dup is %lu\n", load(buf[12]));
+    printf("a dup is %lu\n", load(buf[13]));
+    printf("a dup is %lu\n", load(buf[14]));
+    
+    // >14
+    // B 4, 9, 17, 18, 19, 20, 21
+    fNOT2(buf[0], buf[1], in2); // !
+    fNOT2(buf[2], buf[4], buf[0]);
+    fNOT2(buf[5], buf[6], buf[2]); // !
+    fNOT2(buf[8], buf[9], buf[5]);
+    fNOT2(buf[15], buf[16], buf[8]); // !
+    fNOT2(buf[17], buf[18], buf[15]);
+    
+    fNOT(buf[19], buf[1]);
+    fNOT(buf[20], buf[6]);
+    fNOT(buf[21], buf[16]);
+    
+    flush(buf[0]);
+    flush(buf[1]);
+    flush(buf[2]);
+    flush(buf[5]);
+    flush(buf[6]);
+    flush(buf[8]);
+    flush(buf[15]);
+    flush(buf[16]);
+
+    printf("b dup is %lu\n", load(buf[4]));
+    printf("b dup is %lu\n", load(buf[9]));
+    printf("b dup is %lu\n", load(buf[17]));
+    printf("b dup is %lu\n", load(buf[18]));
+    printf("b dup is %lu\n", load(buf[19]));
+    printf("b dup is %lu\n", load(buf[20]));
+    printf("b dup is %lu\n", load(buf[21]));
+    
+    // > 21
+    // C 5, 16, 24, 25, 26, 27, 28
+    fNOT2(buf[0], buf[1], in3); // !
+    fNOT2(buf[2], buf[5], buf[0]);
+    fNOT2(buf[6], buf[8], buf[2]); // !
+    fNOT2(buf[15], buf[16], buf[6]);
+    fNOT2(buf[22], buf[23], buf[15]); // !
+    fNOT2(buf[24], buf[25], buf[22]);
+    
+    fNOT(buf[26], buf[1]);
+    fNOT(buf[27], buf[8]);
+    fNOT(buf[28], buf[23]);
+    
+    flush(buf[0]);
+    flush(buf[1]);
+    flush(buf[2]);
+    flush(buf[6]);
+    flush(buf[8]);
+    flush(buf[15]);
+    flush(buf[22]);
+    flush(buf[23]);
+    
+    printf("c dup is %lu\n", load(buf[5]));
+    printf("c dup is %lu\n", load(buf[16]));
+    printf("c dup is %lu\n", load(buf[24]));
+    printf("c dup is %lu\n", load(buf[25]));
+    printf("c dup is %lu\n", load(buf[26]));
+    printf("c dup is %lu\n", load(buf[27]));
+    printf("c dup is %lu\n", load(buf[28]]));
+
+    
+    // > 28
+    // D 0, 1, 2, 6, 8, 15, 23
+    fNOT2(buf[0], buf[1], in4); // !
+    fNOT2(buf[2], buf[6], buf[0]);
+    flush(buf[0]);
+    fNOT2(buf[0], buf[8], buf[2]); // !
+    flush(buf[2]);
+    fNOT2(buf[2], buf[15], buf[0]);
+    flush(buf[0]);
+    fNOT2(buf[0], buf[22], buf[2]); // !
+    flush(buf[2]);
+    fNOT2(buf[2], buf[23], buf[0]);
+    flush(buf[0]);
+    fNOT(buf[0], buf[1]);
+    flush(buf[1]);
+    fNOT(buf[1], buf[8]);
+    flush(buf[8]);
+    fNOT(buf[8], buf[22]);
+
+    printf("d dup is %lu\n", load(buf[0]));
+    printf("d dup is %lu\n", load(buf[1]));
+    printf("d dup is %lu\n", load(buf[2]));
+    printf("d dup is %lu\n", load(buf[7]));
+    printf("d dup is %lu\n", load(buf[8]));
+    printf("d dup is %lu\n", load(buf[15]));
+    printf("d dup is %lu\n", load(buf[23]));
+
+    
+}
 
 
 

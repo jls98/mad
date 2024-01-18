@@ -1193,13 +1193,50 @@ void test_fXOR(){
 		free(mm);
 	}
 }
-
+void test_LED(){
+    void *mm = malloc(256000);
+    void *in1=mm;
+    void *in2 = mm+4096+64; // +page size +cache line
+    void *in3 = mm+2*(4096+64); // +page size +cache line
+    void *in4 = mm+3*(4096+64); // +page size +cache line
+    void *out1 = mm+4*(4096+64); // +page size +cache line
+    void *out2 = mm+5*(4096+64); // +page size +cache line
+    void *out3 = mm+6*(4096+64); // +page size +cache line
+    void *out4 = mm+7*(4096+64); // +page size +cache line
+    void *out5 = mm+8*(4096+64); // +page size +cache line
+    void *out6 = mm+9*(4096+64); // +page size +cache line
+    void *out7 = mm+10*(4096+64); // +page size +cache line
+    
+    *((uint64_t *)in1) =0;
+    *((uint64_t *)in2) =0;		
+    *((uint64_t *)in3) =0;		
+    *((uint64_t *)in4) =0;		
+    
+    void **buf = malloc(30*sizeof(void *));
+    for(int j=0;j<30;j++){
+        buf[j]=mm+(11+j)*(4096+64);
+        *((uint64_t *)buf[j]) = 0;
+        flush(buf[j]);
+    }		
+    load(in1);
+    flush(out);
+    load(in2);
+    
+    fence();
+    fLED(in1, in2, in3, in4, out1, out2, out3, out4, out5, out6, out7, buf);
+    fence();
+    //time = probe(out);	
+    fence();
+    
+    //CU_ASSERT_TRUE(time>THRESHOLD);
+    free(mm);
+}
 
 int main() {
     CU_initialize_registry();
 
     CU_pSuite suite = CU_add_suite("Test Suite assignment 3", NULL, NULL);
-    int normal = 1;
+    int normal = 0;
 	
 	if(normal){
 		CU_add_test(suite, "Test fNOT", test_fNOT);
@@ -1209,9 +1246,11 @@ int main() {
 		CU_add_test(suite, "Test fNOR", test_fNOR);
 		CU_add_test(suite, "Test fOR", test_fNOR);
 		CU_add_test(suite, "Test fXOR", test_fXOR);
+        CU_add_test(suite, "Test fNOTN", test_fNOTN);
+        CU_add_test(suite, "Test fNORN", test_fNORN); // TODO
 	}
-	CU_add_test(suite, "Test fNOTN", test_fNOTN);
-    CU_add_test(suite, "Test fNORN", test_fNORN); // TODO
+    CU_add_test(suite, "Test fLED", test_LED); // TODO
+
 
 	CU_basic_run_tests();
     CU_cleanup_registry();
