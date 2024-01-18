@@ -450,13 +450,13 @@ void test_fNORN(){
 		time = probe(out1);	
 		printf("fNOrn1 case notA notB: c is %lu\n", time);
 		CU_ASSERT_TRUE(time<THRESHOLD);
-		time = probe(out2);	
+		time = probe(out3);	
 		printf("fNOrn2 case notA notB: c is %lu\n", time);
 		CU_ASSERT_TRUE(time<THRESHOLD);
-		time = probe(out3);	
-		//CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out2);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out4);	
-		//CU_ASSERT_TRUE(time<THRESHOLD);
+		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
 	}
 	
@@ -505,12 +505,12 @@ void test_fNORN(){
 		time = probe(out3);	
 		printf("fNOrn2 case A notB: c is %lu\n", time);
 		CU_ASSERT_TRUE(time>THRESHOLD);
-		time = probe(out3);	
-		//printf("fNOrn3 case not A: time is %lu\n", time);
-        //CU_ASSERT_TRUE(time>THRESHOLD);
+		time = probe(out2);	
+		printf("fNOrn3 case not A: time is %lu\n", time);
+        CU_ASSERT_TRUE(time>THRESHOLD);
 		time = probe(out4);	
-		//printf("fNOrn4 case not A: time is %lu\n", time);
-		//CU_ASSERT_TRUE(time>THRESHOLD);
+		printf("fNOrn4 case not A: time is %lu\n", time);
+		CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
 	}
 	
@@ -556,13 +556,13 @@ void test_fNORN(){
 		time = probe(out1);	
 		printf("fNOrn1 case notA B: c is %lu\n", time);
 		CU_ASSERT_TRUE(time>THRESHOLD);
-		time = probe(out2);	
+		time = probe(out3);	
 		printf("fNOrn2 case notA B: c is %lu\n", time);
 		CU_ASSERT_TRUE(time>THRESHOLD);
-		time = probe(out3);	
-		//CU_ASSERT_TRUE(time>THRESHOLD);
+		time = probe(out2);	
+		CU_ASSERT_TRUE(time>THRESHOLD);
 		time = probe(out4);	
-		//CU_ASSERT_TRUE(time>THRESHOLD);
+		CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
 	}
 	
@@ -608,13 +608,13 @@ void test_fNORN(){
 		time = probe(out2);	
 		printf("fNOrn1 case A B: c is %lu\n", time);
 		CU_ASSERT_TRUE(time>THRESHOLD);
-		time = probe(out1);	
+		time = probe(out4);	
 		printf("fNOrn2 case A B: c is %lu\n", time);
 		CU_ASSERT_TRUE(time>THRESHOLD);
+		time = probe(out1);	
+		CU_ASSERT_TRUE(time>THRESHOLD);
 		time = probe(out3);	
-		//CU_ASSERT_TRUE(time>THRESHOLD);
-		time = probe(out4);	
-		//CU_ASSERT_TRUE(time>THRESHOLD);
+		CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
 	}
 }
