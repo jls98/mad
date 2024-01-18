@@ -551,7 +551,7 @@ static void fLED(void *in1, void *in2, void *in3, void *in4, void *out1, void *o
     printf("c dup is %lu\n", probe(buf[25]));
     printf("c dup is %lu\n", probe(buf[26]));
     printf("c dup is %lu\n", probe(buf[27]));
-    printf("c dup is %lu\n", probe(buf[28]]));
+    printf("c dup is %lu\n", probe(buf[28]));
 
     
     // > 28
