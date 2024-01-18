@@ -6,6 +6,7 @@
 #define THRESHOLD 160 // timing around 14-16 when cached
 
 static void fNOT(void *out, void *in); // NOT gate
+static void fNOT2(void *out1, void *out2, void *in); // NOT gate
 static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* out_5, void* out_6, void* out_7, void* out_8, void* out_9, void* out_10, void *out_11, void* in);
 //static void fNOTX(void *out, void *in, uint64_t x); // xNOT gate with x out
 static void fNOR(void *out, void *in1, void *in2);
@@ -161,6 +162,34 @@ static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* out_
 		"fNOTN_2: nop;"
 		: 
 		: "S" (in), "r" (out_1), "r" (out_2), "r" (out_3), "r" (out_4), "r" (out_5), "r" (out_6), "r" (out_7), "r" (out_8), "r" (out_9), "r" (out_10), "r" (out_11)
+		: "rax", "rbx", "memory"
+	);
+}
+
+static void fNOT2(void* out_1, void* out_2, void* in){
+	__asm__ volatile(
+		
+		"call fNOTN_1;"
+		"xor rax, rax;"
+		// BEGIN delay ops 
+		".rept 4;" // deplen
+		"mov rax, [rsp+rax];"
+		"and rax, 0x0;"
+		".endr;"
+		// BEGIN Spec part
+		"mov rbx, [%1+rax];" // prob leads to some interleaving/parallel processing which is desired
+		"mov rbx, [%2+rax];"
+		"lfence;"
+		// END Spec part
+		"fNOTN_1: lea rbx, [rip+fNOTN_2];"
+        "mov [rsp], rbx;" 
+		"mov rbx, [rsi];" // load input
+		"add [rsp], rbx;" // data dependency between input and ptr adrs
+		"ret;"
+		
+		"fNOTN_2: nop;"
+		: 
+		: "S" (in), "r" (out_1), "r" (out_2)
 		: "rax", "rbx", "memory"
 	);
 }
@@ -368,8 +397,8 @@ static void fAND(void *out, void *in1, void *in2){
 
 static void fXOR(void *out, void *in1, void *in2, void **buf){
 
-	fNOTN(buf[0], buf[1], in1); // 6 dump
-	fNOTN(buf[2], buf[3], in2); // 
+	fNOT2(buf[0], buf[1], in1); // 6 dump
+	fNOT2(buf[2], buf[3], in2); // 
 
 	//printf("b4 nand 0 %lu 2 %lu\n", probe(buf[0]), probe(buf[2]));
 
