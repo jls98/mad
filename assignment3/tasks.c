@@ -267,7 +267,7 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
 	//	"mov r11, [%12+rax];" // out
 		// END spec code
         "lfence;"
-        "fNANDN_1: lea r11, [rip+fNANDN_2];"
+        "fNANDN_1: lea r11, fNANDN_2[rip];"
 		"mov [rsp], r11;" // move 
         "mov r11, [%0];" // in1
         "add r11, [%1];" // in2
@@ -289,15 +289,15 @@ static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void
 		// BEGIN spec part 
 		"xor rax, rax;"
 		// BEGIN delay ops 
-		".rept 50;"
+		".rept 45;"
 		"mov rax, [rsp+rax];"
 		"and rax, 0x0;"	
 		".endr;"		
 		// END delay ops 
-		"mov r11, [%2+rax];" // addr output + 0
-		"mov r11, [%3+rax];" // addr output + 0
-		"mov r11, [%4+rax];" // addr output + 0
-		"mov r11, [%5+rax];" // addr output + 0
+		"mov r11, %2[rax];" // addr output + 0
+		"mov r11, %3[rax];" // addr output + 0
+		"mov r11, %4[rax];" // addr output + 0
+		"mov r11, %5[rax];" // addr output + 0
 		"lfence;"
 		// END spec part 
 		"fNORN_1: mov [rsp], r11;"		// in2
