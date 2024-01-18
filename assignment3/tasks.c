@@ -392,8 +392,8 @@ static void fAND(void *out, void *in1, void *in2){
 
 static void fAND4(void *out, void *in1, void *in2, void *in3, void *in4){
 	__asm__ volatile(
-		"lea rbx, [rip+fAND_2];"
-        "call fAND_1;"
+		"lea rbx, fAND4_2[rip];"
+        "call fAND4_1;"
 		// BEGIN spec code
 		"mov rax, [%1];" // in1
         "add rax, [%2];" // in2
@@ -402,7 +402,7 @@ static void fAND4(void *out, void *in1, void *in2, void *in3, void *in4){
 		"add r11, [%0+rax];"
 		// END spec code
         "lfence;"
-        "fAND_1: mov [rsp], rbx;" // move 
+        "fAND4_1: mov [rsp], rbx;" // move 
 		"xor rax, rax;"
 		".rept 50;"
         "mov rax, [rsp+rax];"
@@ -410,7 +410,7 @@ static void fAND4(void *out, void *in1, void *in2, void *in3, void *in4){
 		".endr;"
         "add [rsp], rax;"
         "ret;"
-        "fAND_2: nop;" // end
+        "fAND4_2: nop;" // end
         : 
         : "r" (out), "r" (in1), "r" (in2), "r" (in3), "r" (in4)
         : "rax", "rbx", "r11", "memory"
