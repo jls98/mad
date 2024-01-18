@@ -297,6 +297,8 @@ static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void
 		"mov r11, [%3+rax];" // out2
 		"mov r11, [%4+rax];" // out3
 		"mov r11, [%5+rax];" // out4
+		"mov r11, [%6+rax];" // out5
+		"mov r11, [%7+rax];" // out6
 		"lfence;"
 		// END spec part 
 		"fNORN_1: lea r11, fNORN_3[rip];"
@@ -305,16 +307,16 @@ static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void
 		"add [rsp], r11;"
 		"ret;"
 		
-		"fNORN_2: lea rbx, fNORN_3[rip];"
-        "mov [rsp], rbx;"		// in1
-		"mov rbx, [%0];"
-		"add [rsp], rbx;"
+		"fNORN_2: lea r11, fNORN_3[rip];"
+        "mov [rsp], r11;"		// in1
+		"mov r11, [%0];"
+		"add [rsp], r11;"
 		"ret;"
 		// end 
 		"fNORN_3: nop;"
 		: 
-		: "r" (in1), "r" (in2), "r" (out1), "r" (out2), "r" (out3), "r" (out4)//, "r" (out5), "r" (out6), "r" (out7), "r" (out8), "r" (out9), "r" (out10), "r" (out11), "r" (out12)
-		: "rax", "rbx", "r11", "memory"
+		: "r" (in1), "r" (in2), "r" (out1), "r" (out2), "r" (out3), "r" (out4), "r" (out5), "r" (out6)//, "r" (out7), "r" (out8), "r" (out9), "r" (out10), "r" (out11), "r" (out12)
+		: "rax", "rbx", "memory"
 	);
 }
 

@@ -449,9 +449,13 @@ void test_fNORN(){
 		time = probe(out3);	
 		printf("fNOrn2 case notA notB: c is %lu\n", time);
 		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out5);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out2);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out4);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out6);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
 	}
