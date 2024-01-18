@@ -135,9 +135,9 @@ static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in){
 		"and rax, 0x0;"
 		".endr;"
 		// BEGIN Spec part
-		"mov r11, [%1+rax];" // prob leads to some interleaving/parallel processing which is desired
-		"mov r11, [%2+rax];"
-		"mov r11, [%3];"
+		"mov r8, [%1+rax];" // prob leads to some interleaving/parallel processing which is desired
+		"mov r9, [%2+rax];"
+		"mov r10, [%3+rax];"
 		"mov r11, [%4+rax];"
 		"lfence;"
 		// END Spec part
@@ -149,7 +149,7 @@ static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in){
 		"fNOTN_2: nop;"
 		: 
 		: "S" (in), "r" (out_1), "r" (out_2), "r" (out_3), "r" (out_4)
-		: "rax", "rbx", "r11", "memory"
+		: "rax", "rbx", "r8", "r9", "r10", "r11", "memory"
 	);
 }
 
