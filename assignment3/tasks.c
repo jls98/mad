@@ -10,7 +10,7 @@ static void fNOT2(void* out_1, void* out_2, void* in);
 static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4,void* out_5, void* out_6,void* out_7, void* out_8,void* out_9,void* out_10,void* out_11, void* in);
 
 static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4, void *out5, void *out6, void *out7, void *out8, void *out9, void *out10, void *out11, void *out12);
-
+static void fORX(void *out, void *in1, void *in2, void *in3, void *in4);
 //static void fNOTX(void *out, void *in, uint64_t x); // xNOT gate with x out
 static void fNOR(void *out, void *in1, void *in2);
 static void fNAND(void *out, void *in1, void *in2);
@@ -319,18 +319,18 @@ static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void
 		: "rax", "rbx", "memory"
 	);
 }
-/*
+
 static void fOR(void *out, void *in1, void *in2){
 	__asm__ volatile(
 		"lea rbx, [rip+fOR_2];"
         "call fOR_1;"
 		// BEGIN spec code
 		"mov rax, [%1];" // in1
-        "add r11, [%0+rax];" // out
+        "mov rbx, [%2];" // in2
+		"add rax, [%0+rax];"
+		"add rbx, [%0+rbx];"
 		// END spec code
-	
         "lfence;"
-		
         "fOR_1: mov [rsp], rbx;" // move 
 		"xor rax, rax;"
 		".rept 50;"
@@ -339,38 +339,29 @@ static void fOR(void *out, void *in1, void *in2){
 		".endr;"
         "add [rsp], rax;"
         "ret;"
-        
-		"fOR_2: lea rbx, [rip+fOR_4];"
-		"call fOR_3;" // end
-		// BEGIN spec code
-		"mov rax, [%2];" // in2
-        "add r11, [%0+rax];" // out
-		// END spec code
-		"lfence;"
-		"fOR_3: mov [rsp], rbx;" // move 
-		"xor rax, rax;"
-		".rept 50;"
-        "mov rax, [rsp+rax];"
-        "and rax, 0x0;"
-		".endr;"
-        "add [rsp], rax;"
-        "ret;"
-		
-		"fOR_4: nop;"
+        "fOR_2: nop;" // end
         : 
         : "r" (out), "r" (in1), "r" (in2)
         : "rax", "rbx", "r11", "memory"
-    );
-}*/
-static void fOR(void *out, void *in1, void *in2){
+	);
+}
+static void fORX(void *out, void *in1, void *in2, void *in3, void *in4, "r" (in5), "r" (in6)){
 	__asm__ volatile(
 		"lea rbx, [rip+fORX_2];"
         "call fORX_1;"
 		// BEGIN spec code
 		"mov rax, [%1];" // in1
         "mov rbx, [%2];" // in2
+        "mov r8, [%3];" // in3
+        "mov r9, [%4];" // in4
+        "mov r10, [%5];" // in5
+        "mov r11, [%6];" // in6
 		"add rax, [%0+rax];"
 		"add rbx, [%0+rbx];"
+		"add r8, [%0+r8];"
+		"add r9, [%0+r9];"
+		"add r10, [%0+r10];"
+		"add r11, [%0+r11];"
 		// END spec code
         "lfence;"
         "fORX_1: mov [rsp], rbx;" // move 
@@ -383,8 +374,8 @@ static void fOR(void *out, void *in1, void *in2){
         "ret;"
         "fORX_2: nop;" // end
         : 
-        : "r" (out), "r" (in1), "r" (in2)
-        : "rax", "rbx", "r11", "memory"
+        : "r" (out), "r" (in1), "r" (in2), "r" (in3), "r" (in4), "r" (in5), "r" (in6)
+        : "rax", "rbx", "r8", "r9", "r10", "r11", "memory"
 	);
 }
 
