@@ -236,7 +236,7 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
         "ret;"
         "fNANDN_2: nop;"
         : 
-        : "r" (in1), "r" (in2), "r" (out1), "r" (out2), "r" (out3), "r" (out4)
+        : "r" (in1), "r" (in2), "r" (out1), "r" (out2), "r" (out3)//, "r" (out4)
         : "rax", "r11", "memory"
     );
 }
