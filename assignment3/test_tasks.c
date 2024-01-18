@@ -460,7 +460,7 @@ void test_fNORN(){
 		free(mm);
 	}
 	
-	// ------------ A nor notB ------------
+	// ------------ A nor notB = notC------------
 	for(int i=0;i<CYC;i++){
 		void *mm = malloc(81920);
 		void *in1=mm;

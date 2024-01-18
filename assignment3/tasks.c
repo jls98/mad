@@ -295,7 +295,7 @@ static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void
 		".endr;"		
 		// END delay ops 
 		"mov r11, [%2+rax];" // out1
-		"mov r11, [%3+rax];" // out2
+		"mov r12, [%3+rax];" // out2
 		"mov r11, [%4+rax];" // out3
 		"mov r11, [%5+rax];" // out4
 		"lfence;"
