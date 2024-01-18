@@ -15,7 +15,7 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
 static void fAND(void *out, void *in1, void *in2);
 static void fOR(void *out, void *in1, void *in2);
 
-static void fXOR(void *out, void *in1, void *in2, void *buf);
+static void fXOR(void *out, void *in1, void *in2, void **buf);
 
 static uint64_t probe(void *adrs); // access adrs and return access
 static void flush(void *adrs); // clflush adrs 
