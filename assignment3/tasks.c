@@ -242,6 +242,7 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
     );
 }
 
+// 4 outputs 51 % correct on A nor notB
 static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4){
 	__asm__ volatile(
 		"lea rbx, [fNORN_3];"
@@ -257,8 +258,8 @@ static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void
 		// END delay ops 
 		"mov r11, [%2+rax];" // addr output + 0
 		"mov r11, [%3+rax];" // addr output + 0
-		"mov r11, [%4+rax];" // addr output + 0
-		"mov r11, [%5+rax];" // addr output + 0
+		//"mov r11, [%4+rax];" // addr output + 0
+		//"mov r11, [%5+rax];" // addr output + 0
 		"lfence;"
 		// END spec part 
 		"fNORN_1: mov [rsp], rbx;"		// in2
@@ -273,7 +274,7 @@ static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void
 		// end 
 		"fNORN_3: nop;"
 		: 
-		: "r" (in1), "r" (in2), "r" (out1), "r" (out2), "r" (out3), "r" (out4)
+		: "r" (in1), "r" (in2), "r" (out1), "r" (out2)//, "r" (out3), "r" (out4)
 		: "rax", "rbx", "r11", "memory"
 	);
 }
