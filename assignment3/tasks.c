@@ -15,6 +15,8 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
 static void fAND(void *out, void *in1, void *in2);
 static void fOR(void *out, void *in1, void *in2);
 
+static void fXOR(void *out, void *in1, void *in2, void *buf);
+
 static uint64_t probe(void *adrs); // access adrs and return access
 static void flush(void *adrs); // clflush adrs 
 static void load(void *adrs); // load adrs into cache
@@ -125,7 +127,7 @@ static void fNOT(void *out, void *in){
 	}
 }*/
 
-// 78 % success on 4 outputs for case in = not out (weirdly, the false hits all appear at the beginning in a row), 49 % success on 5 outputs for same case
+// 78 % success on 4 outputs for case in = not out (weirdly, the false hits all appear at the beginning in a row, 100 100 89 89), 49 % success on 5 outputs for same case
 static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in){
 	__asm__ volatile(
 		"lea rbx, [fNOTN_2];"
@@ -213,7 +215,7 @@ static void fNAND(void *out, void *in1, void *in2){
     );
 }
 
-// 4 outputs 51 % correct on a nand b 
+// 4 outputs 51 % correct on a nand b: 
 static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4){
 	__asm__ volatile(
         "call fNANDN_1;"
@@ -242,7 +244,7 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
     );
 }
 
-// 4 outputs 51 % correct on A nor notB
+// 4 outputs 51 % correct on A nor notB, 2 outputs 100 %
 static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4){
 	__asm__ volatile(
 		"lea rbx, [fNORN_3];"
@@ -349,7 +351,22 @@ static void fAND(void *out, void *in1, void *in2){
     );
 }
 
-
+static void fXOR(void *out, void *in1, void *in2, void **buf){
+	
+	
+	fNOTN(in1, buf[0], buf[1], buf[6], buf[6]); // 6 dump
+	fNOTN(in2, buf[2], buf[3], buf[6], buf[6]); // 
+	
+	//!(!A & !B)
+	fNAND(buf[4], buf[0], buf[2]);
+	
+	// !A | !B
+	fOR(buf[5], buf[1], buf[3]);
+	
+	//!(!A & !B) & (!A | !B) <=> (A | B) & !(A & B) <=> A & !B | !A & B
+	fAND(out, buf[4], buf[5]);
+	
+}
 
 
 

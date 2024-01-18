@@ -814,6 +814,133 @@ void test_fOR(){
 	}
 }
 
+void test_fXOR(){
+	wait(1E9);
+	uint64_t time;
+	
+	// notA xor notB = notC
+	for(int i=0;i<CYC;i++){
+		void *mm = malloc(81920);
+		void *in1=mm;
+		void *in2 = mm+4096+64; // +page size +cache line
+		void *out = mm+8192+128; // +page size +cache line
+		
+		*((uint64_t *)in1) =0;
+		*((uint64_t *)in2) =0;		
+		
+		void **buf = malloc(7*sizeof(void *));
+		for(int j=0;j<7;j++){
+			buf[j]=mm+(3+j)*(4096+64);
+			*((uint64_t *)buf[j]) = 0;
+			flush(buf[j]);
+		}		
+		flush(in1);
+		flush(in2);
+		flush(out);
+		
+		fence();
+		fXOR(out, in1, in2, buf);
+		fence();
+		time = probe(out);	
+		fence();
+		
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		free(mm);
+	}
+	
+	// notA and B = C 
+	for(int i=0;i<CYC;i++){
+		void *mm = malloc(81920);
+		void *in1=mm;
+		void *in2 = mm+4096+64; // +page size +cache line
+		void *out = mm+8192+128; // +page size +cache line
+		
+		*((uint64_t *)in1) =0;
+		*((uint64_t *)in2) =0;		
+		
+		void **buf = malloc(7*sizeof(void *));
+		for(int j=0;j<7;j++){
+			buf[j]=mm+(3+j)*(4096+64);
+			*((uint64_t *)buf[j]) = 0;
+			flush(buf[j]);
+		}		
+		flush(in1);
+		flush(out);
+		load(in2);
+		
+		fence();
+		fXOR(out, in1, in2, buf);
+		fence();
+		time = probe(out);	
+		fence();
+		
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		free(mm);
+	}
+	
+	// A and notB = C 
+	for(int i=0;i<CYC;i++){
+		void *mm = malloc(81920);
+		void *in1=mm;
+		void *in2 = mm+4096+64; // +page size +cache line
+		void *out = mm+8192+128; // +page size +cache line
+		
+		*((uint64_t *)in1) =0;
+		*((uint64_t *)in2) =0;		
+		
+		void **buf = malloc(7*sizeof(void *));
+		for(int j=0;j<7;j++){
+			buf[j]=mm+(3+j)*(4096+64);
+			*((uint64_t *)buf[j]) = 0;
+			flush(buf[j]);
+		}		
+		flush(in2);
+		flush(out);
+		load(in1);
+		
+		fence();
+		fXOR(out, in1, in2, buf);
+		fence();
+		time = probe(out);	
+		fence();
+		
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		free(mm);
+	}
+
+	
+	// A and B = notC 
+	for(int i=0;i<CYC;i++){
+		void *mm = malloc(81920);
+		void *in1=mm;
+		void *in2 = mm+4096+64; // +page size +cache line
+		void *out = mm+8192+128; // +page size +cache line
+		
+		*((uint64_t *)in1) =0;
+		*((uint64_t *)in2) =0;		
+		
+		void **buf = malloc(7*sizeof(void *));
+		for(int j=0;j<7;j++){
+			buf[j]=mm+(3+j)*(4096+64);
+			*((uint64_t *)buf[j]) = 0;
+			flush(buf[j]);
+		}		
+		load(in1);
+		flush(out);
+		load(in2);
+		
+		fence();
+		fXOR(out, in1, in2, buf);
+		fence();
+		time = probe(out);	
+		fence();
+		
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		free(mm);
+	}
+}
+
+
 int main() {
     CU_initialize_registry();
 
@@ -822,6 +949,7 @@ int main() {
     //CU_add_test(suite, "Test fNOTN", test_fNOTN);
     //CU_add_test(suite, "Test fNANDN", test_fNANDN);
     CU_add_test(suite, "Test fNORN", test_fNORN);
+    CU_add_test(suite, "Test fXOR", test_fXOR);
    // CU_add_test(suite, "Test fNAND", test_fNAND); 
     //CU_add_test(suite, "Test fAND", test_fAND); 
     //CU_add_test(suite, "Test fNOR", test_fNOR);
