@@ -985,7 +985,7 @@ int main() {
 		CU_add_test(suite, "Test fOR", test_fNOR);
 		CU_add_test(suite, "Test fXOR", test_fXOR);
 	}
-	//CU_add_test(suite, "Test fNANDN", test_fNANDN); // TODO
+	CU_add_test(suite, "Test fNANDN", test_fNANDN); // TODO
     //CU_add_test(suite, "Test fNORN", test_fNORN); // TODO
 
 	CU_basic_run_tests();
@@ -993,4 +993,5 @@ int main() {
 
     return 0;
 }
+
 
