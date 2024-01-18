@@ -70,9 +70,7 @@ void test_fNOTN(){
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		time = probe(out4);	
 		CU_ASSERT_TRUE(time>THRESHOLD);
-		//time = probe(out5);	
-		//CU_ASSERT_TRUE(time>THRESHOLD);
-		//printf("fNOT case not A: time is %lu\n", time);
+		printf("fNOT case not A: time is %lu\n", time);
 		free(mm);
 	}
 }
