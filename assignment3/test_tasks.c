@@ -408,7 +408,7 @@ void test_fNANDN(){
 void test_fNORN(){
 	uint64_t time; 
 	wait(1E9);
-	// ------------ notA nor notB ------------
+	// ------------ notA nor notB = C ------------
 	for(int i=0;i<CYC;i++){
 		void *mm = malloc(81920);
 		void *in1=mm;
@@ -448,8 +448,10 @@ void test_fNORN(){
 		fNORN(in1, in2, out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out11, out12);
 		fence();
 		time = probe(out1);	
+		printf("fNOrn1 case notA notB: c is %lu\n", time);
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out2);	
+		printf("fNOrn2 case notA notB: c is %lu\n", time);
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out3);	
 		//CU_ASSERT_TRUE(time<THRESHOLD);
@@ -498,8 +500,10 @@ void test_fNORN(){
 		fNORN(in1, in2, out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out11, out12);
 		fence();
 		time = probe(out1);	
+		printf("fNOrn1 case A notB: c is %lu\n", time);
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		time = probe(out2);	
+		printf("fNOrn2 case A notB: c is %lu\n", time);
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		time = probe(out3);	
 		//printf("fNOrn3 case not A: time is %lu\n", time);
