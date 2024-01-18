@@ -948,8 +948,8 @@ int main() {
     CU_add_test(suite, "Test fNOT", test_fNOT);
     CU_add_test(suite, "Test fNOTN", test_fNOTN);
     //CU_add_test(suite, "Test fNANDN", test_fNANDN); // TODO
-    CU_add_test(suite, "Test fNORN", test_fNORN);
-    //CU_add_test(suite, "Test fXOR", test_fXOR);
+    //CU_add_test(suite, "Test fNORN", test_fNORN); // TODO
+    CU_add_test(suite, "Test fXOR", test_fXOR);
     CU_add_test(suite, "Test fNAND", test_fNAND); 
     CU_add_test(suite, "Test fAND", test_fAND); 
     CU_add_test(suite, "Test fNOR", test_fNOR);
