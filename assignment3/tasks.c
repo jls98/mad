@@ -289,15 +289,15 @@ static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void
 		// BEGIN spec part 
 		"xor rax, rax;"
 		// BEGIN delay ops 
-		".rept 45;"
+		".rept 5;"
 		"mov rax, [rsp+rax];"
 		"and rax, 0x0;"	
 		".endr;"		
 		// END delay ops 
-		"mov r11, %2[rax];" // addr output + 0
-		"mov r11, %3[rax];" // addr output + 0
-		"mov r11, %4[rax];" // addr output + 0
-		"mov r11, %5[rax];" // addr output + 0
+		"mov r11, [%2+rax];" // addr output + 0
+		"mov r11, [%3+rax];" // addr output + 0
+		"mov r11, [%4+rax];" // addr output + 0
+		"mov r11, [%5+rax];" // addr output + 0
 		"lfence;"
 		// END spec part 
 		"fNORN_1: mov [rsp], r11;"		// in2

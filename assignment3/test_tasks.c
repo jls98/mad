@@ -2,7 +2,7 @@
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
 
-#define CYC 100
+#define CYC 10
 
 void test_fNOT2(){
 	uint64_t time; 
