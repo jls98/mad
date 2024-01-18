@@ -14,28 +14,20 @@ void test_fNOT2(){
 		void *in=mm;
 		void *out1 = mm+4096+64; // +page size +cache line
 		void *out2 = mm+2*(4096+64); // +page size +cache line
-		//void *out3 = mm+3*(4096+64); // +page size +cache line
-		//void *out4 = mm+4*(4096+64); // +page size +cache line
-		
+
 		*((uint64_t *)in) =0;
 		
 		flush(in);
 		flush(out1);
 		flush(out2);
-		//flush(out3);
-		//flush(out4);
 		
 		fence();
-		fNOT2(out1, out2/*, out3, out4*/, in);
+		fNOT2(out1, out2, in);
 		fence();
 		time = probe(out1);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out2);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
-		//time = probe(out3);	
-		//CU_ASSERT_TRUE(time<THRESHOLD);
-		//time = probe(out4);	
-		//CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
 	}
 	
@@ -45,28 +37,20 @@ void test_fNOT2(){
 		void *in=mm;
 		void *out1 = mm+4096+64; // +page size +cache line
 		void *out2 = mm+2*(4096+64); // +page size +cache line
-		//void *out3 = mm+3*(4096+64); // +page size +cache line
-		//void *out4 = mm+4*(4096+64); // +page size +cache line
-		
+
 		*((uint64_t *)in) =0;
 		
 		flush(out1);
 		flush(out2);
-		//flush(out3);
-		//flush(out4);
 		load(in);
 		
 		fence();
-		fNOT2(out1, out2/*, out3, out4*/, in);
+		fNOT2(out1, out2, in);
 		fence();
 		time = probe(out1);	
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		time = probe(out2);	
 		CU_ASSERT_TRUE(time>THRESHOLD);
-		//time = probe(out3);	
-		//CU_ASSERT_TRUE(time>THRESHOLD);
-		//time = probe(out4);	
-		//CU_ASSERT_TRUE(time>THRESHOLD);
 		//printf("fNOT case not A: time is %lu\n", time);
 		free(mm);
 	}
@@ -166,8 +150,9 @@ void test_fNOTN(){
 		time = probe(out3);	
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		time = probe(out4);	
+		printf("fNOT case not A: time is %lu\n", time);
 		CU_ASSERT_TRUE(time>THRESHOLD);
-		//printf("fNOT case not A: time is %lu\n", time);
+		printf("fNOT case not A: time is %lu\n", time);
 		free(mm);
 	}
 }
@@ -1148,35 +1133,6 @@ void test_fXOR(){
 	}
 }
 
-void test(){
-	wait(1E9);
-	void *mm = malloc(81920);
-	void *in1=mm;
-	void *in2 = mm+4096+64; // +page size +cache line
-	void *out = mm+8192+128; // +page size +cache line
-	
-	*((uint64_t *)in1) =0;
-	*((uint64_t *)in2) =0;		
-	
-	void **buf = malloc(7*sizeof(void *));
-	for(int j=0;j<7;j++){
-		buf[j]=mm+(3+j)*(4096+64);
-		*((uint64_t *)buf[j]) = 0;
-		flush(buf[j]);
-	}		
-	flush(out);
-	load(in1);
-	load(in2);
-	
-	fence();
-	fXOR(out, in1, in2, buf);
-	fence();
-	uint64_t time = probe(out);	
-	fence();
-	
-	//CU_ASSERT_TRUE(time>THRESHOLD);
-	free(mm);
-}
 
 int main() {
     CU_initialize_registry();
