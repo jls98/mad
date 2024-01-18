@@ -633,6 +633,7 @@ static void fLED2(void *in1, void *in2, void *in3, void *in4, void *out, void **
 	
 }
 
+// bug
 // out3: !B*!C + !A*!C + !A*!B*!D + A*!B*D + A*B*C*!D
 static void fLED3(void *in1, void *in2, void *in3, void *in4, void *out, void **buf){
     // !A: 1, 14, A: 3, 4
@@ -718,20 +719,261 @@ static void fLED3(void *in1, void *in2, void *in3, void *in4, void *out, void **
 	for (int i=0;i<17;i++) flush(buf[i]);  	
 }
 
+// out4: !C*D + B*D + B*!C + A*!B*C + !A*C*!D
 static void fLED4(void *in1, void *in2, void *in3, void *in4, void *out, void **buf){
+ // !A: 1, 4, A: 3 
+	__asm__ volatile("lfence");
+    fNOT2(buf[0], buf[1], in1); // !
+ 	__asm__ volatile("lfence");
+   fNOT2(buf[2], buf[3], buf[0]);
     
+	__asm__ volatile("lfence");
+    flush(buf[0]);
+    flush(buf[2]);
+    
+    // !b: 6 b: 8, 0
+	__asm__ volatile("lfence");
+    fNOT2(buf[5], buf[6], in2); //!
+	__asm__ volatile("lfence");
+    fNOT2(buf[0], buf[8], buf[5]);
+	__asm__ volatile("lfence");
+
+    // !c: 10, 13, c: 12, 16
+	__asm__ volatile("lfence");
+    fNOT2(buf[9], buf[10], in3); //!
+	__asm__ volatile("lfence");
+    fNOT2(buf[11], buf[12], buf[9]);    
+	__asm__ volatile("lfence");
+	fNOT2(buf[14], buf[13], buf[11]); //!
+	__asm__ volatile("lfence");
+    fNOT(buf[16], buf[14]); 
+	__asm__ volatile("lfence");
+    
+	flush(buf[5]);
+    flush(buf[7]);
+    flush(buf[9]);
+    flush(buf[11]);
+    flush(buf[14]);
+
+	__asm__ volatile("lfence");
+    // !d: 2, 14, d: 9, 15
+    fNOT2(buf[7], buf[2], in4); //!
+	__asm__ volatile("lfence");
+    fNOT2(buf[5], buf[9], buf[7]);
+	__asm__ volatile("lfence");
+    fNOT2(buf[11], buf[14], buf[5]); //!
+	__asm__ volatile("lfence");
+    fNOT(buf[15], buf[11]);   
+	__asm__ volatile("lfence");
+
+    flush(buf[7]);
+    flush(buf[5]);
+    flush(buf[11]);
+    
+	// !C*D
+	__asm__ volatile("lfence");
+	fAND(buf[11], buf[10], buf[9]);
+	
+	flush(buf[10]);
+    flush(buf[9]);
+	// B*D
+	__asm__ volatile("lfence");
+	fAND(buf[7], buf[8], buf[15]);
+	
+	// B*!C
+	__asm__ volatile("lfence");
+	fAND(buf[5], buf[0], buf[13]);
+	
+	//A*!B*C
+	__asm__ volatile("lfence");
+	fAND4(buf[10], buf[3], buf[6], buf[12], buf[12]);
+
+	// !A*C*!D
+	__asm__ volatile("lfence");
+	fAND4(buf[9], buf[1], buf[16], buf[14], buf[14]);
+	
+	// result
+	__asm__ volatile("lfence");
+	fORX(out, buf[9], buf[10], buf[5], buf[7], buf[11], buf[4]);
+	for (int i=0;i<17;i++) flush(buf[i]);  	
+
 }
 
+	// out_4: !A*B + C*D + !A*!C + B*!C
 static void fLED5(void *in1, void *in2, void *in3, void *in4, void *out, void **buf){
-    
+    // !A: 0, 1
+	__asm__ volatile("lfence");
+    fNOT2(buf[0], buf[1], in1); // !
+	
+    // B: 3,4
+	__asm__ volatile("lfence");
+    fNOT(buf[2], in2); // !
+ 	__asm__ volatile("lfence");
+   fNOT2(buf[3], buf[4], buf[2]); 
+	
+	// C, 7, , !c 5, 13
+	__asm__ volatile("lfence");
+    fNOT2(buf[5], buf[6], in3); // !
+ 	__asm__ volatile("lfence");
+	fNOT2(buf[12], buf[7], buf[6]); 
+	__asm__ volatile("lfence");
+	fNOT(buf[13], buf[12]); 
+	__asm__ volatile("lfence");
+	
+	// !A*B
+	__asm__ volatile("lfence");
+	fAND(buf[8], buf[0], buf[3]);	
+	
+	// C*D
+	__asm__ volatile("lfence");
+	fAND(buf[9], buf[7], in4);	
+	
+	// !A*!C
+	__asm__ volatile("lfence");
+	fAND(buf[10], buf[1], buf[5]);	
+	
+	// B*!C
+	__asm__ volatile("lfence");
+	fAND(buf[11], buf[4], buf[13]);	
+
+	// result
+	__asm__ volatile("lfence");
+	fORX(out, buf[9], buf[10], buf[11], buf[8], buf[14], buf[15]);
+	for (int i=0;i<17;i++) flush(buf[i]);  	
+
 }
 
+// out6: A*!B + !C*D + C*!D + !B*!C
 static void fLED6(void *in1, void *in2, void *in3, void *in4, void *out, void **buf){
-    
+	
+    // !B: 0, 1
+
+ 	__asm__ volatile("lfence");
+   fNOT2(buf[0], buf[1], in2);  //!
+	
+	// C, 7, , !c 5, 13
+	__asm__ volatile("lfence");
+    fNOT2(buf[5], buf[6], in3); // !
+ 	__asm__ volatile("lfence");
+	fNOT2(buf[2], buf[7], buf[6]); 
+	__asm__ volatile("lfence");
+	fNOT(buf[3], buf[2]); 
+	__asm__ volatile("lfence");
+	
+	// !d 8 , d 9
+	fNOT2(buf[4], buf[8], in4); 
+	__asm__ volatile("lfence");
+	fNOT(buf[9], buf[4]); 
+	__asm__ volatile("lfence");
+	
+	
+	
+	// A*!B
+	__asm__ volatile("lfence");
+	fAND(buf[12], in1, buf[0]);	
+	
+	// !C*D
+	__asm__ volatile("lfence");
+	fAND(buf[13], buf[5], buf[9]);	
+	
+	// C*!D
+	__asm__ volatile("lfence");
+	fAND(buf[10], buf[7], buf[8]);	
+	
+	// !B*!C
+	__asm__ volatile("lfence");
+	fAND(buf[11], buf[1], buf[13]);	
+
+	// result
+	__asm__ volatile("lfence");
+	fORX(out, buf[12], buf[10], buf[11], buf[13], buf[14], buf[15]);
+	for (int i=0;i<17;i++) flush(buf[i]);  	
 }
 
+// out7: !A*!B*!C + A*!B*C + A*B*!C + !A*B*!D + !A*C*D
 static void fLED7(void *in1, void *in2, void *in3, void *in4, void *out, void **buf){
+     // !A3: 1, 17, 19 A2: 3, 18 
+	__asm__ volatile("lfence");
+    fNOT2(buf[0], buf[1], in1); // !
+ 	__asm__ volatile("lfence");
+	fNOT2(buf[2], buf[3], buf[0]);
+	__asm__ volatile("lfence");
+	fNOT2(buf[4], buf[17], buf[2]); //!
+	__asm__ volatile("lfence");
+	fNOT2(buf[5], buf[18], buf[4]);
+	__asm__ volatile("lfence");
+    fNOT(buf[19], buf[5]); // !
     
+	__asm__ volatile("lfence");
+    flush(buf[0]);
+    flush(buf[2]);
+    flush(buf[4]);
+    flush(buf[5]);
+    
+    // !b2: 6, 21, b2: 8, 22
+	__asm__ volatile("lfence");
+    fNOT2(buf[5], buf[6], in2); //!
+	__asm__ volatile("lfence");
+    fNOT2(buf[7], buf[8], buf[5]);
+	__asm__ volatile("lfence");
+    fNOT2(buf[20], buf[21], buf[7]); // !
+	__asm__ volatile("lfence");
+    fNOT(buf[22], buf[20]); 
+	__asm__ volatile("lfence");
+
+   
+
+    // !c2: 10, 13, c2: 12, 16
+	__asm__ volatile("lfence");
+    fNOT2(buf[9], buf[10], in3); //!
+	__asm__ volatile("lfence");
+    fNOT2(buf[11], buf[12], buf[9]);    
+	__asm__ volatile("lfence");
+	fNOT2(buf[14], buf[13], buf[11]); //!
+	__asm__ volatile("lfence");
+    fNOT(buf[16], buf[14]); 
+	__asm__ volatile("lfence");
+
+
+	__asm__ volatile("lfence");
+    // !d1: 2, d1: 4
+    fNOT2(buf[0], buf[2], in4); //!
+	__asm__ volatile("lfence");
+    fNOT(buf[4], buf[0]);   
+	__asm__ volatile("lfence");
+	
+    flush(buf[9]);
+    flush(buf[11]);
+    flush(buf[14]);
+	flush(buf[5]);
+    flush(buf[7]);
+    flush(buf[20]);
+    flush(buf[0]);
+	
+	// !A*!B*!C 
+	__asm__ volatile("lfence");
+	fAND4(buf[9], buf[1], buf[6], buf[10], buf[10]);
+	
+	// A*!B*C
+	__asm__ volatile("lfence");
+	fAND4(buf[11], buf[3], buf[21], buf[16], buf[16]);
+	
+	// A*B*!C
+	__asm__ volatile("lfence");
+	fAND4(buf[14], buf[18], buf[8], buf[13], buf[13]);
+	
+	// !A*B*!D
+	__asm__ volatile("lfence");
+	fAND4(buf[5], buf[17], buf[22], buf[2], buf[2]);
+	
+	// !A*C*D
+	__asm__ volatile("lfence");
+	fAND4(buf[7], buf[9], buf[12], buf[4], buf[4]);
+	
+	// result
+	__asm__ volatile("lfence");
+	fORX(out, buf[7], buf[5], buf[11], buf[9], buf[14], buf[0]);
+	for (int i=0;i<23;i++) flush(buf[i]);  	
 }
 
 // according to the naming convention of the first gates, I started counting from 1 and not from 0, so in1 is in0 from the task and out1 is out0 from the task respectively
