@@ -1100,6 +1100,7 @@ void test_fXOR(){
 		
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
+		free(buf);
 	}
 	
 	// notA and B = C 
@@ -1130,6 +1131,7 @@ void test_fXOR(){
 		
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
+		free(buf);
 	}
 	
 	// A and notB = C 
@@ -1160,6 +1162,7 @@ void test_fXOR(){
 		
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
+		free(buf);
 	}
 
 	
@@ -1191,6 +1194,7 @@ void test_fXOR(){
 		
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
+		free(buf);
 	}
 }
 void test_LED(){
@@ -1240,6 +1244,7 @@ void test_LED(){
     
     //CU_ASSERT_TRUE(time>THRESHOLD);
     free(mm);
+    free(buf);
 }
 
 int main() {

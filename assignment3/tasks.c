@@ -408,13 +408,11 @@ static void fXOR(void *out, void *in1, void *in2, void **buf){
 
 	//!(!A & !B) & (!A | !B) <=> (A | B) & !(A & B) <=> A & !B | !A & B
 	fAND(out, buf[4], buf[5]);
-	
 }
 
 // out1: !A*D + B*C + !A*!C + B*!D + !B*!C*D + A*C*!D
 
 static void fLED1(void *in1, void *in2, void *in3, void *in4, void *out, void **buf){
-    
     
     // !A: 1, 4, A: 3 
     printf("a");
@@ -642,7 +640,7 @@ static void fLED(void *in1, void *in2, void *in3, void *in4, void *out1, void *o
     printf("d dup is %lu\n", probe(buf[15]));
     printf("d dup is %lu\n", probe(buf[23]));*/
 
-    void **buff = buf+29*sizeof(void *);
+    void **buff = buf+29;
     fLED1(buf[3], buf[4], buf[5], buf[0], out1, buff);
     fLED2(buf[7], buf[9], buf[16], buf[1], out2, buff);
     fLED3(buf[10], buf[17], buf[24], buf[2], out3, buff);
