@@ -423,9 +423,7 @@ void test_fNORN(){
 		void *out8 = mm+16*(4096+64); // +page size +cache line
 		void *out9 = mm+18*(4096+64); // +page size +cache line
 		void *out10 = mm+20*(4096+64); // +page size +cache line
-		void *out11 = mm+22*(4096+64); // +page size +cache line
-		void *out12 = mm+24*(4096+64); // +page size +cache line
-		
+
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;		
 		
@@ -441,11 +439,9 @@ void test_fNORN(){
 		flush(out8);
 		flush(out9);
 		flush(out10);
-		flush(out11);
-		flush(out12);
 		
 		fence();
-		fNORN(in1, in2, out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out11, out12);
+		fNORN(in1, in2, out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out10, out10);
 		fence();
 		time = probe(out1);	
 		printf("fNOrn1 case notA notB: c is %lu\n", time);
@@ -475,9 +471,7 @@ void test_fNORN(){
 		void *out8 = mm+16*(4096+64); // +page size +cache line
 		void *out9 = mm+18*(4096+64); // +page size +cache line
 		void *out10 = mm+20*(4096+64); // +page size +cache line
-		void *out11 = mm+22*(4096+64); // +page size +cache line
-		void *out12 = mm+24*(4096+64); // +page size +cache line
-		
+
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;		
 		
@@ -492,12 +486,10 @@ void test_fNORN(){
 		flush(out8);
 		flush(out9);
 		flush(out10);
-		flush(out11);
-		flush(out12);
 		load(in1);
 		
 		fence();
-		fNORN(in1, in2, out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out11, out12);
+		fNORN(in1, in2, out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out10, out10);
 		fence();
 		time = probe(out1);	
 		printf("fNOrn1 case A notB: c is %lu\n", time);
@@ -529,9 +521,7 @@ void test_fNORN(){
 		void *out8 = mm+16*(4096+64); // +page size +cache line
 		void *out9 = mm+18*(4096+64); // +page size +cache line
 		void *out10 = mm+20*(4096+64); // +page size +cache line
-		void *out11 = mm+22*(4096+64); // +page size +cache line
-		void *out12 = mm+24*(4096+64); // +page size +cache line
-		
+
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;		
 		
@@ -546,12 +536,10 @@ void test_fNORN(){
 		flush(out8);
 		flush(out9);
 		flush(out10);
-		flush(out11);
-		flush(out12);
 		load(in2);
 		
 		fence();
-		fNORN(in1, in2, out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out11, out12);
+		fNORN(in1, in2, out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out10, out10);
 		fence();
 		time = probe(out1);	
 		printf("fNOrn1 case notA B: c is %lu\n", time);
@@ -581,9 +569,7 @@ void test_fNORN(){
 		void *out8 = mm+16*(4096+64); // +page size +cache line
 		void *out9 = mm+18*(4096+64); // +page size +cache line
 		void *out10 = mm+20*(4096+64); // +page size +cache line
-		void *out11 = mm+22*(4096+64); // +page size +cache line
-		void *out12 = mm+24*(4096+64); // +page size +cache line
-		
+
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;		
 		
@@ -597,13 +583,11 @@ void test_fNORN(){
 		flush(out8);
 		flush(out9);
 		flush(out10);
-		flush(out11);
-		flush(out12);
 		load(in1);
 		load(in2);
 		
 		fence();
-		fNORN(in1, in2, out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out11, out12);
+		fNORN(in1, in2, out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out10, out10);
 		fence();
 		time = probe(out1);	
 		printf("fNOrn1 case A B: c is %lu\n", time);
