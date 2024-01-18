@@ -417,9 +417,14 @@ static void fLED1(void *in1, void *in2, void *in3, void *in4, void *out, void **
     
     
     // !A: 1, 4, A: 3 
+    printf("a");
     fNOT2(buf[0], buf[1], in1); // !
+    
+    printf("a");
     fNOT2(buf[2], buf[3], buf[0]);
+    printf("a");
     fNOT(buf[4], buf[2]); // !
+    printf("a");
     
     flush(buf[0]);
     flush(buf[2]);
