@@ -442,30 +442,19 @@ void test_fNORN(){
 		
 		fence();
 		fNORN(in1, in2, out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out10, out10);
-		fence();
 		time = probe(out1);	
 		printf("fNOrn1 case notA notB: c is %lu\n", time);
-		fence();
         CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out2);	
-		fence();
         printf("fNOrn2 case notA notB: c is %lu\n", time);
 		CU_ASSERT_TRUE(time<THRESHOLD);
-        fence();
 		time = probe(out3);	
-        fence();
 		CU_ASSERT_TRUE(time<THRESHOLD);
-		fence();
         time = probe(out4);	
-		fence();
         CU_ASSERT_TRUE(time<THRESHOLD);
-		fence();
 		time = probe(out5);	
-		fence();
 		CU_ASSERT_TRUE(time<THRESHOLD);
-		fence();
 		time = probe(out6);	
-		fence();
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
 	}
@@ -1210,7 +1199,7 @@ int main() {
     CU_initialize_registry();
 
     CU_pSuite suite = CU_add_suite("Test Suite assignment 3", NULL, NULL);
-    int normal = 0;
+    int normal = 1;
 	
 	if(normal){
 		CU_add_test(suite, "Test fNOT", test_fNOT);
@@ -1221,7 +1210,7 @@ int main() {
 		CU_add_test(suite, "Test fOR", test_fNOR);
 		CU_add_test(suite, "Test fXOR", test_fXOR);
 	}
-	//CU_add_test(suite, "Test fNOTN", test_fNOTN);
+	CU_add_test(suite, "Test fNOTN", test_fNOTN);
     CU_add_test(suite, "Test fNORN", test_fNORN); // TODO
 
 	CU_basic_run_tests();
