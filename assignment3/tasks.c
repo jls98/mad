@@ -283,7 +283,6 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
 // 4 outputs 51 % correct on A nor notB, 2 outputs 100 %
 static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4, void *out5, void *out6, void *out7, void *out8, void *out9, void *out10, void *out11, void *out12){
 	__asm__ volatile(
-        "lea rbx, fNORN_3[rip];"
 		"call fNORN_1;"
 		"call fNORN_2;"
 		// BEGIN spec part 
@@ -306,10 +305,10 @@ static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void
 		"add [rsp], r11;"
 		"ret;"
 		
-		"fNORN_2: lea r11, fNORN_3[rip];"
-        "mov [rsp], r11;"		// in1
-		"mov r11, [%0];"
-		"add [rsp], r11;"
+		"fNORN_2: lea rbx, fNORN_3[rip];"
+        "mov [rsp], rbx;"		// in1
+		"mov rbx, [%0];"
+		"add [rsp], rbx;"
 		"ret;"
 		// end 
 		"fNORN_3: nop;"
