@@ -142,7 +142,7 @@ void test_fNANDN(){
 		load(in1);
 		
 		fence();
-		fNANDN(in1, in2, out1, out2, out3, out4);
+		fNANDN(in1, in2, out1, out2, out3, out4, out5, out6);
 		fence();
 		time = probe(out1);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
