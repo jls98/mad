@@ -6,12 +6,12 @@
 #define THRESHOLD 160 // timing around 14-16 when cached
 
 static void fNOT(void *out, void *in); // NOT gate
-static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in);
+static void fNOTN(void* out_1, void* out_2/*, void* out_3, void* out_4*/, void* in);
 //static void fNOTX(void *out, void *in, uint64_t x); // xNOT gate with x out
 static void fNOR(void *out, void *in1, void *in2);
-static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4);
+static void fNORN(void *in1, void *in2, void *out1, void *out2/*, void *out3, void *out4*/);
 static void fNAND(void *out, void *in1, void *in2);
-static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4);
+static void fNANDN(void *in1, void *in2, void *out1, void *out2/*, void *out3, void *out4*/);
 static void fAND(void *out, void *in1, void *in2);
 static void fOR(void *out, void *in1, void *in2);
 
@@ -245,7 +245,7 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
 }
 
 // 4 outputs 51 % correct on A nor notB, 2 outputs 100 %
-static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4){
+static void fNORN(void *in1, void *in2, void *out1, void *out2/*, void *out3, void *out4*/){
 	__asm__ volatile(
 		"lea rbx, [fNORN_3];"
 		"call fNORN_1;"
@@ -354,8 +354,8 @@ static void fAND(void *out, void *in1, void *in2){
 static void fXOR(void *out, void *in1, void *in2, void **buf){
 	
 	
-	fNOTN(in1, buf[0], buf[1], buf[6], buf[6]); // 6 dump
-	fNOTN(in2, buf[2], buf[3], buf[6], buf[6]); // 
+	fNOTN(in1, buf[0], buf[1]); // 6 dump
+	fNOTN(in2, buf[2], buf[3]); // 
 	
 	//!(!A & !B)
 	fNAND(buf[4], buf[0], buf[2]);
