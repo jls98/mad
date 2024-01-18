@@ -1196,7 +1196,7 @@ void test_fXOR(){
 void test_LED(){
 	wait(1E9);
 
-    void *mm = malloc(256000);
+    void *mm = malloc(512000);
     void *in1=mm;
     void *in2 = mm+4096+64; // +page size +cache line
     void *in3 = mm+2*(4096+64); // +page size +cache line
@@ -1214,8 +1214,8 @@ void test_LED(){
     *((uint64_t *)in3) =0;		
     *((uint64_t *)in4) =0;		
     
-    void **buf = malloc(30*sizeof(void *));
-    for(int j=0;j<30;j++){
+    void **buf = malloc(50*sizeof(void *));
+    for(int j=0;j<50;j++){
         buf[j]=mm+(11+j)*(4096+64);
         *((uint64_t *)buf[j]) = 0;
         flush(buf[j]);
