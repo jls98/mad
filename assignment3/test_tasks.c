@@ -951,7 +951,7 @@ int main() {
     //CU_add_test(suite, "Test fNORN", test_fNORN);
     //CU_add_test(suite, "Test fXOR", test_fXOR);
     //CU_add_test(suite, "Test fNAND", test_fNAND); 
-    //CU_add_test(suite, "Test fAND", test_fAND); 
+    CU_add_test(suite, "Test fAND", test_fAND); 
     CU_add_test(suite, "Test fNOR", test_fNOR);
     CU_add_test(suite, "Test fOR", test_fNOR);
 
