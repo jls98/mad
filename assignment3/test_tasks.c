@@ -460,7 +460,7 @@ void test_fNORN(){
 	
 	// ------------ A nor notB ------------
 	for(int i=0;i<CYC;i++){
-		void *mm = malloc(8192);
+		void *mm = malloc(81920);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
 		void *out1 = mm+2*(4096+64); // +page size +cache line
@@ -502,15 +502,17 @@ void test_fNORN(){
 		time = probe(out2);	
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		time = probe(out3);	
-		CU_ASSERT_TRUE(time>THRESHOLD);
+		printf("fNOrn3 case not A: time is %lu\n", time);
+        CU_ASSERT_TRUE(time>THRESHOLD);
 		time = probe(out4);	
+		printf("fNOrn4 case not A: time is %lu\n", time);
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
 	}
 	
 		// ------------ notA nor B ------------
 	for(int i=0;i<CYC;i++){
-		void *mm = malloc(8192);
+		void *mm = malloc(81920);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
 		void *out1 = mm+2*(4096+64); // +page size +cache line
@@ -560,7 +562,7 @@ void test_fNORN(){
 	
 		// ------------ A nor B ------------
 	for(int i=0;i<CYC;i++){
-		void *mm = malloc(8192);
+		void *mm = malloc(81920);
 		void *in1=mm;
 		void *in2 = mm+4096+64; // +page size +cache line
 		void *out1 = mm+2*(4096+64); // +page size +cache line
