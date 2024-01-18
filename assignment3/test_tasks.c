@@ -957,7 +957,7 @@ void test(){
 		flush(buf[j]);
 	}		
 	flush(out);
-	flush(in1);
+	load(in1);
 	load(in2);
 	
 	fence();

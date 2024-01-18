@@ -356,7 +356,7 @@ static void fXOR(void *out, void *in1, void *in2, void **buf){
 	fNOTN(in1, buf[0], buf[1]); // 6 dump
 	fNOTN(in2, buf[2], buf[3]); // 
 
-	printf("b4 nand 0 %lu 2 %lu\n", probe(buf[0]), probe(buf[2]));
+	//printf("b4 nand 0 %lu 2 %lu\n", probe(buf[0]), probe(buf[2]));
 
 	fence();
 	//!(!A & !B)
