@@ -11,7 +11,7 @@ static void fNOTN(void* out_1, void* out_2/*, void* out_3, void* out_4*/, void* 
 static void fNOR(void *out, void *in1, void *in2);
 static void fNORN(void *in1, void *in2, void *out1, void *out2/*, void *out3, void *out4*/);
 static void fNAND(void *out, void *in1, void *in2);
-static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4, void *out5, void *out6, void *out7, void *out8);
+static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4, void *out5, void *out6, void *out7, void *out8, void *out9, void *out10, void *out11, void *out12);
 static void fAND(void *out, void *in1, void *in2);
 static void fOR(void *out, void *in1, void *in2);
 
@@ -216,7 +216,7 @@ static void fNAND(void *out, void *in1, void *in2){
 }
 
 // 4 outputs 51 % correct on a nand b: 
-static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4, void *out5, void *out6, void *out7, void *out8){
+static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4, void *out5, void *out6, void *out7, void *out8, void *out9, void *out10, void *out11, void *out12){
 	__asm__ volatile(
         "call fNANDN_1;"
 		// BEGIN spec code
@@ -233,6 +233,10 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
 		"mov r11, [%7+rax];" // out
 		"mov r11, [%8+rax];" // out
 		"mov r11, [%9+rax];" // out
+		"mov r11, [%10+rax];" // out
+		"mov r11, [%11+rax];" // out
+		"mov r11, [%12+rax];" // out
+		"mov r11, [%13+rax];" // out
 		// END spec code
         "lfence;"
         "fNANDN_1: lea r11, [rip+fNANDN_2];"
@@ -243,7 +247,7 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, voi
         "ret;"
         "fNANDN_2: nop;"
         : 
-        : "r" (in1), "r" (in2), "r" (out1), "r" (out2), "r" (out3), "r" (out4), "r" (out5), "r" (out6), "r" (out7), "r" (out8)
+        : "r" (in1), "r" (in2), "r" (out1), "r" (out2), "r" (out3), "r" (out4), "r" (out5), "r" (out6), "r" (out7), "r" (out8), "r" (out9), "r" (out10), "r" (out11), "r" (out12)
         : "rax", "r11", "memory"
     );
 }
