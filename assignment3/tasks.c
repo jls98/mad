@@ -364,15 +364,15 @@ static void fOR(void *out, void *in1, void *in2){
 }
 static void fORX(void *out, void *in1, void *in2){
 	__asm__ volatile(
-		"lea rbx, [rip+fAND_2];"
-        "call fAND_1;"
+		"lea rbx, [rip+fORX_2];"
+        "call fORX_1;"
 		// BEGIN spec code
 		"mov rax, [%1];" // in1
         "add rax, [%2];" // in2
 		"add r11, [%0+rax];"
 		// END spec code
         "lfence;"
-        "fAND_1: mov [rsp], rbx;" // move 
+        "fORX_1: mov [rsp], rbx;" // move 
 		"xor rax, rax;"
 		".rept 50;"
         "mov rax, [rsp+rax];"
@@ -380,7 +380,7 @@ static void fORX(void *out, void *in1, void *in2){
 		".endr;"
         "add [rsp], rax;"
         "ret;"
-        "fAND_2: nop;" // end
+        "fORX_2: nop;" // end
         : 
         : "r" (out), "r" (in1), "r" (in2)
         : "rax", "rbx", "r11", "memory"
