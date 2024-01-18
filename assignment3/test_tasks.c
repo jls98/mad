@@ -84,6 +84,8 @@ void test_fNANDN(){
 		void *out2 = mm+3*(4096+64); // +page size +cache line
         void *out3 = mm+4*(4096+64); // +page size +cache line
 		void *out4 = mm+5*(4096+64); // +page size +cache line
+		void *out5 = mm+6*(4096+64); // +page size +cache line
+		void *out6 = mm+7*(4096+64); // +page size +cache line
 		
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;		
@@ -94,9 +96,11 @@ void test_fNANDN(){
 		flush(out2);
 		flush(out3);
 		flush(out4);
+		flush(out5);
+		flush(out6);
 		
 		fence();
-		fNANDN(in1, in2, out1, out2, out3, out4);
+		fNANDN(in1, in2, out1, out2, out3, out4, out5, out6);
 		fence();
 		time = probe(out1);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
@@ -105,6 +109,10 @@ void test_fNANDN(){
 		time = probe(out3);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out4);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out5);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out6);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
 	}
@@ -118,6 +126,8 @@ void test_fNANDN(){
 		void *out2 = mm+3*(4096+64); // +page size +cache line
 		void *out3 = mm+4*(4096+64); // +page size +cache line
 		void *out4 = mm+5*(4096+64); // +page size +cache line
+		void *out5 = mm+6*(4096+64); // +page size +cache line
+		void *out6 = mm+7*(4096+64); // +page size +cache line
 		
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;		
@@ -127,6 +137,8 @@ void test_fNANDN(){
 		flush(out2);
         flush(out3);
 		flush(out4);
+		flush(out5);
+		flush(out6);
 		load(in1);
 		
 		fence();
@@ -139,6 +151,10 @@ void test_fNANDN(){
 		time = probe(out3);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out4);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out5);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out6);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
 	}
@@ -152,6 +168,8 @@ void test_fNANDN(){
 		void *out2 = mm+3*(4096+64); // +page size +cache line
 		void *out3 = mm+4*(4096+64); // +page size +cache line
 		void *out4 = mm+5*(4096+64); // +page size +cache line
+		void *out5 = mm+6*(4096+64); // +page size +cache line
+		void *out6 = mm+7*(4096+64); // +page size +cache line
 		
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;		
@@ -161,10 +179,12 @@ void test_fNANDN(){
 		flush(out2);
 		flush(out3);
 		flush(out4);
+		flush(out5);
+		flush(out6);
 		load(in2);
 		
 		fence();
-		fNANDN(in1, in2, out1, out2, out3, out4);
+		fNANDN(in1, in2, out1, out2, out3, out4, out5, out6);
 		fence();
 		time = probe(out1);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
@@ -173,6 +193,10 @@ void test_fNANDN(){
 		time = probe(out3);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		time = probe(out4);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out5);	
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		time = probe(out6);	
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
 	}
@@ -186,6 +210,8 @@ void test_fNANDN(){
 		void *out2 = mm+3*(4096+64); // +page size +cache line
 		void *out3 = mm+4*(4096+64); // +page size +cache line
 		void *out4 = mm+5*(4096+64); // +page size +cache line
+		void *out4 = mm+6*(4096+64); // +page size +cache line
+		void *out4 = mm+7*(4096+64); // +page size +cache line
 		
 		*((uint64_t *)in1) =0;
 		*((uint64_t *)in2) =0;		
@@ -194,6 +220,8 @@ void test_fNANDN(){
 		flush(out2);
 		flush(out3);
 		flush(out4);
+		flush(out5);
+		flush(out6);
 		load(in1);
 		load(in2);
 		
@@ -207,6 +235,10 @@ void test_fNANDN(){
 		time = probe(out3);	
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		time = probe(out4);	
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		time = probe(out5);	
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		time = probe(out6);	
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
 	}
