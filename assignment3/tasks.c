@@ -525,7 +525,7 @@ static void fLED1(void *in1, void *in2, void *in3, void *in4, void *out, void **
     flush(buf[15]);	
 
 	// A*C*!D
-	fAND(buf[12], buf[3], buf[16], buf[15], buf[15]);
+	fAND4(buf[12], buf[3], buf[16], buf[15], buf[15]);
     flush(buf[3]);
     flush(buf[16]);	
     flush(buf[15]);	
