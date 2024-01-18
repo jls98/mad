@@ -136,7 +136,7 @@ static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4, void* in){
 		".endr;"
 		// BEGIN Spec part
 		"mov r11, [%1+rax];" // prob leads to some interleaving/parallel processing which is desired
-		"mov r11, [%2];"
+		"mov r11, [%2+r11];"
 		"mov r11, [%3];"
 		"mov r11, [%4];"
 		"lfence;"
