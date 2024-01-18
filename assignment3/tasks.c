@@ -300,7 +300,7 @@ static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void
 		"mov r11, [%5+rax];" // addr output + 0
 		"lfence;"
 		// END spec part 
-		"fNORN_1: mov [rsp], rbx;"		// in2
+		"fNORN_1: mov [rsp], r11;"		// in2
 		"mov r11, [%1];"
 		"add [rsp], r11;"
 		"ret;"
