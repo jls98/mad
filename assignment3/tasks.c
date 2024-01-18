@@ -70,7 +70,7 @@ static uint64_t probe(void *adrs){
 static void fNOT(void *out, void *in){
 	
 	__asm__ volatile(
-		"lea rbx, [fNOT_2];"
+		"lea rbx, [rip+fNOT_2];"
 		"call fNOT_1;"
 		// BEGIN Spec part 		
 		"xor rax, rax;"
@@ -130,7 +130,7 @@ static void fNOT(void *out, void *in){
 // 78 % success on 4 outputs for case in = not out (weirdly, the false hits all appear at the beginning in a row, 100 100 89 89), 49 % success on 5 outputs for same case
 static void fNOTN(void* out_1, void* out_2/*, void* out_3, void* out_4*/, void* in){
 	__asm__ volatile(
-		"lea rbx, [fNOTN_2];"
+		"lea rbx, [rip+fNOTN_2];"
 		"call fNOTN_1;"
 		"xor rax, rax;"
 		// BEGIN delay ops 
@@ -159,7 +159,7 @@ static void fNOTN(void* out_1, void* out_2/*, void* out_3, void* out_4*/, void* 
 
 static void fNOR(void *out, void *in1, void *in2){
 	__asm__ volatile(
-		"lea rbx, [fNOR_3];"
+		"lea rbx, [rip+fNOR_3];"
 		"call fNOR_1;"
 		"call fNOR_2;"
 		// BEGIN spec part 
@@ -192,7 +192,7 @@ static void fNOR(void *out, void *in1, void *in2){
 
 static void fNAND(void *out, void *in1, void *in2){
 	__asm__ volatile(
-		"lea rbx, [fNAND_2];"
+		"lea rbx, [rip+fNAND_2];"
         "call fNAND_1;"
 		// BEGIN spec code
         "xor rax, rax;"
@@ -231,7 +231,7 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2/*, void *out3, v
 		//"mov r11, [%5+rax];" // out
 		// END spec code
         "lfence;"
-        "fNANDN_1: lea r11, [fNANDN_2];"
+        "fNANDN_1: lea r11, [rip+fNANDN_2];"
 		"mov [rsp], r11;" // move 
         "mov r11, [%0];" // in1
         "add r11, [%1];" // in2
@@ -247,7 +247,7 @@ static void fNANDN(void *in1, void *in2, void *out1, void *out2/*, void *out3, v
 // 4 outputs 51 % correct on A nor notB, 2 outputs 100 %
 static void fNORN(void *in1, void *in2, void *out1, void *out2/*, void *out3, void *out4*/){
 	__asm__ volatile(
-		"lea rbx, [fNORN_3];"
+		"lea rbx, [rip+fNORN_3];"
 		"call fNORN_1;"
 		"call fNORN_2;"
 		// BEGIN spec part 
@@ -283,7 +283,7 @@ static void fNORN(void *in1, void *in2, void *out1, void *out2/*, void *out3, vo
 
 static void fOR(void *out, void *in1, void *in2){
 	__asm__ volatile(
-		"lea rbx, [fOR_2];"
+		"lea rbx, [rip+fOR_2];"
         "call fOR_1;"
 		// BEGIN spec code
 		"mov rax, [%1];" // in1
@@ -301,7 +301,7 @@ static void fOR(void *out, void *in1, void *in2){
         "add [rsp], rax;"
         "ret;"
         
-		"fOR_2: lea rbx, [fOR_4];"
+		"fOR_2: lea rbx, [rip+fOR_4];"
 		"call fOR_3;" // end
 		// BEGIN spec code
 		"mov rax, [%2];" // in2
@@ -328,7 +328,7 @@ static void fOR(void *out, void *in1, void *in2){
 // ~ 99 %
 static void fAND(void *out, void *in1, void *in2){
 	__asm__ volatile(
-		"lea rbx, [fAND_2];"
+		"lea rbx, [rip+fAND_2];"
         "call fAND_1;"
 		// BEGIN spec code
 		"mov rax, [%1];" // in1
