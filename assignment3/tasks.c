@@ -7,11 +7,12 @@
 
 static void fNOT(void *out, void *in); // NOT gate
 static void fNOT2(void* out_1, void* out_2, void* in);
+static void fNOTN(void* out_1, void* out_2, void* out_3, void* out_4,void* out_5, void* out_6,void* out_7, void* out_8,void* out_9,void* out_10,void* out_11, void* in);
+
 static void fNORN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4, void *out5, void *out6, void *out7, void *out8, void *out9, void *out10, void *out11, void *out12);
 
 //static void fNOTX(void *out, void *in, uint64_t x); // xNOT gate with x out
 static void fNOR(void *out, void *in1, void *in2);
-static void fNORN(void *in1, void *in2, void *out1, void *out2/*, void *out3, void *out4*/);
 static void fNAND(void *out, void *in1, void *in2);
 static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4, void *out5, void *out6, void *out7, void *out8, void *out9, void *out10, void *out11, void *out12);
 static void fAND(void *out, void *in1, void *in2);
