@@ -212,12 +212,13 @@ static void fNAND(void *out, void *in1, void *in2){
     );
 }
 
+// 4 outputs 51 % correct on a nand b 
 static void fNANDN(void *in1, void *in2, void *out1, void *out2, void *out3, void *out4){
 	__asm__ volatile(
         "call fNANDN_1;"
 		// BEGIN spec code
         "xor rax, rax;"
-		".rept 15;"
+		".rept 30;"
         "mov rax, [rsp+rax];"
         "and rax, 0x0;"
 		".endr;"
