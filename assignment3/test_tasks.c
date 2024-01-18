@@ -1553,6 +1553,10 @@ void test_LED(){
 		time = probe(out1);	
 		fence();
 		CU_ASSERT_TRUE(time<THRESHOLD);
+		fence();
+		time = probe(out2);	
+		fence();
+		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
 		free(buf);
 	}
@@ -1599,6 +1603,10 @@ void test_LED(){
 		fLED(in1, in2, in3, in4, out1, out2, out3, out4, out5, out6, out7, buf);
 		fence();
 		time = probe(out1);	
+		fence();
+		CU_ASSERT_TRUE(time<THRESHOLD);
+		fence();
+		time = probe(out2);	
 		fence();
 		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
@@ -1649,6 +1657,10 @@ void test_LED(){
 		time = probe(out1);	
 		fence();
 		CU_ASSERT_TRUE(time<THRESHOLD);
+		fence();
+		time = probe(out2);	
+		fence();
+		CU_ASSERT_TRUE(time<THRESHOLD);
 		free(mm);
 		free(buf);
 	}
@@ -1695,6 +1707,10 @@ void test_LED(){
 		fLED(in1, in2, in3, in4, out1, out2, out3, out4, out5, out6, out7, buf);
 		fence();
 		time = probe(out1);	
+		fence();
+		CU_ASSERT_TRUE(time>THRESHOLD);
+		fence();
+		time = probe(out2);	
 		fence();
 		CU_ASSERT_TRUE(time>THRESHOLD);
 		free(mm);
