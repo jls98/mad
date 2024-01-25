@@ -29,6 +29,7 @@ static void fence();
 #ifndef TESTCASE
 int main(){
 	printf("hi\n");
+	wait(1E9);
 	uint64_t *test = malloc(sizeof(uint64_t *));
 	*test = 10;
 	flush(test);
