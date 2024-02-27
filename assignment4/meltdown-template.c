@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <x86intrin.h>
 #include <sys/mman.h>
+#include <string.h>
 
 #define u64 uint64_t
 #define i64 int64_t
