@@ -108,6 +108,6 @@ int do_meltdown(uintptr_t adrs) {
 
 int main(){
     printf("TODO\n");
-    return;
+    return 0;
 }
 
