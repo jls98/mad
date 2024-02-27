@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -1168,3 +1169,16 @@ static void fLED(void *in1, void *in2, void *in3, void *in4, void *out1, void *o
 
 
 
+=======
+CC = gcc
+CFLAGS = -Wall -Wextra -masm=intel -O0
+
+
+all: meltdown-template
+
+meltdown-template: meltdown-template.c
+	$(CC) $(CFLAGS) -o meltdown-template meltdown-template.c
+	
+clean:
+	rm -f meltdown-template
+>>>>>>> main
