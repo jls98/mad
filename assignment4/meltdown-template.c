@@ -25,7 +25,7 @@ reside in a different memory page.
 Your task is to implement the four functions, test the accuracy of the covert channel, and report.
 */
 void *cc_buffer;
-size_t cc_buf_size = 256 * 4096; // 256 cache lines, 4096 bytes apart (mem pages)
+int cc_buf_size = 256 * 4096; // 256 cache lines, 4096 bytes apart (mem pages)
 u64 threshold = 40;
 
 static inline void maccess(void *p) {
