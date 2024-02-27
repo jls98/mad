@@ -29,7 +29,7 @@ int cc_buf_size = 256 * 4096; // 256 cache lines, 4096 bytes apart (mem pages)
 u64 threshold = 40;
 
 static inline void maccess(void *p) {
-    asm volatile("movl eax, [%0]\n" : : "c"(p) : "eax");
+    asm volatile("mov eax, [%0]\n" : : "c"(p) : "eax");
 }
 static void flush(void *p) {
     asm volatile("clflush [%0]\n" : : "c"(p) : "eax");
