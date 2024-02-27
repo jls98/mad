@@ -103,6 +103,11 @@ void meltdown(uintptr_t adrs) {
 
 int do_meltdown(uintptr_t adrs) {
   // Implement
+  return -1;
 }
 
+int main(){
+    printf("TODO\n");
+    return;
+}
 
