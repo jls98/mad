@@ -78,7 +78,7 @@ int cc_receive() {
         cur_adrs=&cc_buffer[i*512];
         time = my_rdtsc();
         maccess(cur_adrs);
-        time = my_rdtsc - time;
+        time = my_rdtsc() - time;
         flush(cur_adrs);
         if (time<threshold) return i;
     }
