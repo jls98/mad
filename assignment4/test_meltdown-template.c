@@ -15,7 +15,7 @@ void test_cc_setup(){
     cc_setup();
     u64 time;
     void *cur_adrs;
-    for (int i=0; i<cc_buf_size/4096;i++){
+    for (int i=0; i< (int)cc_buf_size/4096;i++){
         cur_adrs=&cc_buffer[i*512];
         time = my_rdtsc();
         maccess(cur_adrs);
