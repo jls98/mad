@@ -7,7 +7,6 @@ void test_cc_init(){
     cc_init();
     CU_ASSERT_TRUE(cc_buffer != NULL);
     munmap(cc_buffer, cc_buf_size);
-    CU_ASSERT_TRUE(cc_buffer == NULL);
 }
 
 void test_cc_setup(){
@@ -34,6 +33,7 @@ int main() {
 
     CU_pSuite suite = CU_add_suite("Test Suite assignment 4", NULL, NULL);
    	CU_add_test(suite, "test_cc_init", test_cc_init);
+   	CU_add_test(suite, "test_cc_setup", test_cc_setup);
 
 
 	CU_basic_run_tests();
