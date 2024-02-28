@@ -52,21 +52,68 @@ void test_meltdown(){
         meltdown((uintptr_t) &test_num);
         CU_ASSERT_EQUAL(test_num, cc_receive());
         asm volatile("mfence\n"); 
-        meltdown((uintptr_t) &test_num);
-        CU_ASSERT_EQUAL(test_num, cc_receive());
-        asm volatile("mfence\n"); 
+        CU_ASSERT_EQUAL(test_num, do_meltdown((uintptr_t) &test_num));
+        CU_ASSERT_EQUAL(test_num, do_meltdown((uintptr_t) &test_num));
     }
     
-    uintptr_t target = (uintptr_t) &cc_buffer[8*283000];
-    CU_ASSERT_EQUAL
-    printf("%i\n", do_meltdown( target));
-    printf("%i\n", do_meltdown( target));
-    printf("%i\n", do_meltdown( target));
-    munmap(cc_buffer, cc_buf_size);
+    // measuring something outside of allocated mem space
+    // test segfault
+    uintptr_t target = (uintptr_t) &cc_buffer[12*283000];
+    CU_ASSERT_FALSE(do_meltdown( target)==-1);
+    CU_ASSERT_FALSE(do_meltdown( target)==-1);
+    CU_ASSERT_FALSE(do_meltdown( target)==-1);
+    
     
     // test via a file
+    const char *filename = "./file"; // contains only "AA..."
+    // Open the file
+    int fd = open(filename, O_RDONLY);
+    if (fd == -1) {
+        perror("Error opening file");
+        exit(EXIT_FAILURE);
+    }
+    // Get the size of the file
+    struct stat stat_buf;
+    if (fstat(fd, &stat_buf) == -1) {
+        perror("Error getting file size");
+        close(fd);
+        exit(EXIT_FAILURE);
+    }
+    // Map the file into memory
+    void *file_ptr = mmap(NULL, stat_buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+    if (file_ptr == MAP_FAILED) {
+        perror("Error mapping file to memory");
+        close(fd);
+        exit(EXIT_FAILURE);
+    }
+    CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), 65);
+    CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), 65);
+    CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), 65);
     
+    // Close the file descriptor since it's no longer needed
+    close(fd);
+
+    CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), 65);
+    CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), 65);
+    CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), 65);
+    
+    // Unmap the file from memory
+    if (munmap(file_ptr, stat_buf.st_size) == -1) {
+        perror("Error unmapping file from memory");
+        exit(EXIT_FAILURE);
+    }
+    
+    // does this work?
     // test segfault
+    CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), 65);
+    CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), 65);
+    CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), 65);    
+    
+    
+    
+    
+    
+    munmap(cc_buffer, cc_buf_size);
 }
 
 

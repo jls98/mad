@@ -150,9 +150,6 @@ static int do_meltdown(uintptr_t adrs) {
     }else{
         ret = cc_receive(); // receive if segfault
     }
-  
-  
-  
     return ret;
 }
 
