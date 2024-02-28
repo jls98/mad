@@ -108,7 +108,7 @@ static int cc_receive() {
     return -1;
 }
 
-void meltdown(uintptr_t adrs) {
+static void meltdown(uintptr_t adrs) {
     static volatile int tmp[1024] = {1};
     _mm_clflush((void *)(tmp + 512));
     cc_setup();
