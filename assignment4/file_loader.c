@@ -30,11 +30,7 @@ int main() {
         close(fd);
         exit(EXIT_FAILURE);
     }
-
-    // Close the file descriptor since it's no longer needed
-    close(fd);
-
-    // Print the pointer and content
+ // Print the pointer and content
     printf("Pointer: %p\n", file_ptr);
     printf("File Content:\n%s\n", (char *)file_ptr);
     
@@ -42,6 +38,10 @@ int main() {
     while(1){
         cnt++;
     }
+    // Close the file descriptor since it's no longer needed
+    close(fd);
+
+   
     printf("cnt %i\n", cnt);
     // Unmap the file from memory
     if (munmap(file_ptr, stat_buf.st_size) == -1) {
