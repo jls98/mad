@@ -30,9 +30,9 @@ void test_cc_transmission(){
     wait(1E9);
     cc_setup();
     int miss_cnt=0;
-    for(int j=0;j<100;j++){ // repeat 1000 times to evlauate reliability of covert channel
+    for(int i=0; i<256;i++){
         my_mfence();
-        for(int i=0; i<256;i++){
+        for(int j=0;j<100;j++){ // repeat 1000 times to evlauate reliability of covert channel
             my_mfence();
             cc_transmit(i); 
             my_mfence();        
