@@ -11,7 +11,7 @@ void test_cc_init(){
 
 void test_cc_setup(){
     cc_init();
-    CU_ASSERT_TRUE(((char *)cc_buffer)[0] != 0xaa);
+    CU_ASSERT_TRUE(((u64 *)cc_buffer)[0] != 0xaaaaaaaa);
     cc_setup();
     u64 time;
     void *cur_adrs;
@@ -20,8 +20,7 @@ void test_cc_setup(){
         time = my_rdtsc();
         maccess(cur_adrs);
         time = my_rdtsc() - time;
-        printf("%x %lx\n", *((u64 *)cur_adrs), (char *)cur_adrs);
-        CU_ASSERT_TRUE(*((u64 *)cur_adrs) == 0xaa);
+        CU_ASSERT_TRUE(*((u64 *)cur_adrs) == 0xaaaaaaaa);
         CU_ASSERT_TRUE(time > threshold);
         flush(cur_adrs);
     }
