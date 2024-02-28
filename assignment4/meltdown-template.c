@@ -155,7 +155,7 @@ int main(){
     meltdown((uintptr_t) &test_num);
     printf("%i\n", cc_receive());
     
-    printf("%i\n", do_meltdown(&test_num));
+    printf("%i\n", do_meltdown( (uintptr_t) &test_num));
     munmap(cc_buffer, cc_buf_size);
     return 0;
 }
