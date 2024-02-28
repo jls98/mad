@@ -155,12 +155,10 @@ int main(){
     meltdown((uintptr_t) &test_num);
     printf("%i\n", cc_receive());
     
-    printf("%i\n", do_meltdown( (uintptr_t) &test_num));
-    printf("%i\n", do_meltdown( (uintptr_t) &test_num));
-    printf("%i\n", do_meltdown( (uintptr_t) &test_num));
-    printf("%i\n", do_meltdown( (uintptr_t) &test_num));
-    printf("%i\n", do_meltdown( (uintptr_t) &cc_buffer[132000]));
-    printf("%i\n", do_meltdown( (uintptr_t) &cc_buffer[132000]));
+    printf("%i\n", do_meltdown( (uintptr_t) &cc_buffer[133000]));
+    printf("%i\n", do_meltdown( (uintptr_t) &cc_buffer[133000]));
+    printf("%i\n", do_meltdown( (uintptr_t) &cc_buffer[133000]));
+    printf("%i\n", do_meltdown( (uintptr_t) &cc_buffer[133000]));
     munmap(cc_buffer, cc_buf_size);
     return 0;
 }
