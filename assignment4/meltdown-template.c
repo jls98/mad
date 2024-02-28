@@ -158,6 +158,8 @@ static int do_meltdown(uintptr_t adrs) {
 
 #ifdef MELTDOWNCASE
 int main() {
+    wait(1E9);
+    cc_init();
     const char *filename = "./file";
 
     // Open the file
