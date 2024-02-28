@@ -3,6 +3,7 @@
 #include <CUnit/Basic.h>
 
 void test_cc_init(){
+    CU_ASSERT_TRUE(cc_buffer == NULL);
     cc_init();
     CU_ASSERT_TRUE(cc_buffer != NULL);
 }
