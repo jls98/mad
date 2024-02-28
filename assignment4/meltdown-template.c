@@ -33,9 +33,9 @@ Your task is to implement the four functions, test the accuracy of the covert ch
 */
 static jmp_buf sig_buf;
 static void *cc_buffer;
-static size_t cc_buf_size = 256 * 4096; // 256 cache lines, 4096 bytes apart (mem pages)
+static size_t cc_buf_size = 512 * 4096; // 256 cache lines, 4096 bytes apart (mem pages)
 static u64 threshold = 180; // should be below 160 , but whatever
-
+static u64 cc_buf_offset = 512;
 static void wait(uint64_t cycles) {
 	unsigned int ignore;
 	uint64_t start = __rdtscp(&ignore);
@@ -57,8 +57,8 @@ static inline u64 my_rdtsc() {
 }
 
 static void flush_buf(){
-    for (int i=0; i<(int) cc_buf_size/4096;i++){
-        flush(&cc_buffer[i*512+i]);
+    for (int i=0; i< 256;i++){
+        flush(&cc_buffer[cc_buf_offset+i*512+i]);
     }
 }
 
@@ -90,16 +90,16 @@ static void cc_setup() {
 
 // cc_transmit(uint8_t value) transmits a value through the channel
 static void cc_transmit(uint8_t value) {
-    maccess(&cc_buffer[value*512+value]);
+    maccess(&cc_buffer[cc_buf_offset+value*512+value]);
 }
 
 // int cc_receive() returns the value it receives, or -1 if no value has been received
 static int cc_receive() {
     u64 time;
     void *cur_adrs;
-    for (int i=0; i< (int)cc_buf_size/4096;i++){
+    for (int i=0; i< 256;i++){
         asm volatile("mfence\n");
-        cur_adrs=&cc_buffer[i*512+i];
+        cur_adrs=&cc_buffer[cc_buf_offset+i*512+i];
         time = my_rdtsc();
         maccess(cur_adrs);
         time = my_rdtsc() - time;

