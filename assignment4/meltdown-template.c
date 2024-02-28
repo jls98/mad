@@ -58,12 +58,11 @@ static void flush_buf(){
 }
 
 static void segfault_handler(int signum) {
-    printf("entered segfault handler\n");
     sigset_t sigs;
     sigemptyset(&sigs);
     sigaddset(&sigs, signum);
     sigprocmask(SIG_UNBLOCK, &sigs, NULL);
-    sigsetjmp(sig_buf, 0);
+    sigsetjmp(sig_buf, 1);
 }
 
 
