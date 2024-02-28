@@ -109,6 +109,7 @@ static int do_meltdown(uintptr_t adrs) {
 #ifdef MELTDOWNCASE
 int main(){
     printf("TODO\n");
+    cc_init();
     uint8_t test_num = 8;
     meltdown((uintptr_t) &test_num);
     munmap(cc_buffer, cc_buf_size);
