@@ -68,7 +68,7 @@ static void segfault_handler(int signum) {
     // sigemptyset(&sigs);
     // sigaddset(&sigs, signum);
     // sigprocmask(SIG_UNBLOCK, &sigs, NULL);
-    siglongjmp(sig_buf, 0); 
+    siglongjmp(sig_buf, 1); 
 }
 
 
