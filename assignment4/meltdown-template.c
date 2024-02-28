@@ -81,7 +81,7 @@ static int cc_receive() {
     u64 time;
     void *cur_adrs;
     for (int i=0; i<cc_buf_size/4096;i++){
-        cur_adrs=&cc_buffer[i*512+value];
+        cur_adrs=&cc_buffer[i*512+i];
         time = my_rdtsc();
         maccess(cur_adrs);
         time = my_rdtsc() - time;
