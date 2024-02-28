@@ -31,6 +31,7 @@ void test_cc_transmission(){
     cc_setup();
     int miss_cnt=0;
     for(int j=0;j<1000;j++){ // repeat 1000 times to evlauate reliability of covert channel
+        my_mfence();
         for(int i=0; i<256;i++){
             my_mfence();
             cc_transmit(i); 
@@ -42,6 +43,7 @@ void test_cc_transmission(){
                miss_cnt++;
             }
         }
+        my_mfence();
     }
     printf("miss_cnt is %i\n", miss_cnt);
 }
