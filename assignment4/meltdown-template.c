@@ -95,7 +95,7 @@ static int cc_receive() {
             ret = i;
         } 
     }
-    if (hit_cnt>3) return -1
+    if (hit_cnt>3) return -1;
     return ret;
 }
 
