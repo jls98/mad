@@ -50,7 +50,7 @@ static inline u64 my_rdtsc() {
 
 static void flush_buf(){
     for (int i=0; i<(int) cc_buf_size/4096;i++){
-        flush(&cc_buffer[i*512]);
+        flush(&cc_buffer[i*512+i]);
     }
 }
 
@@ -73,7 +73,7 @@ static void cc_setup() {
 
 // cc_transmit(uint8_t value) transmits a value through the channel
 static void cc_transmit(uint8_t value) {
-    maccess(&cc_buffer[value*512]);
+    maccess(&cc_buffer[value*512+i]);
 }
 
 // int cc_receive() returns the value it receives, or -1 if no value has been received
@@ -84,7 +84,7 @@ static int cc_receive() {
     int hit_cnt=0;
     for (int i=0; i<cc_buf_size/4096;i++){
         asm volatile("mfence\n");
-        cur_adrs=&cc_buffer[i*512];
+        cur_adrs=&cc_buffer[i*512+i];
         time = my_rdtsc();
         maccess(cur_adrs);
         time = my_rdtsc() - time;
