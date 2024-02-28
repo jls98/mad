@@ -26,7 +26,7 @@ Your task is to implement the four functions, test the accuracy of the covert ch
 */
 static void *cc_buffer;
 static size_t cc_buf_size = 256 * 4096; // 256 cache lines, 4096 bytes apart (mem pages)
-static u64 threshold = 160;
+static u64 threshold = 180;
 
 static void wait(uint64_t cycles) {
 	unsigned int ignore;
