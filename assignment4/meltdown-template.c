@@ -73,7 +73,7 @@ static void cc_setup() {
 
 // cc_transmit(uint8_t value) transmits a value through the channel
 static void cc_transmit(uint8_t value) {
-    maccess(&cc_buffer[value*512+value]);
+    maccess(&cc_buffer[value*512]);
 }
 
 // int cc_receive() returns the value it receives, or -1 if no value has been received
@@ -81,7 +81,7 @@ static int cc_receive() {
     u64 time;
     void *cur_adrs;
     for (int i=0; i<cc_buf_size/4096;i++){
-        cur_adrs=&cc_buffer[i*512+i];
+        cur_adrs=&cc_buffer[i*512];
         time = my_rdtsc();
         maccess(cur_adrs);
         time = my_rdtsc() - time;
