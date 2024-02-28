@@ -67,7 +67,7 @@ static void cc_init() {
 
 // cc_setup() sets the channel for sending a byte. 
 static void cc_setup() {
-    memset(cc_buffer, 0xaaaaaaaa, cc_buf_size); // write something -> avoid null page
+    memset(cc_buffer, 0xaa, cc_buf_size); // write something -> avoid null page
     flush_buf();
 }
 
