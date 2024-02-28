@@ -68,10 +68,10 @@ static void flush_buf(){
 
 static void segfault_handler(int signum) {
     printf("handled segfault\n");
-    // sigset_t sigs;
-    // sigemptyset(&sigs);
-    // sigaddset(&sigs, signum);
-    // sigprocmask(SIG_UNBLOCK, &sigs, NULL);
+    sigset_t sigs;
+    sigemptyset(&sigs);
+    sigaddset(&sigs, signum);
+    sigprocmask(SIG_UNBLOCK, &sigs, NULL);
     siglongjmp(sig_buf, 1); 
 }
 
