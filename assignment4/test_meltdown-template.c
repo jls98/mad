@@ -15,6 +15,7 @@ void test_cc_setup(){
     CU_ASSERT_TRUE(((char *)cc_buffer)[0] != 0xaa);
     cc_setup();
     u64 time;
+    void *cur_adrs;
     for (int i=0; i<cc_buf_size/4096;i++){
         cur_adrs=&cc_buffer[i*512];
         time = my_rdtsc();
