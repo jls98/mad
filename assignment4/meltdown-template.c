@@ -26,7 +26,7 @@ Your task is to implement the four functions, test the accuracy of the covert ch
 */
 static void *cc_buffer;
 static size_t cc_buf_size = 256 * 4096; // 256 cache lines, 4096 bytes apart (mem pages)
-static u64 threshold = 180;
+static u64 threshold = 180; // should be below 160 , but whatever
 
 static void wait(uint64_t cycles) {
 	unsigned int ignore;
@@ -88,7 +88,7 @@ static int cc_receive() {
         maccess(cur_adrs);
         time = my_rdtsc() - time;
         flush(cur_adrs);
-        printf("%lu;", time);
+        //printf("%lu;", time); // this stabilizes the measurement lol
         if (time<threshold) {
             //printf("hit at %i\n", i);
             printf("\n");
