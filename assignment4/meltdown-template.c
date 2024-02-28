@@ -109,6 +109,8 @@ static int do_meltdown(uintptr_t adrs) {
 #ifdef MELTDOWNCASE
 int main(){
     printf("TODO\n");
+    uint8_t test_num = 8;
+    meltdown((uintptr_t) &test_num);
     return 0;
 }
 #endif
