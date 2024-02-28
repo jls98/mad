@@ -81,7 +81,6 @@ static int cc_receive() {
     u64 time;
     void *cur_adrs;
     int ret=-1;
-    int hit_cnt=0;
     for (int i=0; i<cc_buf_size/4096;i++){
         asm volatile("mfence\n");
         cur_adrs=&cc_buffer[i*512+i];
@@ -91,13 +90,10 @@ static int cc_receive() {
         flush(cur_adrs);
         //printf("%lu;", time);
         if (time<threshold) {
-            printf("\nhit at %i\n", i);
-            hit_cnt++;
+            //printf("hit at %i\n", i);
             return i;
         } 
     }
-    if (hit_cnt>2) return -1;
-    printf("\n");
     return -1;
 }
 
