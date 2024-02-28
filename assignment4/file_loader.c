@@ -37,7 +37,12 @@ int main() {
     // Print the pointer and content
     printf("Pointer: %p\n", file_ptr);
     printf("File Content:\n%s\n", (char *)file_ptr);
-
+    
+    int cnt=0;
+    while(1){
+        cnt++;
+    }
+    printf("cnt %i\n", cnt);
     // Unmap the file from memory
     if (munmap(file_ptr, stat_buf.st_size) == -1) {
         perror("Error unmapping file from memory");
