@@ -4,6 +4,7 @@
 #include <sys/mman.h>
 #include <string.h>
 #include <signal.h>
+#include <setjmp.h>
 
 #define u64 uint64_t
 #define i64 int64_t
