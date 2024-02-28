@@ -20,10 +20,18 @@ void test_cc_setup(){
         time = my_rdtsc();
         maccess(cur_adrs);
         time = my_rdtsc() - time;
-        printf("%lx\n", *((u64 *)cur_adrs));
         CU_ASSERT_TRUE(*((u64 *)cur_adrs) == 0xaaaaaaaaaaaaaaaa);
         CU_ASSERT_TRUE(time > threshold);
         flush(cur_adrs);
+    }
+}
+
+void test_cc_transmission(){
+    wait(1E9);
+    for(int i=0; i<256;i++){
+        cc_setup();
+        cc_transmit(i);
+        CU_ASSERT_TRUE(cc_receive(), i);
     }
 }
 
