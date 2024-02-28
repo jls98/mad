@@ -118,7 +118,7 @@ static int cc_receive() {
         time = end - start;
         flush(cur_adrs);
         my_mfence();
-        //printf("%lu;", time); // this stabilizes the measurement lol (uncommented, we get less 254 fails)
+        printf("%lu;", time); // this stabilizes the measurement lol (uncommented, we get less 254 fails)
         if (time<threshold) {
             //printf("\n");
             return i; // return the first transmitted value encountered

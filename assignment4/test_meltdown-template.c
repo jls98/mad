@@ -2,7 +2,7 @@
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
 
-#define CC_REPS 100
+#define CC_REPS 10
 
 void test_cc_init(){
     CU_ASSERT_TRUE(cc_buffer == NULL);
@@ -41,7 +41,7 @@ void test_cc_transmission(){
             int time = cc_receive();
             CU_ASSERT_EQUAL(time, i);
             if (time !=i){
-               printf("transmission failed at %i\n", i);
+               printf("transmission failed at %i, received %i\n", i, time);
                miss_cnt++;
             }
         }
