@@ -80,8 +80,12 @@ static int cc_receive() {
         maccess(cur_adrs);
         time = my_rdtsc() - time;
         flush(cur_adrs);
-        if (time<threshold) return i;
+        if (time<threshold) {
+            printf("received %i\n", i);
+            return i;
+        }
     }
+    printf("received nothing\n");
     return -1;
   // Implement
 }
@@ -112,6 +116,7 @@ int main(){
     cc_init();
     uint8_t test_num = 8;
     meltdown((uintptr_t) &test_num);
+    cc_receive();
     munmap(cc_buffer, cc_buf_size);
     return 0;
 }
