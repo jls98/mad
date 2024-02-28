@@ -6,6 +6,25 @@ void test_cc_init(){
     CU_ASSERT_TRUE(cc_buffer == NULL);
     cc_init();
     CU_ASSERT_TRUE(cc_buffer != NULL);
+    munmap(cc_buffer, cc_buf_size);
+    CU_ASSERT_TRUE(cc_buffer == NULL);
+}
+
+void test_cc_setup(){
+    cc_init();
+    CU_ASSERT_TRUE(((char *)cc_buffer)[0] != 0xaa);
+    cc_setup();
+    u64 time;
+    for (int i=0; i<cc_buf_size/4096;i++){
+        cur_adrs=&cc_buffer[i*512];
+        time = my_rdtsc();
+        maccess(cur_adrs);
+        time = my_rdtsc() - time;
+        
+        CU_ASSERT_TRUE(((char *)&cc_buffer[i*512])[0] == 0xaa);
+        CU_ASSERT_TRUE(time > threshold);
+        flush(cur_adrs);
+    }
 }
 
 
