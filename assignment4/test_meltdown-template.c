@@ -42,6 +42,7 @@ int main() {
     CU_pSuite suite = CU_add_suite("Test Suite assignment 4", NULL, NULL);
    	CU_add_test(suite, "test_cc_init", test_cc_init);
    	CU_add_test(suite, "test_cc_setup", test_cc_setup);
+   	CU_add_test(suite, "test_cc_transmission", test_cc_transmission);
 
 
 	CU_basic_run_tests();
