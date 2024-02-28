@@ -28,10 +28,10 @@ void test_cc_setup(){
 
 void test_cc_transmission(){
     wait(1E9);
+    cc_setup();
     for(int i=0; i<256;i++){
-        cc_setup();
-        cc_transmit(i);
-        asm volatile("lfence\n");
+        asm volatile("mfence\n");
+        cc_transmit(i);  
         // consistently fails to transmit 247 - 255, sometimes unreliable (reason?)
         //int time = cc_receive();
         CU_ASSERT_EQUAL(cc_receive(), i);
