@@ -89,14 +89,15 @@ static int cc_receive() {
         maccess(cur_adrs);
         time = my_rdtsc() - time;
         flush(cur_adrs);
-        printf("time %lu\n", time);
+        printf("%lu;", time);
         if (time<threshold) {
-            printf("hit at %i\n", i);
+            printf("\nhit at %i\n", i);
             hit_cnt++;
             ret = i;
         } 
     }
     if (hit_cnt>2) return -1;
+    printf("\n");
     return ret;
 }
 
