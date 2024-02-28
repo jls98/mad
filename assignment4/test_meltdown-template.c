@@ -57,8 +57,9 @@ void test_meltdown(){
         test_num=i;
         meltdown((uintptr_t) &test_num);
         CU_ASSERT_EQUAL(test_num, cc_receive());
-        asm volatile("mfence\n"); 
+        my_mfence(); 
         CU_ASSERT_EQUAL(test_num, do_meltdown((uintptr_t) &test_num));
+        my_mfence(); 
         CU_ASSERT_EQUAL(test_num, do_meltdown((uintptr_t) &test_num));
     }
     
