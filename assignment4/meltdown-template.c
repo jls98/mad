@@ -73,7 +73,7 @@ static void cc_setup() {
 
 // cc_transmit(uint8_t value) transmits a value through the channel
 static void cc_transmit(uint8_t value) {
-    maccess(&cc_buffer[value*512+i]);
+    maccess(&cc_buffer[value*512+value]);
 }
 
 // int cc_receive() returns the value it receives, or -1 if no value has been received
