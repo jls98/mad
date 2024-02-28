@@ -6,6 +6,11 @@
 #include <signal.h>
 #include <setjmp.h>
 
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdlib.h>
+
 #define u64 uint64_t
 #define i64 int64_t
 
@@ -187,7 +192,6 @@ int main() {
     close(fd);
 
    
-    printf("cnt %i\n", cnt);
     // Unmap the file from memory
     if (munmap(file_ptr, stat_buf.st_size) == -1) {
         perror("Error unmapping file from memory");
