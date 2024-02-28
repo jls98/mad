@@ -137,10 +137,11 @@ static int do_meltdown(uintptr_t adrs) {
         printf("Failed to setup signal handler\n");
         return -1;
     }
+    int ret = -1;
     if (sigsetjmp(sig_buf, 1) == 0) {
     // call meltdown
         meltdown(adrs);
-        int ret = cc_receive();
+        ret = cc_receive();
     }
   
   
