@@ -32,11 +32,12 @@ void test_cc_transmission(){
         cc_setup();
         cc_transmit(i);
         asm volatile("lfence\n");
-        int time = cc_receive();
-        CU_ASSERT_EQUAL(time, i);
-        if (time !=i){
-            printf("transmission failed at %i\n", i);
-        }
+        // consistently fails to transmit 247 - 255, less reliable if cc_receive is stored in a variable
+        //int time = cc_receive();
+        CU_ASSERT_EQUAL(cc_receive(), i);
+        //if (time !=i){
+        //    printf("transmission failed at %i\n", i);
+        //}
     }
 }
 
