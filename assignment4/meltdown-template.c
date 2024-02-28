@@ -123,7 +123,7 @@ static int cc_receive() {
             return i; // return the first transmitted value encountered
         } 
     }
-    //printf("received nothing\n");
+    printf("received nothing\n");
     return -1;
 }
 
