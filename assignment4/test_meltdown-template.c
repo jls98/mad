@@ -20,7 +20,7 @@ void test_cc_setup(){
         time = my_rdtsc();
         maccess(cur_adrs);
         time = my_rdtsc() - time;
-        printf("%c %lx\n", *((char *)cur_adrs), (char *)cur_adrs);
+        printf("%x %lx\n", *((char *)cur_adrs), (char *)cur_adrs);
         CU_ASSERT_TRUE(*((char *)cur_adrs) == 0xaa);
         CU_ASSERT_TRUE(time > threshold);
         flush(cur_adrs);
