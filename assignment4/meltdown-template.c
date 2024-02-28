@@ -99,7 +99,7 @@ static int cc_receive() {
         maccess(cur_adrs);
         time = my_rdtsc() - time;
         flush(cur_adrs);
-        //printf("%lu;", time); // this stabilizes the measurement lol (uncommented, we get less 254 fails)
+        printf("%lu;", time); // this stabilizes the measurement lol (uncommented, we get less 254 fails)
         if (time<threshold) {
             //printf("\n");
             return i;
