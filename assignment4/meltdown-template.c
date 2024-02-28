@@ -58,6 +58,7 @@ static void flush_buf(){
 }
 
 static void segfault_handler(int signum) {
+    printf("entered segfault handler\n");
     sigset_t sigs;
     sigemptyset(&sigs);
     sigaddset(&sigs, signum);
