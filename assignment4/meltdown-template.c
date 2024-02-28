@@ -80,6 +80,7 @@ static void cc_transmit(uint8_t value) {
 static int cc_receive() {
     u64 time;
     void *cur_adrs;
+    int ret=-1;
     for (int i=0; i<cc_buf_size/4096;i++){
         cur_adrs=&cc_buffer[i*512];
         time = my_rdtsc();
@@ -89,11 +90,11 @@ static int cc_receive() {
         flush(cur_adrs);
         if (time<threshold) {
             //printf("received %i\n", i);
-            return i;
+            ret = i;
         }
     }
     //printf("received nothing\n");
-    return -1;
+    return ret;
 }
 
 // --------------------------------------------------
