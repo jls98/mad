@@ -2,10 +2,13 @@ CC = gcc
 CFLAGS = -Wall -Wextra -masm=intel -O0
 
 
-all: meltdown-template
+all: meltdown-template test_meltdown-template
 
 meltdown-template: meltdown-template.c
-	$(CC) $(CFLAGS) -o meltdown-template meltdown-template.c
-	
+	$(CC) $(CFLAGS) -o meltdown-template -DMELTDOWNCASE meltdown-template.c
+
+test_meltdown-template: test_meltdown-template.c 
+	$(CC) $(CFLAGS) -o test_meltdown-template -DTESTCASE  test_meltdown-template.c meltdown-template.c -lcunit
+    
 clean:
-	rm -f meltdown-template
+	rm -f meltdown-template test_meltdown-template
