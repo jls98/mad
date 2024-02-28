@@ -73,9 +73,7 @@ static void cc_setup() {
 
 // cc_transmit(uint8_t value) transmits a value through the channel
 static void cc_transmit(uint8_t value) {
-    asm volatile("mfence\n");
     maccess(&cc_buffer[value*512]);
-    asm volatile("mfence\n");
 }
 
 // int cc_receive() returns the value it receives, or -1 if no value has been received
@@ -91,6 +89,7 @@ static int cc_receive() {
         maccess(cur_adrs);
         time = my_rdtsc() - time;
         flush(cur_adrs);
+        
         if (time<threshold) {
             printf("hit at %i\n", i);
             hit_cnt++;

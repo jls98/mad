@@ -31,7 +31,8 @@ void test_cc_transmission(){
     cc_setup();
     for(int i=0; i<256;i++){
         asm volatile("mfence\n");
-        cc_transmit(i);  
+        cc_transmit(i); 
+        asm volatile("mfence\n");        
         //consistently fails to transmit 247 - 255, sometimes unreliable (reason?)
         int time = cc_receive();
         CU_ASSERT_EQUAL(time, i);
