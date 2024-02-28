@@ -32,7 +32,7 @@ void test_cc_transmission(){
         cc_setup();
         cc_transmit(i);
         asm volatile("lfence\n");
-        // consistently fails to transmit 247 - 255, less reliable if cc_receive is stored in a variable
+        // consistently fails to transmit 247 - 255, sometimes unreliable (reason?)
         //int time = cc_receive();
         CU_ASSERT_EQUAL(cc_receive(), i);
         //if (time !=i){

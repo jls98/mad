@@ -123,7 +123,7 @@ int main(){
     cc_init();
     uint8_t test_num = 8;
     meltdown((uintptr_t) &test_num);
-    cc_receive();
+    printf("%i\n", cc_receive());
     munmap(cc_buffer, cc_buf_size);
     return 0;
 }
