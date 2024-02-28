@@ -101,11 +101,11 @@ static int cc_receive() {
         flush(cur_adrs);
         //printf("%lu;", time); // this stabilizes the measurement lol (uncommented, we get less 254 fails)
         if (time<threshold) {
-            printf("\n");
+            //printf("\n");
             return i;
         } 
     }
-    printf("\n");
+    printf("received nothing\n");
     return -1;
 }
 
