@@ -93,7 +93,7 @@ static int cc_receive() {
         if (time<threshold) {
             printf("\nhit at %i\n", i);
             hit_cnt++;
-            ret = i;
+            return i;
         } 
     }
     if (hit_cnt>2) return -1;
