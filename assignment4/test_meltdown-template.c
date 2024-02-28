@@ -31,6 +31,7 @@ void test_cc_transmission(){
     for(int i=0; i<256;i++){
         cc_setup();
         cc_transmit(i);
+        asm volatile("lfence\n");
         int time = cc_receive();
         CU_ASSERT_EQUAL(time, i);
         if (time !=i){
