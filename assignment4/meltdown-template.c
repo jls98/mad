@@ -151,9 +151,9 @@ int main(){
     wait(1E9);
     printf("TODO\n");
     cc_init();
-    uint8_t test_num = 8;
-    meltdown((uintptr_t) &test_num);
-    printf("%i\n", cc_receive());
+    //uint8_t test_num = 8;
+    //meltdown((uintptr_t) &test_num);
+    //printf("%i\n", cc_receive());
     
     printf("%i\n", do_meltdown( (uintptr_t) &cc_buffer[133000]));
     printf("%i\n", do_meltdown( (uintptr_t) &cc_buffer[133000]));
