@@ -79,6 +79,7 @@ static int cc_receive() {
         time = my_rdtsc();
         maccess(cur_adrs);
         time = my_rdtsc() - time;
+        printf("timing %lu\n", time);
         flush(cur_adrs);
         if (time<threshold) {
             printf("received %i\n", i);
