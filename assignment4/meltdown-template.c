@@ -72,8 +72,7 @@ static void flush_buf(){
 }
 
 static void segfault_handler(int signum) {
-    my_mfence();
-    // printf("handled segfault\n");
+    printf("");
     // sigset_t sigs;
     // sigemptyset(&sigs);
     // sigaddset(&sigs, signum);

@@ -74,7 +74,7 @@ void test_meltdown(){
     CU_ASSERT_FALSE(do_meltdown( target)==-1);
     CU_ASSERT_FALSE(do_meltdown( target)==-1);
     
-    
+    wait(1E9);
     // test via a file
     const char *filename = "./file"; // contains only "AA..."
     // Open the file
