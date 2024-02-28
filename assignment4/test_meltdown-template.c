@@ -1,4 +1,4 @@
-#include "tasks.c"
+#include "meltdown-template.c"
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
 

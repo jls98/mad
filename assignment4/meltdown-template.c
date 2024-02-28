@@ -106,8 +106,9 @@ int do_meltdown(uintptr_t adrs) {
   return -1;
 }
 
+#ifdef MELTDOWNCASE
 int main(){
     printf("TODO\n");
     return 0;
 }
-
+#endif
