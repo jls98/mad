@@ -157,10 +157,10 @@ int main(int ac, char**av){
     //uint8_t test_num = 8;
     //meltdown((uintptr_t) &test_num);
     //printf("%i\n", cc_receive());
-    uintptr_t target = ac==1? (uintptr_t) &cc_buffer[8*283000]) : (uintptr_t) av[1];
-    printf("%i\n", do_meltdown( target);
-    printf("%i\n", do_meltdown( target);
-    printf("%i\n", do_meltdown( target);
+    uintptr_t target = ac==1? (uintptr_t) &cc_buffer[8*283000] : (uintptr_t) av[1];
+    printf("%i\n", do_meltdown( target));
+    printf("%i\n", do_meltdown( target));
+    printf("%i\n", do_meltdown( target));
     munmap(cc_buffer, cc_buf_size);
     return 0;
 }
