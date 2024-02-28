@@ -35,7 +35,7 @@ static void wait(uint64_t cycles) {
 }
 
 static inline void maccess(void *p) {
-    asm volatile("mov eax, [%0]\n" : : "c"(p) : "eax");
+    asm volatile("mfence;mov eax, [%0];mfence\n" : : "c"(p) : "eax");
 }
 static void flush(void *p) {
     asm volatile("clflush [%0]\n" : : "c"(p) : "eax");
@@ -89,7 +89,6 @@ static int cc_receive() {
         maccess(cur_adrs);
         time = my_rdtsc() - time;
         flush(cur_adrs);
-        //printf("time %i\n", time);
         if (time<threshold) {
             printf("hit at %i\n", i);
             hit_cnt++;
