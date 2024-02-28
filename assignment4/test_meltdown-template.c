@@ -32,12 +32,12 @@ void test_cc_transmission(){
     for(int i=0; i<256;i++){
         asm volatile("mfence\n");
         cc_transmit(i);  
-        // consistently fails to transmit 247 - 255, sometimes unreliable (reason?)
-        //int time = cc_receive();
-        CU_ASSERT_EQUAL(cc_receive(), i);
-        //if (time !=i){
-        //    printf("transmission failed at %i\n", i);
-        //}
+        //consistently fails to transmit 247 - 255, sometimes unreliable (reason?)
+        int time = cc_receive();
+        CU_ASSERT_EQUAL(time, i);
+        if (time !=i){
+           printf("transmission failed at %i\n", i);
+        }
     }
 }
 
