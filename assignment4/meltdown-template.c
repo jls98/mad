@@ -113,7 +113,7 @@ static int cc_receive() {
         //printf("%lu;", time); // this stabilizes the measurement lol (uncommented, we get less 254 fails)
         if (time<threshold) {
             //printf("\n");
-            return i;
+            return i; // return the first transmitted value encountered
         } 
     }
     printf("received nothing\n");

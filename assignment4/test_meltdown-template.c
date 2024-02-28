@@ -2,6 +2,8 @@
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
 
+#define CC_REPS 100
+
 void test_cc_init(){
     CU_ASSERT_TRUE(cc_buffer == NULL);
     cc_init();
@@ -32,7 +34,7 @@ void test_cc_transmission(){
     int miss_cnt=0;
     for(int i=0; i<256;i++){
         my_mfence();
-        for(int j=0;j<100;j++){ // repeat 1000 times to evlauate reliability of covert channel
+        for(int j=0;j<CC_REPS;j++){ // repeat 1000 times to evlauate reliability of covert channel
             my_mfence();
             cc_transmit(i); 
             my_mfence();        
