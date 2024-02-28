@@ -57,7 +57,9 @@ void test_meltdown(){
     uint8_t test_num;
     for (int i=0;i<256;i++){
         test_num=i;
+        my_mfence(); 
         meltdown((uintptr_t) &test_num);
+        my_mfence(); 
         CU_ASSERT_EQUAL(test_num, cc_receive());
         my_mfence(); 
         CU_ASSERT_EQUAL(test_num, do_meltdown((uintptr_t) &test_num));
