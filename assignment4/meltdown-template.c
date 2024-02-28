@@ -73,7 +73,9 @@ static void cc_setup() {
 
 // cc_transmit(uint8_t value) transmits a value through the channel
 static void cc_transmit(uint8_t value) {
+    asm volatile("mfence\n");
     maccess(&cc_buffer[value*512]);
+    asm volatile("mfence\n");
 }
 
 // int cc_receive() returns the value it receives, or -1 if no value has been received
