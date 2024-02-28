@@ -25,7 +25,7 @@ reside in a different memory page.
 Your task is to implement the four functions, test the accuracy of the covert channel, and report.
 */
 static void *cc_buffer;
-static int cc_buf_size = 256 * 4096; // 256 cache lines, 4096 bytes apart (mem pages)
+static size_t cc_buf_size = 256 * 4096; // 256 cache lines, 4096 bytes apart (mem pages)
 static u64 threshold = 40;
 
 static inline void maccess(void *p) {
@@ -43,7 +43,7 @@ static inline u64 my_rdtsc() {
 }
 
 static void flush_buf(){
-    for (int i=0; i<cc_buf_size/4096;i++){
+    for (int i=0; i<(int) cc_buf_size/4096;i++){
         flush(&cc_buffer[i*512]);
     }
 }
@@ -111,6 +111,7 @@ int main(){
     printf("TODO\n");
     uint8_t test_num = 8;
     meltdown((uintptr_t) &test_num);
+    munmap(cc_buffer, cc_buf_size);
     return 0;
 }
 #endif
