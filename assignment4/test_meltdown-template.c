@@ -10,6 +10,7 @@ void test_cc_init(){
 }
 
 void test_cc_setup(){
+    wait(1E9);
     cc_init();
     CU_ASSERT_TRUE(((u64 *)cc_buffer)[cc_buf_offset] != 0xaaaaaaaaaaaaaaaa);
     cc_setup();
@@ -57,6 +58,8 @@ void test_meltdown(){
         my_mfence(); 
         test_num=i;
         my_mfence(); 
+        cc_setup();
+        my_mfence();
         meltdown((uintptr_t) &test_num);
         CU_ASSERT_EQUAL(test_num, cc_receive());
         my_mfence(); 
