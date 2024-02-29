@@ -77,6 +77,7 @@ static void segfault_handler(int signum) {
 
 
 static void cc_init() {
+    wait(1E9);
 	// Implement
 	// allocate 256 different cache lines on differenz mem pages
 	cc_buffer = mmap(NULL, cc_buf_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_POPULATE | MAP_HUGETLB, -1, 0);
