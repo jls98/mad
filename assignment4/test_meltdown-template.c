@@ -10,8 +10,6 @@ void test_cc_init(){
 }
 
 void test_cc_setup(){
-    // wait(1E9);
-    cc_init();
     // value not written to adrs yet
     CU_ASSERT_TRUE(((u64 *)cc_buffer)[cc_buf_offset] != 0xaaaaaaaaaaaaaaaa);
     cc_setup();
@@ -32,12 +30,10 @@ void test_cc_setup(){
         flush(cur_adrs);
     }
     
-    munmap(cc_buffer, cc_buf_size);
 }
 
 void test_cc_transmission(){
-    // wait(1E9);
-    cc_init();
+   
     cc_setup();
     for(int i=0; i<256;i++){
         my_mfence();
@@ -51,13 +47,10 @@ void test_cc_transmission(){
         }
     }
     
-    munmap(cc_buffer, cc_buf_size);
 }
 
 void test_meltdown(){
     // test valid values
-    // wait(1E9);
-    cc_init();
     uint8_t test_num;
     int received;
     for (int i=0;i<256;i++){
@@ -134,12 +127,12 @@ void test_meltdown(){
     CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), -1);
     CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), -1);    
 
-    munmap(cc_buffer, cc_buf_size);
 }
 
 
 int main() {
     wait(1E9);
+    cc_init();
     CU_initialize_registry();
 
     CU_pSuite suite = CU_add_suite("Test Suite assignment 4", NULL, NULL);
@@ -152,5 +145,6 @@ int main() {
 	CU_basic_run_tests();
     CU_cleanup_registry();
 
+    munmap(cc_buffer, cc_buf_size);
     return 0;
 }
