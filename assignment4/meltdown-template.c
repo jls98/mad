@@ -33,7 +33,7 @@ Your task is to implement the four functions, test the accuracy of the covert ch
 */
 static jmp_buf sig_buf;
 static void *cc_buffer;
-static size_t cc_buf_size = 512 * 4096; // 256 cache lines, 4096 bytes apart (mem pages)
+static size_t cc_buf_size = 512 * 8192; // 256 cache lines, 4096 bytes apart (mem pages)
 static u64 threshold = 190; // should be below 160 , but whatever
 static u64 cc_buf_offset = 512;
 static void wait(uint64_t cycles) {
@@ -62,7 +62,7 @@ static inline u64 my_rdtsc() {
 
 static void flush_buf(){
     for (int i=0; i< 256;i++){
-        flush(&cc_buffer[cc_buf_offset+i*512+i*4]);
+        flush(&cc_buffer[cc_buf_offset+i*1024+i*4]);
     }
 }
 
@@ -95,7 +95,7 @@ static void cc_setup() {
 // cc_transmit(uint8_t value) transmits a value through the channel
 static void cc_transmit(uint8_t value) {
     my_mfence();
-    maccess(&cc_buffer[cc_buf_offset+value*512+value*4]);
+    maccess(&cc_buffer[cc_buf_offset+value*1024+value*4]);
     my_mfence();
 }
 
@@ -105,7 +105,7 @@ static int cc_receive() {
     void *cur_adrs;
     for (int i=0; i< 256;i++){
         my_mfence();
-        cur_adrs=&cc_buffer[cc_buf_offset+i*512+i*4];
+        cur_adrs=&cc_buffer[cc_buf_offset+i*1024+i*4];
         start = my_rdtsc();
         maccess(cur_adrs);
         end = my_rdtsc();
