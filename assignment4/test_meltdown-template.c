@@ -14,15 +14,17 @@ void test_cc_setup(){
     cc_init();
     CU_ASSERT_TRUE(((u64 *)cc_buffer)[cc_buf_offset] != 0xaaaaaaaaaaaaaaaa);
     cc_setup();
-    u64 time;
+    u64 time, start, end;
     void *cur_adrs;
     for (int i=0; i< (int)256;i++){
         cur_adrs=&cc_buffer[cc_buf_offset+i*512];
-        time = my_rdtsc();
+        start = my_rdtsc();
         maccess(cur_adrs);
-        time = my_rdtsc() - time;
+        end = my_rdtsc();
+        my_mfence();
         CU_ASSERT_TRUE(*((u64 *)cur_adrs) == 0xaaaaaaaaaaaaaaaa);
-        CU_ASSERT_TRUE(time > threshold);
+        my_mfence();
+        CU_ASSERT_TRUE((end-start) > threshold);
         flush(cur_adrs);
     }
     
