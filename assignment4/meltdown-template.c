@@ -97,8 +97,9 @@ static void cc_setup() {
 
 // cc_transmit(uint8_t value) transmits a value through the channel
 static void cc_transmit(uint8_t value) {
+    int index = cc_buf_offset+value*512+value;
     my_mfence();
-    maccess(&cc_buffer[cc_buf_offset+value*512+value]);
+    maccess(&cc_buffer[index]);
     my_mfence();
 }
 
