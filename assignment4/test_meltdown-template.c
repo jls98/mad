@@ -196,9 +196,9 @@ void test_init_uts_ns(){
     
     
     
-    for (int i=0;i<RANGE;i++){
-        printf("measured value %i = %c at position %i\n", buf[i],buf[i], i);
-    }    
+    // for (int i=0;i<RANGE;i++){
+        // printf("measured value %i = %c at position %i\n", buf[i],buf[i], i);
+    // }    
 }
 
 int main() {

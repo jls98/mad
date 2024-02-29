@@ -82,7 +82,7 @@ static void cc_init() {
     // Init segfault handler
     if (signal(SIGSEGV, segfault_handler) == SIG_ERR) {
         printf("Failed to setup signal handler\n");
-        return -1;
+        return;
     }
 	// allocate 256 different cache lines on differenz mem pages
 	cc_buffer = mmap(NULL, cc_buf_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_POPULATE | MAP_HUGETLB, -1, 0);
