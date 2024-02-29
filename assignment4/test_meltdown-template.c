@@ -44,7 +44,7 @@ void test_cc_transmission(){
 
 void test_meltdown(){
     // test valid values
-    uint8_t *test_num;
+    uint8_t *test_num = malloc(sizeof(uint8_t));
     int received;
     for (int i=0;i<256;i++){
         my_mfence(); 
