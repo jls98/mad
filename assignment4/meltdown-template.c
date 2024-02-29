@@ -104,16 +104,17 @@ static void cc_transmit(uint8_t value) {
 
 // int cc_receive() returns the value it receives, or -1 if no value has been received
 static int cc_receive() {
-    u64 time;
+    u64 time, start, end;
     void *cur_adrs;
     for (int i=0; i< 256;i++){
         my_mfence();
         cur_adrs=&cc_buffer[cc_buf_offset+i*512+i];
-        time = my_rdtsc();
+        start = my_rdtsc();
         maccess(cur_adrs);
-        time = my_rdtsc() - time;
+        end = my_rdtsc();
         flush(cur_adrs);
         //printf("%lu;", time); // this stabilizes the measurement lol (uncommented, we get less 254 fails)
+        time = end - start;
         if (time<threshold) {
             //printf("\n");
             return i;
