@@ -87,7 +87,7 @@ static void cc_init() {
 	// allocate 256 different cache lines on differenz mem pages
 	cc_buffer = mmap(NULL, cc_buf_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_POPULATE | MAP_HUGETLB, -1, 0);
 	if (cc_buffer == MAP_FAILED) {
-        perror("cc_init: mmap failed");
+        printf("cc_init: mmap failed");
         return;
 	}
 }
@@ -120,10 +120,10 @@ static int cc_receive() {
         my_mfence();
         flush(cur_adrs);
         time = end - start;
-        printf("|%lu;", time); // this stabilizes the measurement lol (uncommented, we get less 254 fails)
+        // printf("|%lu;", time); // this stabilizes the measurement lol (uncommented, we get less 254 fails)
         
         if (time<threshold) {
-            printf("\n");
+            // printf("\n");
             return i;
         } 
     }
