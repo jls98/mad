@@ -109,6 +109,7 @@ static int cc_receive() {
         start = my_rdtsc();
         maccess(cur_adrs);
         end = my_rdtsc();
+        my_mfence();
         flush(cur_adrs);
         time = end - start;
         printf("|%lu;", time); // this stabilizes the measurement lol (uncommented, we get less 254 fails)
