@@ -178,8 +178,8 @@ void test_init_uts_ns(){
         for(int k=0;k<257;k++){
             count[k]=0;
         }
-        for (int j=0;j<RANGE;j++){
-            if (buf[j][i]!=-1) count[buf[j][i]]++;
+        for (int j=0;j<REPS;j++){
+            if (buf[i][j]!=-1) count[buf[j][i]]++;
             else count[256]++;
         }
         
@@ -190,7 +190,7 @@ void test_init_uts_ns(){
                 cand = k;
             }
         }
-        buf[j][REPS]=cand;
+        buf[i][REPS]=cand;
         printf("position %i %i with %i\n", i, cand, max);
     }
     
