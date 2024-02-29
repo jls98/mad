@@ -34,7 +34,7 @@ Your task is to implement the four functions, test the accuracy of the covert ch
 static jmp_buf sig_buf;
 static void *cc_buffer;
 static size_t cc_buf_size = 512 * 8192; // 256 cache lines, 4096 bytes apart (mem pages)
-static u64 threshold = 200; // should be below 160 , but whatever
+static u64 threshold = 220; // should be below 160 , but whatever
 static u64 cc_buf_offset = 512;
 static void wait(uint64_t cycles) {
 	unsigned int ignore;
