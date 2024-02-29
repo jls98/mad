@@ -156,6 +156,9 @@ void test_meltdown(){
 
 }
 
+void test_init_uts_ns(){
+    uintptr_t target = 0xffffffffb9df9920;
+}
 
 int main() {
     wait(1E9);
