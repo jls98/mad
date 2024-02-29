@@ -174,7 +174,7 @@ void test_init_uts_ns(){
     }
     
     for (int i=0;i<RANGE;i++){
-        printf("measured value %i at position %i\n", buf[i], i);
+        printf("measured value %c at position %i\n", buf[i], i);
     }    
 }
 
