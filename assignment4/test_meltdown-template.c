@@ -12,7 +12,6 @@ void test_cc_setup(){
         cc_setup();
         my_mfence();
         cur_adrs=&cc_buffer[cc_buf_offset+i*offset];
-        // printf("pointer %p\n",  &cc_buffer[cc_buf_offset+i*512+i]);
         start = my_rdtsc();
         maccess(cur_adrs);
         end = my_rdtsc();
@@ -148,14 +147,14 @@ void test_meltdown(){
         exit(EXIT_FAILURE);
     }
     
-    // does this work?
-    // test segfault
+    // test recovering from segfault
     CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), -1);
     CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), -1);
     CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), -1);    
 
 }
 
+// task4
 #define REPS 10000
 #define RANGE 300
 void test_init_uts_ns(){
@@ -193,12 +192,6 @@ void test_init_uts_ns(){
         buf[i][REPS]=cand;
         printf("position %i %i with %i\n", i, cand, max);
     }
-    
-    
-    
-    // for (int i=0;i<RANGE;i++){
-        // printf("measured value %i = %c at position %i\n", buf[i],buf[i], i);
-    // }    
 }
 
 int main() {
