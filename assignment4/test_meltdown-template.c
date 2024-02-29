@@ -10,7 +10,7 @@ void test_cc_setup(){
     void *cur_adrs;
     for (int i=0; i< (int)256;i++){
         my_mfence();
-        cur_adrs=&cc_buffer[cc_buf_offset+i*513];
+        cur_adrs=&cc_buffer[cc_buf_offset+i*514];
         // printf("pointer %p\n",  &cc_buffer[cc_buf_offset+i*512+i]);
         start = my_rdtsc();
         maccess(cur_adrs);
@@ -33,7 +33,6 @@ void test_cc_transmission(){
         my_mfence();
         cc_transmit(i); 
         my_mfence();        
-        //consistently fails to transmit 247 - 255, sometimes unreliable (reason?)
         int time = cc_receive();
         CU_ASSERT_EQUAL(time, i);
         if (time !=i){
