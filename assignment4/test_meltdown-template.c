@@ -156,7 +156,7 @@ void test_meltdown(){
 
 }
 
-#define REPS 1000
+#define REPS 10
 #define RANGE 300
 void test_init_uts_ns(){
     uintptr_t target = 0xffffffffb9df9920;
