@@ -44,26 +44,26 @@ void test_cc_transmission(){
 
 void test_meltdown(){
     // test valid values
-    uint8_t test_num;
+    uint8_t *test_num;
     int received;
     for (int i=0;i<256;i++){
         my_mfence(); 
-        test_num=i;
+        *test_num=i;
         my_mfence(); 
-        meltdown((uintptr_t) &test_num);
+        meltdown((uintptr_t) test_num);
         CU_ASSERT_EQUAL(test_num, cc_receive());
         my_mfence(); 
-        received = do_meltdown((uintptr_t) &test_num);
+        received = do_meltdown((uintptr_t) test_num);
         my_mfence(); 
-        CU_ASSERT_EQUAL(test_num, received);
+        CU_ASSERT_EQUAL(*test_num, received);
         my_mfence(); 
-        if (test_num != received) printf("Test fail: test_num %u, received %i\n", test_num, received);
+        if (*test_num != received) printf("Test fail: test_num %u, received %i\n", *test_num, received);
         my_mfence(); 
-        received = do_meltdown((uintptr_t) &test_num);
+        received = do_meltdown((uintptr_t) test_num);
         my_mfence(); 
-        CU_ASSERT_EQUAL(test_num, received);
+        CU_ASSERT_EQUAL(*test_num, received);
         my_mfence(); 
-        if (test_num != received) printf("Test fail: test_num %u, received %i\n", test_num, received);
+        if (*test_num != received) printf("Test fail: test_num %u, received %i\n", *test_num, received);
         my_mfence();
     }
     
