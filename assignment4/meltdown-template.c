@@ -108,7 +108,7 @@ static int cc_receive() {
     for (int i=0; i< 256;i++){
         my_mfence();
         // cur_adrs=&cc_buffer[cc_buf_offset+i*1024+i*4];
-        cur_adrs=&cc_buffer[cc_buf_offset+i*512+i;
+        cur_adrs=&cc_buffer[cc_buf_offset+i*512+i];
         start = my_rdtsc();
         maccess(cur_adrs);
         end = my_rdtsc();
