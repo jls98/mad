@@ -157,7 +157,7 @@ static int do_meltdown(uintptr_t adrs) {
         my_mfence();
         meltdown(adrs);
     }
-    my_mfence();
+    // my_mfence();
     return cc_receive();
 }
 

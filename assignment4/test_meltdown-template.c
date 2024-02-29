@@ -76,19 +76,19 @@ void test_meltdown(){
     received = do_meltdown(target);
     my_mfence(); 
     CU_ASSERT_FALSE(received==-1);
-    if (received==-1) printf("Test fail: received %i, should be -1\n", received);
+    if (received==-1) printf("Test fail: received %i, should not be -1\n", received);
     
     my_mfence();
     received = do_meltdown(target);
     my_mfence(); 
     CU_ASSERT_FALSE(received==-1);
-    if (received==-1) printf("Test fail: received %i, should be -1\n", received);
+    if (received==-1) printf("Test fail: received %i, should not be -1\n", received);
     
     my_mfence();
     received = do_meltdown(target);
     my_mfence(); 
     CU_ASSERT_FALSE(received==-1);
-    if (received==-1) printf("Test fail: received %i, should be -1\n", received);
+    if (received==-1) printf("Test fail: received %i, should not be -1\n", received);
     my_mfence();
      
     
