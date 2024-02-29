@@ -10,8 +10,8 @@ void test_cc_setup(){
     void *cur_adrs;
     for (int i=0; i< (int)256;i++){
         my_mfence();
-        cur_adrs=&cc_buffer[cc_buf_offset+i*512];
-        printf("pointer %p\n", cc_buf_offset+i*512);
+        cur_adrs=&cc_buffer[cc_buf_offset+i*512+i];
+        printf("pointer %p\n",  cc_buf_offset+i*512);
         start = my_rdtsc();
         maccess(cur_adrs);
         end = my_rdtsc();
@@ -24,7 +24,6 @@ void test_cc_setup(){
         my_mfence();
         flush(cur_adrs);
     }
-    
 }
 
 void test_cc_transmission(){
