@@ -156,7 +156,7 @@ void test_meltdown(){
 
 }
 
-#define REPS 10
+#define REPS 100
 #define RANGE 300
 void test_init_uts_ns(){
     uintptr_t target = 0xffffffffb9df9920;
@@ -174,7 +174,7 @@ void test_init_uts_ns(){
     }
     
     for (int i=0;i<RANGE;i++){
-        printf("measured value %c at position %i\n", buf[i], i);
+        printf("measured value %i = %c at position %i\n", buf[i],buf[i], i);
     }    
 }
 
