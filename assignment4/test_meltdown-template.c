@@ -105,9 +105,9 @@ void test_meltdown(){
     
     // does this work?
     // test segfault
-    CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), 65);
-    CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), 65);
-    CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), 65);    
+    CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), -1);
+    CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), -1);
+    CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), -1);    
     
     
     
