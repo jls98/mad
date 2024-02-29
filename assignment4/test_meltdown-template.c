@@ -48,12 +48,15 @@ void test_meltdown(){
     cc_init();
     uint8_t test_num;
     for (int i=0;i<256;i++){
+        my_mfence(); 
         test_num=i;
         meltdown((uintptr_t) &test_num);
         CU_ASSERT_EQUAL(test_num, cc_receive());
-        asm volatile("mfence\n"); 
+        my_mfence(); 
         CU_ASSERT_EQUAL(test_num, do_meltdown((uintptr_t) &test_num));
+        my_mfence(); 
         CU_ASSERT_EQUAL(test_num, do_meltdown((uintptr_t) &test_num));
+        my_mfence(); 
     }
     
     // measuring something outside of allocated mem space
