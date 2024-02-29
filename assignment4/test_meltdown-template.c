@@ -24,6 +24,8 @@ void test_cc_setup(){
         CU_ASSERT_TRUE(time > threshold);
         flush(cur_adrs);
     }
+    
+    munmap(cc_buffer, cc_buf_size);
 }
 
 void test_cc_transmission(){
@@ -41,6 +43,8 @@ void test_cc_transmission(){
            printf("transmission failed at %i\n", i);
         }
     }
+    
+    munmap(cc_buffer, cc_buf_size);
 }
 
 void test_meltdown(){
@@ -122,11 +126,7 @@ void test_meltdown(){
     CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), -1);
     CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), -1);
     CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), -1);    
-    
-    
-    
-    
-    
+
     munmap(cc_buffer, cc_buf_size);
 }
 
