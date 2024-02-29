@@ -12,6 +12,7 @@ void test_cc_init(){
 void test_cc_setup(){
     // wait(1E9);
     cc_init();
+    // value not written to adrs yet
     CU_ASSERT_TRUE(((u64 *)cc_buffer)[cc_buf_offset] != 0xaaaaaaaaaaaaaaaa);
     cc_setup();
     u64 time, start, end;
@@ -22,9 +23,12 @@ void test_cc_setup(){
         maccess(cur_adrs);
         end = my_rdtsc();
         my_mfence();
+        // a written all over the place, yay
         CU_ASSERT_TRUE(*((u64 *)cur_adrs) == 0xaaaaaaaaaaaaaaaa);
         my_mfence();
+        
         CU_ASSERT_TRUE((end-start) > threshold);
+        my_mfence();
         flush(cur_adrs);
     }
     
