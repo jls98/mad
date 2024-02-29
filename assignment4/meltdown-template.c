@@ -156,12 +156,8 @@ static int do_meltdown(uintptr_t adrs) {
     if (sigsetjmp(sig_buf, 1) == 0) {
     // call meltdown
         meltdown(adrs);
-        
-        ret = cc_receive(); // receive anyways
-    }else{
-        ret = cc_receive(); // receive if segfault
     }
-    return ret;
+    return cc_receive();
 }
 
 #ifdef MELTDOWNCASE
