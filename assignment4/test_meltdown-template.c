@@ -118,19 +118,19 @@ void test_meltdown(){
     my_mfence();
     received = do_meltdown((uintptr_t) file_ptr);
     my_mfence(); 
-    CU_ASSERT_EQUAL(received==65);
+    CU_ASSERT_EQUAL(received, 65);
     if (received!=65) printf("Test fail: received %i, should be 65\n", received);
     
     my_mfence();
     received = do_meltdown((uintptr_t) file_ptr);
     my_mfence(); 
-    CU_ASSERT_EQUAL(received==65);
+    CU_ASSERT_EQUAL(received, 65);
     if (received!=65) printf("Test fail: received %i, should be 65\n", received);
     
     my_mfence();
     received = do_meltdown((uintptr_t) file_ptr);
     my_mfence(); 
-    CU_ASSERT_EQUAL(received==65);
+    CU_ASSERT_EQUAL(received, 65);
     if (received!=65) printf("Test fail: received %i, should be 65\n", received);
     my_mfence();
     
