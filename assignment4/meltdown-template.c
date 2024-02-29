@@ -121,8 +121,8 @@ static int cc_receive() {
         flush(cur_adrs);
         time = end - start;
         // printf("|%lu;", time); // this stabilizes the measurement lol
-        // printf(" "); // this stabilizes the measurement lol I want to cry
-        my_mfence();
+        printf(" "); // this stabilizes the measurement lol I want to cry
+        
         if (time<threshold) {
             printf("\n");
             return i;
