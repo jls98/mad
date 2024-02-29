@@ -28,6 +28,7 @@ void test_cc_setup(){
 
 void test_cc_transmission(){
     wait(1E9);
+    cc_init();
     cc_setup();
     for(int i=0; i<256;i++){
         my_mfence();
