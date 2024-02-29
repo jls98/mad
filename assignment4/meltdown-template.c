@@ -120,10 +120,10 @@ static int cc_receive() {
         my_mfence();
         flush(cur_adrs);
         time = end - start;
-        // printf("|%lu;", time); // this stabilizes the measurement lol (uncommented, we get less 254 fails)
+        printf("|%lu;", time); // this stabilizes the measurement lol (uncommented, we get less 254 fails)
         
         if (time<threshold) {
-            // printf("\n");
+            printf("\n");
             return i;
         } 
     }
