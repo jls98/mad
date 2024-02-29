@@ -58,8 +58,6 @@ void test_meltdown(){
         my_mfence(); 
         test_num=i;
         my_mfence(); 
-        cc_setup();
-        my_mfence();
         meltdown((uintptr_t) &test_num);
         CU_ASSERT_EQUAL(test_num, cc_receive());
         my_mfence(); 
