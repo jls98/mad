@@ -122,7 +122,7 @@ static int cc_receive() {
             return i;
         } 
     }
-    printf("received nothing\n");
+    // printf("received nothing\n");
     return -1;
 }
 
