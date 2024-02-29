@@ -51,18 +51,20 @@ void test_meltdown(){
         *test_num=i;
         my_mfence(); 
         meltdown((uintptr_t) test_num);
-        CU_ASSERT_EQUAL(test_num, cc_receive());
         my_mfence(); 
-        received = do_meltdown((uintptr_t) test_num);
-        my_mfence(); 
-        CU_ASSERT_EQUAL(*test_num, received);
-        my_mfence(); 
+        received = cc_receive();
+        my_mfence();
+        CU_ASSERT_EQUAL(test_num, received);
         if (*test_num != received) printf("Test fail: test_num %u, received %i\n", *test_num, received);
         my_mfence(); 
         received = do_meltdown((uintptr_t) test_num);
         my_mfence(); 
         CU_ASSERT_EQUAL(*test_num, received);
+        if (*test_num != received) printf("Test fail: test_num %u, received %i\n", *test_num, received);
         my_mfence(); 
+        received = do_meltdown((uintptr_t) test_num);
+        my_mfence(); 
+        CU_ASSERT_EQUAL(*test_num, received);
         if (*test_num != received) printf("Test fail: test_num %u, received %i\n", *test_num, received);
         my_mfence();
     }
@@ -70,10 +72,25 @@ void test_meltdown(){
     // measuring something outside of allocated mem space
     // test segfault
     uintptr_t target = (uintptr_t) &cc_buffer[12*283000];
-    CU_ASSERT_FALSE(do_meltdown( target)==-1);
-    CU_ASSERT_FALSE(do_meltdown( target)==-1);
-    CU_ASSERT_FALSE(do_meltdown( target)==-1);
+    my_mfence();
+    received = do_meltdown(target);
+    my_mfence(); 
+    CU_ASSERT_FALSE(received==-1);
+    if (received==-1) printf("Test fail: received %i, should be -1\n", received);
     
+    my_mfence();
+    received = do_meltdown(target);
+    my_mfence(); 
+    CU_ASSERT_FALSE(received==-1);
+    if (received==-1) printf("Test fail: received %i, should be -1\n", received);
+    
+    my_mfence();
+    received = do_meltdown(target);
+    my_mfence(); 
+    CU_ASSERT_FALSE(received==-1);
+    if (received==-1) printf("Test fail: received %i, should be -1\n", received);
+    my_mfence();
+     
     
     // test via a file
     const char *filename = "./file"; // contains only "AA..."
@@ -97,9 +114,25 @@ void test_meltdown(){
         close(fd);
         exit(EXIT_FAILURE);
     }
-    CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), 65);
-    CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), 65);
-    CU_ASSERT_EQUAL(do_meltdown((uintptr_t) file_ptr), 65);
+    
+    my_mfence();
+    received = do_meltdown((uintptr_t) file_ptr);
+    my_mfence(); 
+    CU_ASSERT_EQUAL(received==65);
+    if (received!=65) printf("Test fail: received %i, should be 65\n", received);
+    
+    my_mfence();
+    received = do_meltdown((uintptr_t) file_ptr);
+    my_mfence(); 
+    CU_ASSERT_EQUAL(received==65);
+    if (received!=65) printf("Test fail: received %i, should be 65\n", received);
+    
+    my_mfence();
+    received = do_meltdown((uintptr_t) file_ptr);
+    my_mfence(); 
+    CU_ASSERT_EQUAL(received==65);
+    if (received!=65) printf("Test fail: received %i, should be 65\n", received);
+    my_mfence();
     
     // Close the file descriptor since it's no longer needed
     close(fd);
