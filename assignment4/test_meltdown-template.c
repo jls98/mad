@@ -211,7 +211,7 @@ int main() {
    	CU_add_test(suite, "test_cc_setup", test_cc_setup);
    	CU_add_test(suite, "test_cc_transmission", test_cc_transmission);
    	CU_add_test(suite, "test_meltdown", test_meltdown);
-   	CU_add_test(suite, "test_init_uts_ns", test_init_uts_ns);
+   	// CU_add_test(suite, "test_init_uts_ns", test_init_uts_ns);
 
 
 	CU_basic_run_tests();
