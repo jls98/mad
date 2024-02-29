@@ -5,10 +5,11 @@
 void test_cc_setup(){
     // value not written to adrs yet
     CU_ASSERT_TRUE(((u64 *)cc_buffer)[cc_buf_offset] != 0xaaaaaaaaaaaaaaaa);
-    cc_setup();
+    
     u64 time, start, end;
     void *cur_adrs;
     for (int i=0; i< (int)256;i++){
+        cc_setup();
         my_mfence();
         cur_adrs=&cc_buffer[cc_buf_offset+i*offset];
         // printf("pointer %p\n",  &cc_buffer[cc_buf_offset+i*512+i]);
