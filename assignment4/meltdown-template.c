@@ -149,12 +149,14 @@ static void meltdown(uintptr_t adrs) {
 
 */
 static int do_meltdown(uintptr_t adrs) {
-
+    my_mfence();
     int ret = -1;
     if (sigsetjmp(sig_buf, 1) == 0) {
     // call meltdown
+        my_mfence();
         meltdown(adrs);
     }
+    my_mfence();
     return cc_receive();
 }
 
