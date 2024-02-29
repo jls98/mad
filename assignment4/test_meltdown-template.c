@@ -10,7 +10,7 @@ void test_cc_setup(){
     void *cur_adrs;
     for (int i=0; i< (int)256;i++){
         my_mfence();
-        cur_adrs=&cc_buffer[cc_buf_offset+i*514];
+        cur_adrs=&cc_buffer[cc_buf_offset+i*offset];
         // printf("pointer %p\n",  &cc_buffer[cc_buf_offset+i*512+i]);
         start = my_rdtsc();
         maccess(cur_adrs);
@@ -20,7 +20,7 @@ void test_cc_setup(){
         CU_ASSERT_TRUE(*((u64 *)cur_adrs) == 0xaaaaaaaaaaaaaaaa);
         time = end-start;
         CU_ASSERT_TRUE(time > threshold);
-        if (time <= threshold) printf("Test fail: diff is %lu at %x\n", time, i);
+        if (time <= threshold) printf("Test fail: diff is %lu at %i\n", time, i);
         my_mfence();
         flush(cur_adrs);
     }

@@ -13,7 +13,8 @@
 
 #define u64 uint64_t
 #define i64 int64_t
-
+// #define offset 514
+#define offset 1026
 /*
 Task 1 - Build a covert channel (30%)
 
@@ -63,7 +64,7 @@ static inline u64 my_rdtsc() {
 static void flush_buf(){
     for (int i=0; i< 256;i++){
         // flush(&cc_buffer[cc_buf_offset+i*1024+i*4]);
-        flush(&cc_buffer[cc_buf_offset+i*514]);
+        flush(&cc_buffer[cc_buf_offset+i*offset]);
     }
 }
 
@@ -97,7 +98,7 @@ static void cc_setup() {
 static void cc_transmit(uint8_t value) {
     my_mfence();
     // maccess(&cc_buffer[cc_buf_offset+value*1024+value*4]);
-    maccess(&cc_buffer[cc_buf_offset+value*514]);
+    maccess(&cc_buffer[cc_buf_offset+value*offset]);
     my_mfence();
 }
 
@@ -108,7 +109,7 @@ static int cc_receive() {
     for (int i=0; i< 256;i++){
         my_mfence();
         // cur_adrs=&cc_buffer[cc_buf_offset+i*1024+i*4];
-        cur_adrs=&cc_buffer[cc_buf_offset+i*514];
+        cur_adrs=&cc_buffer[cc_buf_offset+i*offset];
         start = my_rdtsc();
         maccess(cur_adrs);
         end = my_rdtsc();
