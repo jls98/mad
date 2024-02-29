@@ -77,6 +77,7 @@ static void segfault_handler(int signum) {
 
 
 static void cc_init() {
+    wait(1E9);
     // Init segfault handler
     if (signal(SIGSEGV, segfault_handler) == SIG_ERR) {
         printf("Failed to setup signal handler\n");
