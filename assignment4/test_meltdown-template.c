@@ -30,7 +30,7 @@ void test_cc_setup(){
 }
 
 void test_cc_transmission(){
-    wait(1E9);
+    // wait(1E9);
     cc_init();
     cc_setup();
     for(int i=0; i<256;i++){
@@ -50,7 +50,7 @@ void test_cc_transmission(){
 
 void test_meltdown(){
     // test valid values
-    wait(1E9);
+    // wait(1E9);
     cc_init();
     uint8_t test_num;
     int received;
@@ -133,6 +133,7 @@ void test_meltdown(){
 
 
 int main() {
+    wait(1E9);
     CU_initialize_registry();
 
     CU_pSuite suite = CU_add_suite("Test Suite assignment 4", NULL, NULL);
