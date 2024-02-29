@@ -20,7 +20,7 @@ void test_cc_setup(){
         CU_ASSERT_TRUE(*((u64 *)cur_adrs) == 0xaaaaaaaaaaaaaaaa);
         time = end-start;
         CU_ASSERT_TRUE(time > threshold);
-        if (time <= threshold) printf("Test fail: diff is %lx at %i\n", time, i);
+        if (time <= threshold) printf("Test fail: diff is %lu at %x\n", time, i);
         my_mfence();
         flush(cur_adrs);
     }
