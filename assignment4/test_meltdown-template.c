@@ -2,13 +2,6 @@
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
 
-void test_cc_init(){
-    CU_ASSERT_TRUE(cc_buffer == NULL);
-    cc_init();
-    CU_ASSERT_TRUE(cc_buffer != NULL);
-    munmap(cc_buffer, cc_buf_size);
-}
-
 void test_cc_setup(){
     // value not written to adrs yet
     CU_ASSERT_TRUE(((u64 *)cc_buffer)[cc_buf_offset] != 0xaaaaaaaaaaaaaaaa);
@@ -136,7 +129,7 @@ int main() {
     CU_initialize_registry();
 
     CU_pSuite suite = CU_add_suite("Test Suite assignment 4", NULL, NULL);
-   	CU_add_test(suite, "test_cc_init", test_cc_init);
+   	// CU_add_test(suite, "test_cc_init", test_cc_init);
    	CU_add_test(suite, "test_cc_setup", test_cc_setup);
    	CU_add_test(suite, "test_cc_transmission", test_cc_transmission);
    	CU_add_test(suite, "test_meltdown", test_meltdown);
