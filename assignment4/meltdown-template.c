@@ -100,10 +100,10 @@ static void cc_setup() {
 
 // cc_transmit(uint8_t value) transmits a value through the channel
 static void cc_transmit(uint8_t value) {
-    my_mfence();
+    // my_mfence();
     // maccess(&cc_buffer[cc_buf_offset+value*1024+value*4]);
     maccess(&cc_buffer[cc_buf_offset+value*offset]);
-    my_mfence();
+    // my_mfence();
 }
 
 // int cc_receive() returns the value it receives, or -1 if no value has been received
@@ -120,8 +120,8 @@ static int cc_receive() {
         my_mfence();
         flush(cur_adrs);
         time = end - start;
-        // printf("|%lu;", time); // this stabilizes the measurement lol
-        printf(" "); // this stabilizes the measurement lol I want to cry
+        printf("|%lu;", time); // this stabilizes the measurement lol
+        // printf(" "); // this stabilizes the measurement lol I want to cry
         
         if (time<threshold) {
             printf("\n");
