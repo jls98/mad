@@ -55,7 +55,7 @@ void test_meltdown(){
         my_mfence(); 
         received = cc_receive();
         my_mfence();
-        CU_ASSERT_EQUAL(test_num, received);
+        CU_ASSERT_EQUAL(*test_num, received);
         if (*test_num != received) printf("Test fail: test_num %u, received %i\n", *test_num, received);
         my_mfence(); 
         received = do_meltdown((uintptr_t) test_num);
