@@ -10,7 +10,7 @@ void test_cc_init(){
 }
 
 void test_cc_setup(){
-    wait(1E9);
+    // wait(1E9);
     cc_init();
     CU_ASSERT_TRUE(((u64 *)cc_buffer)[cc_buf_offset] != 0xaaaaaaaaaaaaaaaa);
     cc_setup();
